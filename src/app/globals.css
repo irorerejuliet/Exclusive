@@ -19,6 +19,14 @@
   }
 }
 
+
+
+.wrapper {
+  @apply mx-auto container w-full ;
+}
+
+
+
 body {
   background: var(--background);
   color: var(--foreground);
