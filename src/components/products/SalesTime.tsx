@@ -15,7 +15,7 @@ const SalesTime = () => {
   }, []);
 
   return (
-    <div className="md:flex flex-row justify-between items-center py-8">
+    <div className="md:flex flex-row justify-between items-center py-8 md:px-0 px-10">
       <div className="md:flex flex-row items-center gap-20 md:space-y-0 space-y-10">
         <h2 className="text-3xl font-bold mb-4">Flash Sales</h2>
 

@@ -1,11 +1,6 @@
-
 import HomePage from "@/features/landingpage";
 const page = () => {
-  return (
-    <main>
-      <HomePage />
-    </main>
-  );
+  return <HomePage />;
 };
 
 export default page;
