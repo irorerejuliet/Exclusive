@@ -10,7 +10,6 @@ import { Product } from "@/types/products";
 
 const Page = () => {
   const { id } = useParams<{ id: string }>();
-  // const [product, setProduct] = useState<Product | null>(null);
   const [currentImage, setCurrentImage] = useState("");
   const [qty, setQty] = useState(2);
 
@@ -21,22 +20,6 @@ const Page = () => {
   console.log(data, "single product");
 
   const product = data as Product;
-  // useEffect(() => {
-  //   async function fetchproductById() {
-  //     try {
-  //       const res = await fetch(`https://dummyjson.com/products/${id}`);
-  //       if (!res.ok) {
-  //         throw new Error("Unable to fetch data");
-  //       }
-  //       const data = await res.json();
-  //       setProduct(data);
-  //     } catch (error) {
-  //       console.log(error);
-  //     }
-  //   }
-  //   fetchproductById();
-  // }, [id]);
-
   if (isLoading) {
     return (
       <p className="text-center py-20 text-red-800 text-lg">
