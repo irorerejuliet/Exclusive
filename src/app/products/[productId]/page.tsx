@@ -1,7 +1,10 @@
+
+import useFetch from '@/hooks/useFetch';
 import { Heart } from 'lucide-react';
 import Image from 'next/image';
 import Link from 'next/link';
-import React from 'react'
+import { useParams } from 'next/navigation';
+
 
 const page = () => {
     const { id } = useParams<{ id: string }>();
@@ -15,22 +18,22 @@ const page = () => {
     });
     console.log(data, "single product");
 
-    const product = data as Product;
-    useEffect(() => {
-      async function fetchproductById() {
-        try {
-          const res = await fetch(`https://dummyjson.com/products/${id}`);
-          if (!res.ok) {
-            throw new Error("Unable to fetch data");
-          }
-          const data = await res.json();
-          setProduct(data);
-        } catch (error) {
-          console.log(error);
-        }
-      }
-      fetchproductById();
-    }, [id]);
+    // const product = data as Product;
+    // useEffect(() => {
+    //   async function fetchproductById() {
+    //     try {
+    //       const res = await fetch(`https://dummyjson.com/products/${id}`);
+    //       if (!res.ok) {
+    //         throw new Error("Unable to fetch data");
+    //       }
+    //       const data = await res.json();
+    //       setProduct(data);
+    //     } catch (error) {
+    //       console.log(error);
+    //     }
+    //   }
+    //   fetchproductById();
+    // }, [id]);
 
     if (isLoading) {
       return (
