@@ -8,7 +8,7 @@ import { useParams } from 'next/navigation';
 
 const page = () => {
     const { id } = useParams<{ id: string }>();
-    // const [product, setProduct] = useState<Product | null>(null);
+    const [product, setProduct] = useState<Product | null>(null);
     const [currentImage, setCurrentImage] = useState("");
     const [qty, setQty] = useState(2);
 
