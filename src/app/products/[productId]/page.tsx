@@ -1,53 +1,55 @@
+import { useState } from "react";
+import useFetch from "@/hooks/useFetch";
+import formattedDate from "@/utils/formatted.Date";
+import { ratingAndStars } from "@/utils/ratingAndStars";
+import { Heart } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
+import { useParams } from "next/navigation";
+import { Product } from "@/types/products";
 
-import useFetch from '@/hooks/useFetch';
-import { Heart } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
-import { useParams } from 'next/navigation';
+const Page = () => {
+  const { id } = useParams<{ id: string }>();
+  // const [product, setProduct] = useState<Product | null>(null);
+  const [currentImage, setCurrentImage] = useState("");
+  const [qty, setQty] = useState(2);
 
+  const { data, isLoading, error } = useFetch({
+    url: "products",
+    params: id as string,
+  });
+  console.log(data, "single product");
 
-const page = () => {
-    const { id } = useParams<{ id: string }>();
-    // const [product, setProduct] = useState<Product | null>(null);
-    const [currentImage, setCurrentImage] = useState("");
-    const [qty, setQty] = useState(2);
+  const product = data as Product;
+  // useEffect(() => {
+  //   async function fetchproductById() {
+  //     try {
+  //       const res = await fetch(`https://dummyjson.com/products/${id}`);
+  //       if (!res.ok) {
+  //         throw new Error("Unable to fetch data");
+  //       }
+  //       const data = await res.json();
+  //       setProduct(data);
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   }
+  //   fetchproductById();
+  // }, [id]);
 
-    const { data, isLoading, error } = useFetch({
-      url: "products",
-      params: id as string,
-    });
-    console.log(data, "single product");
+  if (isLoading) {
+    return (
+      <p className="text-center py-20 text-red-800 text-lg">
+        Loading product...
+      </p>
+    );
+  }
 
-    // const product = data as Product;
-    // useEffect(() => {
-    //   async function fetchproductById() {
-    //     try {
-    //       const res = await fetch(`https://dummyjson.com/products/${id}`);
-    //       if (!res.ok) {
-    //         throw new Error("Unable to fetch data");
-    //       }
-    //       const data = await res.json();
-    //       setProduct(data);
-    //     } catch (error) {
-    //       console.log(error);
-    //     }
-    //   }
-    //   fetchproductById();
-    // }, [id]);
-
-    if (isLoading) {
-      return (
-        <p className="text-center py-20 text-red-800 text-lg">
-          Loading product...
-        </p>
-      );
-    }
-
-    if (error) {
-      return <h1>{error}</h1>;
-    }
-    if (!product && !isLoading) return <h2>NO Product found in id {id}</h2>;
-    console.log(product.reviews);
+  if (error) {
+    return <h1>{error}</h1>;
+  }
+  if (!product && !isLoading) return <h2>NO Product found in id {id}</h2>;
+  console.log(product.reviews);
   return (
     <div className="wrapper ">
       <p className="text-2xl font-medium text-green-600 flex  justify-end pt-10">
@@ -221,6 +223,6 @@ const page = () => {
       </div>
     </div>
   );
-}
+};
 
-export default page
+export default Page;
