@@ -65,7 +65,7 @@ const Page = () => {
             </div>
           ))}
         </div>
-        <div className="md:w-[500px] w-[300px] md:mx-0 mx-auto md:h-[600px] h-[450px]  bg-[#F5F5F5] pt-[154px] pb-[131px] px-[27px] rounded-sm md:mt-0 my-8">
+        <div className="md:w-125 w-75 md:mx-0 mx-auto md:h-[600px] h-[450px]  bg-[#F5F5F5] pt-[154px] pb-[131px] px-[27px] rounded-sm md:mt-0 my-8">
           <Image
             src={currentImage || product?.thumbnail}
             alt="gamepad"
