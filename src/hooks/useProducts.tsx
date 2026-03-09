@@ -1,6 +1,5 @@
 "use client"
 import { useEffect, useState } from "react";
-import type { ProductApiResponse } from "../types/products";
 import useFetch from "./useFetch";
 
 const useProducts = () => {

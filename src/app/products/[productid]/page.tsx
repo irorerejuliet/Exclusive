@@ -1,3 +1,4 @@
+"use client"
 import { useState } from "react";
 import useFetch from "@/hooks/useFetch";
 import formattedDate from "@/utils/formatted.Date";
@@ -5,17 +6,18 @@ import { ratingAndStars } from "@/utils/ratingAndStars";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+
 import { Product } from "@/types/products";
+import { useParams } from "next/navigation";
 
 const Page = () => {
-  const { id } = useParams<{ id: string }>();
+  const { productId } = useParams<{ productId: string }>();
   const [currentImage, setCurrentImage] = useState("");
   const [qty, setQty] = useState(2);
 
   const { data, isLoading, error } = useFetch({
     url: "products",
-    params: id as string,
+    params: productId as string,
   });
   console.log(data, "single product");
 
@@ -31,7 +33,7 @@ const Page = () => {
   if (error) {
     return <h1>{error}</h1>;
   }
-  if (!product && !isLoading) return <h2>NO Product found in id {id}</h2>;
+  if (!product && !isLoading) return <h2>NO Product found in id {productId}</h2>;
   console.log(product.reviews);
   return (
     <div className="wrapper ">
@@ -82,7 +84,7 @@ const Page = () => {
             <div className="text-yellow-400">{product.rating}</div>
             <span className="text-gray-400">(150 Reviews)</span>
             <span className="text-green-500">
-              {" "}
+            
               {product.stock} | In Stock::
             </span>
           </div>

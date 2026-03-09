@@ -19,7 +19,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
           {discountPercentage}
         </button>
         <div className="flex justify-center items-center my-6 ">
-          <Link href={`/product/${id}`}>
+          <Link href={`/products/${id}`}>
             <Image src={thumbnail} alt={title} width={172} height={152} />
           </Link>
         </div>

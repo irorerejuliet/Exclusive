@@ -17,7 +17,7 @@ const useFetch = ({ url, params }: FetchType) => {
       setLoading(true);
       try {
         const fullUrl = params
-          ? `${process.env.NEXT_PUBLIC_API_URL}/${url}${params}`
+          ? `${process.env.NEXT_PUBLIC_API_URL}/${url}/${params}`
           : `${process.env.NEXT_PUBLIC_API_URL}/${url}`;
 
         const res = await fetch(fullUrl);
