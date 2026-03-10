@@ -17,7 +17,7 @@ const Navbar = () => {
           Exclusive
         </Link>
         <div className="hidden md:flex gap-6 items-center text-base font-normal">
-          <Link href={""}>Home</Link>
+          <Link href={"/"}>Home</Link>
           <Link href={"/contact"}>Contact</Link>
           <Link href={"/about"}>About</Link>
           <Link href={"/sign-up"}>SignUp</Link>

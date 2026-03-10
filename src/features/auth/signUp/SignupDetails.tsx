@@ -1,9 +1,9 @@
 
 
 import CustomInput from "../../../components/CustomInput";
-import { signupSchema } from "../../../schema/auth";
+import { SignupFormData, signupSchema } from "../../../schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
+import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 
@@ -32,10 +32,12 @@ const SignupDetails = () => {
   return (
     <div className="flex justify-between  items-center  my-28 ">
       <div className="">
-        <img
+        <Image
           src="/images/beatsnoop.svg"
           alt="beatsnoop"
-          className="w-[805px]"
+          width={805}
+          height={400}
+          className="w-full"
         />
       </div>
       <div className=" space-y-10 pr-64">
@@ -75,7 +77,7 @@ const SignupDetails = () => {
           </button>
 
           <button className=" w-[371px] gap-3 border border-gray-100 flex items-center rounded-md py-3 px-7">
-            <img src="/images/Icon-Google.svg" alt="googleIcon" />
+            <Image src="/images/Icon-Google.svg" alt="googleIcon" width={50} height={50}/>
             <span className="text-base font-normal"> Sign up with Google</span>
           </button>
 
