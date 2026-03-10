@@ -5,10 +5,10 @@ import Stories from "./Stories";
 
 const AboutUsPage = () => {
   return (
-    <main>
+    <main className="bg-white text-black">
+      <Stories />
       <Activity />
       <Founders />
-      <Stories />
     </main>
   );
 };
