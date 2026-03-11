@@ -4,7 +4,7 @@ import Link from "next/link";
 
 const ContactDetails = () => {
   return (
-    <section>
+    <section className="bg-white text-black">
       <div className="wrapper">
         <div className="flex  items-center gap-2 py-20">
           <Link href="/">Home</Link>
@@ -18,7 +18,12 @@ const ContactDetails = () => {
             <div className="space-y-6 pb-4">
               <div className="gap-2 flex items-center">
                 <button className="text-white bg-primary rounded-full p-4">
-                  <Image src="/images/call.svg" alt="callIcon" width={12} height={12}/>
+                  <Image
+                    src="/images/call.svg"
+                    alt="callIcon"
+                    width={12}
+                    height={12}
+                  />
                 </button>
                 <span className="text-base font-bold">Call To Us</span>
               </div>
@@ -29,7 +34,12 @@ const ContactDetails = () => {
             <div className="space-y-4">
               <div className="gap-2 flex items-center">
                 <button className="text-white bg-primary rounded-full p-4">
-                  <Image src="/images/message.svg" alt="callIcon" width={12} height={12}/>
+                  <Image
+                    src="/images/message.svg"
+                    alt="callIcon"
+                    width={12}
+                    height={12}
+                  />
                 </button>
                 <span className="text-base font-bold py-6">Write To Us</span>
               </div>
@@ -38,7 +48,7 @@ const ContactDetails = () => {
               <p>Emails: support@exclusive.com</p>
             </div>
           </div>
-          <div className="w-250   bg-white p-8 rounded-md shadow">
+          <div className="w-250   bg-white text-[#000000] p-8 rounded-md shadow">
             <form className="space-y-6">
               {/* Top Inputs */}
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">

@@ -1,3 +1,4 @@
+"use client"
 import { zodResolver } from "@hookform/resolvers/zod";
 import type z from "zod";
 import Image from "next/image";
@@ -25,11 +26,11 @@ const LoginDetails = () => {
   };
 
   return (
-    <div className="flex justify-between  items-center wrapper my-28">
+    <div className="flex gap-60 items-center  py-28 bg-white text-black">
       <div>
-        <Image src="/images/beatsnoop.svg" alt="beatsnoop" width={30} height={30}/>
+        <Image src="/images/beatsnoop.svg" alt="beatsnoop" width={805} height={781}/>
       </div>
-      <div className="w-[371px] space-y-10">
+      <div className="w-[371px] space-y-10 ">
         <h4 className="text-3xl font-medium">Log in to Exclusive</h4>
         <p className="text-base font-normal">Enter your details below</p>
         <form

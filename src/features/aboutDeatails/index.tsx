@@ -1,4 +1,5 @@
 "use client";
+import DeliveryService from "../landingpage/DeliveryService";
 import Activity from "./Activity";
 import Founders from "./Founders";
 import Stories from "./Stories";
@@ -9,6 +10,7 @@ const AboutUsPage = () => {
       <Stories />
       <Activity />
       <Founders />
+      <DeliveryService/>
     </main>
   );
 };

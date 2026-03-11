@@ -1,4 +1,4 @@
-
+"use client"
 
 import CustomInput from "../../../components/CustomInput";
 import { SignupFormData, signupSchema } from "../../../schema/auth";
@@ -30,8 +30,8 @@ const SignupDetails = () => {
   };
 
   return (
-    <div className="flex justify-between  items-center  my-28 ">
-      <div className="">
+    <section className="flex gap-60  items-center  bg-white text-black">
+      <div className="my-28 ">
         <Image
           src="/images/beatsnoop.svg"
           alt="beatsnoop"
@@ -40,7 +40,7 @@ const SignupDetails = () => {
           className="w-full"
         />
       </div>
-      <div className=" space-y-10 pr-64">
+      <div className=" space-y-10 ">
         <h4 className="text-3xl font-medium">Create an account</h4>
         <p className="text-base font-normal">Enter your details below</p>
         <form
@@ -76,8 +76,13 @@ const SignupDetails = () => {
             create Account
           </button>
 
-          <button className=" w-[371px] gap-3 border border-gray-100 flex items-center rounded-md py-3 px-7">
-            <Image src="/images/Icon-Google.svg" alt="googleIcon" width={50} height={50}/>
+          <button className=" w-[371px] gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7">
+            <Image
+              src="/images/Icon-Google.svg"
+              alt="googleIcon"
+              width={24}
+              height={24}
+            />
             <span className="text-base font-normal"> Sign up with Google</span>
           </button>
 
@@ -92,7 +97,7 @@ const SignupDetails = () => {
           </p>
         </form>
       </div>
-    </div>
+    </section>
   );
 };
 

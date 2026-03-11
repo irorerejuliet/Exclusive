@@ -28,7 +28,7 @@ export const activityData = [
 export const foundersData = [
   {
     id: 1,
-    image: "/images/TomCruise.svg",
+    image: "/images/Tom-cruise.svg",
     title: "Tom Cruise",
     subTitle: "Founder & Chairman",
   },

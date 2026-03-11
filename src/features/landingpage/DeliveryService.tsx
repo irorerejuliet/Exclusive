@@ -5,7 +5,7 @@ import Image from "next/image";
 
 const DeliveryService = () => {
   return (
-    <div className="my-40 md:flex flex-row justify-center gap-60 items-center">
+    <div className="pb-32 md:flex flex-row justify-center gap-60 items-center">
       {deliveryData?.map(({ id, image, title, description }) => (
         <div
           key={id}
@@ -15,8 +15,8 @@ const DeliveryService = () => {
             <Image
               src={image}
               alt="delivery-service"
-              width={12}
-              height={12}
+              width={40}
+              height={40}
               className=" rounded-full p-2 bg-black"
             />
           </div>
