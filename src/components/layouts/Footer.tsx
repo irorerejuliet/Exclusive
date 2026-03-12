@@ -10,7 +10,7 @@ const Footer = () => {
   return (
     <footer className=" bg-black text-white py-12 ">
       <section className="wrapper md:py-0 py-5 md:px-0 px-6">
-        <div className="flex lg:flex-row flex-col justify-between ">
+        <div className="grid lg:grid-cols-5 md:grid-cols-2 justify-between ">
           {/* Exclusive */}
           <div>
             <Link href={"/"} className="text-2xl font-bold">

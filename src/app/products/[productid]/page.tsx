@@ -42,7 +42,7 @@ const Page = () => {
           FREE SHOPPING ON ORDER $50+
         </p>
         <div className="flex items-center gap-4 py-20">
-          <Link href={"/"} className="text-[#BFBFBF] text-base font-medium bg-red-700">
+          <Link href={"/"} className="text-[#BFBFBF] text-base font-medium">
             Account
           </Link>
           <span className="text-[#BFBFBF] text-base font-medium">/</span>
@@ -52,7 +52,7 @@ const Page = () => {
           >
             {product?.category}
           </Link>
-          <span className="text-[#BFBFBF] text-base font-medium">/</span>
+          <span className="text-[#000000] text-base font-medium">/</span>
           <p className="text-base font-medium capitalize">{product.title}</p>
         </div>
         <div className="flex flex-col md:flex-row md:justify-between gap-8">
@@ -64,21 +64,21 @@ const Page = () => {
                 role="button"
                 onClick={() => setCurrentImage(image)}
               >
-                <Image src={image} alt="gampad" width={20} height={20} />
+                <Image src={image} alt="gampad" width={121} height={121} />
               </div>
             ))}
           </div>
-          <div className="md:w-125 w-75 md:mx-0 mx-auto md:h-[600px] h-[450px]  bg-[#F5F5F5] pt-[154px] pb-[131px] px-[27px] rounded-sm md:mt-0 my-8">
+          <div className="md:w-125 w-75 md:mx-0 mx-auto md:h-150 h-112.5  bg-[#F5F5F5] pt-38.5 pb-32.75 px-6.75 rounded-sm md:mt-0 my-8">
             <Image
               src={currentImage || product?.thumbnail}
               alt="gamepad"
-              width={40}
-              height={40}
+              width={446}
+              height={315}
               className="w-full h-full"
             />
           </div>
           {/* Product Details */}
-          <div className="max-w-sm font-sans space-y-4 bg-red-800">
+          <div className="max-w-sm font-sans space-y-4 text-black px-4">
             <h2 className="text-2xl font-semibold">{product?.title}</h2>
             <p>{product?.date}</p>
             <div className="flex items-center gap-2 text-sm">
@@ -122,7 +122,7 @@ const Page = () => {
               <p>{}</p>
             </div>
 
-            <div className="border rounded p-4 space-y-3 text-sm w-[399px]">
+            <div className="border rounded p-4 space-y-3 text-sm lg:w-99.75">
               <div className="flex gap-3 items-start">
                 <Image
                   src="/images/DelivryIcon.svg"
