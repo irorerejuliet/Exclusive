@@ -8,9 +8,9 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="w-full bg-black text-white py-12 ">
+    <footer className=" bg-black text-white py-12 ">
       <section className="wrapper md:py-0 py-5 md:px-0 px-6">
-        <div className="grid grid-cols-1 md:grid-cols-5 ">
+        <div className="flex lg:flex-row flex-col justify-between ">
           {/* Exclusive */}
           <div>
             <Link href={"/"} className="text-2xl font-bold">
@@ -24,7 +24,12 @@ const Footer = () => {
                 placeholder="Enter your email"
                 className="bg-transparent text-white outline-none w-full pr-2"
               />
-              <Image src="/images/email-icon.svg" alt="email-icon" width={6} height={6}/>
+              <Image
+                src="/images/email-icon.svg"
+                alt="email-icon"
+                width={24}
+                height={24}
+              />
             </div>
           </div>
 
@@ -66,21 +71,21 @@ const Footer = () => {
               <Image
                 src="/images/Qr Code.svg"
                 alt="QR Code"
-                width={16}
-                height={16}
+                width={80}
+                height={80}
               />
               <div className="flex flex-col gap-2">
                 <Image
                   src="/images/google.svg"
                   alt="Google Play"
-                  width={28}
-                  height={28}
+                  width={110}
+                  height={40}
                 />
                 <Image
                   src="/images/AppStore.svg"
                   alt="App Store"
-                  width={28}
-                  height={28}
+                  width={110}
+                  height={40}
                 />
               </div>
             </div>
