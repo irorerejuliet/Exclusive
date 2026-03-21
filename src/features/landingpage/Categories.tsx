@@ -1,10 +1,16 @@
 "use client";
 
 
-import { categoriesData } from "@/components/constant/CategoriesData";
+
+import ProductCard from "@/components/products/ProductCard";
+import CardSkeleton from "@/components/ui/CardSkeleton";
+import useProducts from "@/hooks/useProducts";
 import Image from "next/image";
 
 const Categories = () => {
+  const { products, loading } = useProducts();
+
+
   return (
     <section className="bg-white text-black wrapper">
       <div className="wrapper ">
@@ -31,21 +37,10 @@ const Categories = () => {
             />
           </div>
         </div>
-        <div className="grid md:grid-cols-6 gap-5  grid-cols-1">
-          {categoriesData?.map(({ id, image, title }) => (
-            <div
-              className=" shadow border border-gray-200 py-3 px-1 rounded-4 text-center"
-              key={id}
-            >
-              <Image
-                src={image}
-                alt="cellPhone"
-                width={40}
-                height={40}
-                className="text-center m-auto"
-              />
-              <p>{title}</p>
-            </div>
+        <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 items-center space-y-10 md:space-y-0 md:px-0 px-10">
+          {loading && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
+          {products?.slice(6, 10).map((product) => (
+            <ProductCard key={product.id} product={product} />
           ))}
         </div>
         <div className="w-full border-t border-gray-200 mt-20"></div>

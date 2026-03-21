@@ -1,38 +1,52 @@
 import { formatCurrency } from "@/helper/formatCurrency";
-import { Product } from "@/types/products";
+import { Products } from "@/types/products";
 
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import Image from "next/image";
 import Link from "next/link";
 
 interface ProductCardProps {
-  product: Product;
+  product: Products;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-  const { id, thumbnail, discountPercentage, title, price, rating } = product;
+  const {
+    id,
+    stock,
+    thumbnail,
+    discount_percentage,
+    title,
+    price,
+    rating,
+    description,
+    category,
+  } = product;
   return (
-    <div className="w-[270px]">
+    <div className="">
       {/* Card */}
-      <div className="relative bg-[#F5F5F5] shadow rounded-xl p-4">
+      <div className="relative bg-[#F5F5F5] shadow rounded-t-xl p-4">
         <button className="absolute top-3 left-3 bg-primary text-white py-1 px-2 rounded-md">
-          {discountPercentage}
+          {discount_percentage}
         </button>
+        <p>{stock}</p>
         <div className="flex justify-center items-center my-6 ">
           <Link href={`/products/${id}`}>
+            
             <Image src={thumbnail} alt={title} width={172} height={152} />
           </Link>
         </div>
       </div>
-      <button className="text-white bg-black w-[270px] py-2 rounded-t-none rounded-b-sm">
+      <button className="text-white bg-red-800  py-3 px-36.75 rounded-t-none rounded-b-sm">
         Add to cart
       </button>
       {/* Product info below card */}
-      <div className="mt-4 w-[210px]">
-        <p className="font-semibold text-lg">{title}</p>
+      <div className="mt-4 w-52.5 space-y-1 ">
+        <p className="font-semibold text-base w-72  ">{title}</p>
+        <p className="text-xs font-normal w-80 ">{description}</p>
+        <p className="uppercase text-base font-semibold">{category}</p>
         <div className="flex items-center gap-1">
           <p className="text-black/50 line-through flex gap-4 font-medium">
-            {formatCurrency(price)}
+            {formatCurrency(Number(price))}
           </p>
         </div>
         <div className="flex items-center gap-2 mt-1">

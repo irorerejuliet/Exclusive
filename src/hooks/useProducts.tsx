@@ -1,35 +1,33 @@
-"use client"
-import { useEffect, useState } from "react";
+"use client";
+import { useState } from "react";
 import useFetch from "./useFetch";
+import { Products } from "@/types/products";
 
 const useProducts = () => {
-   const { data, isLoading, error } = useFetch({
-     url: "products",
-   });
+  const { data, isLoading, error } = useFetch({
+    url: "products",
+  });
 
-  const [loading, setLoading] = useState<boolean>(false);
+  // useEffect(() => {
+  //   async function fetchProducts() {
+  //     setLoading(true);
+  //     try {
+  //       const res = await fetch("http://localhost:3000/api/products");
+  //       if (!res.ok) throw new Error("Unable to fetch data");
+  //       const data = await res.json();
+  //       console.log(data)
+  //     } catch (error) {
+  //       console.log(error);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   }
+  //   fetchProducts();
+  // }, []);
 
-  useEffect(() => {
-    async function fetchProducts() {
-      setLoading(true);
-      try {
-        const res = await fetch("https://dummyjson.com/products");
-        if (!res.ok) throw new Error("Unable to fetch data");
-        const data = await res.json();
-        console.log(data)
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchProducts();
-  }, []);
-
-  console.log(data, "The data here");
   return {
     loading: isLoading,
-    data: data,
+    products: (data?.data as Products[]) || [],
     error: error,
   };
 };

@@ -1,14 +1,14 @@
-"use client"
-import { useState } from "react";
+"use client";
+
 import useFetch from "@/hooks/useFetch";
+import { Product } from "@/types/products";
 import formattedDate from "@/utils/formatted.Date";
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
-import { Product } from "@/types/products";
 import { useParams } from "next/navigation";
+import { useState } from "react";
 
 const Page = () => {
   const { productId } = useParams<{ productId: string }>();
@@ -33,7 +33,8 @@ const Page = () => {
   if (error) {
     return <h1>{error}</h1>;
   }
-  if (!product && !isLoading) return <h2>NO Product found in id {productId}</h2>;
+  if (!product && !isLoading)
+    return <h2>NO Product found in id {productId}</h2>;
   console.log(product.reviews);
   return (
     <section className="bg-white">
@@ -129,11 +130,11 @@ const Page = () => {
                   alt="delivryIcon"
                   width={40}
                   height={40}
-                  className="w-[26px]"
+                  className="w-6.5"
                 />
                 <div>
                   <p className="font-medium">Free Delivery</p>
-                  <p className="text-gray-500 w-[300px] p-1">
+                  <p className="text-gray-500 w-75 p-1">
                     Enter your postal code for Delivery Availability
                   </p>
                   <p>{product.warrantyInformation}</p>
@@ -187,7 +188,7 @@ const Page = () => {
                     className=" rounded-full object-cover ring-2 ring-gray-100"
                   />
                   <div className="flex flex-col">
-                    <div className="flex  md:gap-5  items-center">
+                    <div className="flex md:gap-5  items-center">
                       <span className="text-sm font-semibold text-gray-900">
                         {review.reviewerName}
                       </span>

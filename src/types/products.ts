@@ -1,54 +1,29 @@
-export interface ProductApiResponse {
-  products: Product[];
-  total: number;
-  skip: number;
-  limit: number;
+
+export interface ProductResponseData {
+  success: boolean;
+  message: string;
+  data: Products[];
 }
 
-export interface Product {
-  id: number;
+export interface Products {
+  created_at: string;
   title: string;
-  description: string;
-  category: string;
-  price: number;
-  discountPercentage: number;
   rating: number;
   stock: number;
+  description: string;
+  category: string;
+  discount_percentage: number;
+  price: string;
   tags: string[];
   brand?: string;
-  sku: string;
   weight: number;
-  dimensions: Dimensions;
-  warrantyInformation: string;
-  shippingInformation: string;
-  availabilityStatus: string;
-  reviews: Review[];
-  returnPolicy: string;
-  minimumOrderQuantity: number;
-  meta: Meta;
+  warranty_information: string;
+  shipping_information: string;
+  availability_status: string;
+  return_policy?: string;
+  minimum_order_quantity?: number;
   images: string[];
   thumbnail: string;
-  comment: string;
-  date: string;
-}
-
-export interface Dimensions {
-  width: number;
-  height: number;
-  depth: number;
-}
-
-export interface Review {
-  rating: number;
-  comment: string;
-  date: string;
-  reviewerName: string;
-  reviewerEmail: string;
-}
-
-export interface Meta {
-  createdAt: string;
-  updatedAt: string;
-  barcode: string;
-  qrCode: string;
+  sku: string;
+  id: string;
 }
