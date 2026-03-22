@@ -1,16 +1,12 @@
 "use client";
 import CardSkeleton from "@/components/ui/CardSkeleton";
 import useProducts from "../../hooks/useProducts";
-import { shuffleArray } from "../../utils/shuffleArray";
 import Image from "next/image";
 import ProductCard from "@/components/products/ProductCard";
 
 const ExploreOurProducts = () => {
-  const { data, loading } = useProducts();
-  const products =
-    data?.products && data?.products?.length > 0
-      ? shuffleArray(data?.products)
-      : [];
+  const { products, loading } = useProducts();
+
 
   return (
     <div className="my-40 wrapper">
@@ -38,12 +34,12 @@ const ExploreOurProducts = () => {
         </div>
       </div>
 
-      <div className="flex-row md:flex justify-between items-center gap-10 space-y-10 md:space-y-0 md:px-0 px-10">
+      <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 space-y-10 md:space-y-0 md:px-0 px-10">
         {loading && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
         {products &&
           !loading &&
           products
-            .slice(1, 5)
+            .slice(6, 10)
             .map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}

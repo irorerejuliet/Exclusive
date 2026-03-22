@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -14,7 +14,7 @@ const HeroBanner = () => {
   ];
 
   return (
-    <div className="flex-1 bg-black w-[892px] text-white rounded-sm px-20 py-20 relative overflow-hidden lg:block hidden wrapper">
+    <div className="flex-1 bg-black w-223 text-white rounded-sm px-20 py-20 relative overflow-hidden lg:block hidden wrapper">
       <div className="space-y-3">
         <div className="flex items-center gap-2">
           <Image
@@ -26,7 +26,7 @@ const HeroBanner = () => {
           <p className="text-sm opacity-70">iPhone 14 Series</p>
         </div>
 
-        <h1 className="text-5xl font-semibold leading-tight w-[298px]">
+        <h1 className="text-5xl font-semibold leading-tight w-74.5">
           Up to 10% off Voucher
         </h1>
 
@@ -48,7 +48,7 @@ const HeroBanner = () => {
           alt="hero"
           width={450}
           height={450}
-          className="absolute right-40 bottom-10  w-[450px]"
+          className="absolute right-40 bottom-10  w-112.5"
         />
 
         {/* Loading Dots */}

@@ -1,8 +1,7 @@
 "use client";
 
 import useFetch from "@/hooks/useFetch";
-import formattedDate from "@/utils/formatted.Date";
-import { ratingAndStars } from "@/utils/ratingAndStars";
+import { Products } from "@/types/products";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -20,7 +19,7 @@ const Page = () => {
   });
   console.log(data, "single product");
 
-  const product = data as Product;
+  const product = data as Products;
   if (isLoading) {
     return (
       <p className="text-center py-20 text-red-800 text-lg">
@@ -34,7 +33,7 @@ const Page = () => {
   }
   if (!product && !isLoading)
     return <h2>NO Product found in id {productId}</h2>;
-  console.log(product.reviews);
+  // console.log(product.reviews);
   return (
     <section className="bg-white">
       <div className="wrapper ">
@@ -56,7 +55,7 @@ const Page = () => {
           <p className="text-base font-medium capitalize">{product.title}</p>
         </div>
         <div className="flex flex-col md:flex-row md:justify-between gap-8">
-          <div className=" w-[171px] md:mx-0 mx-auto space-y-3">
+          <div className=" w-42.75 md:mx-0 mx-auto space-y-3">
             {product?.images?.map((image, index) => (
               <div
                 key={`${image}-${index}`}
@@ -80,7 +79,7 @@ const Page = () => {
           {/* Product Details */}
           <div className="max-w-sm font-sans space-y-4 text-black px-4">
             <h2 className="text-2xl font-semibold">{product?.title}</h2>
-            <p>{product?.date}</p>
+            {/* <p>{product?.date}</p> */}
             <div className="flex items-center gap-2 text-sm">
               <div className="text-yellow-400">{product.rating}</div>
               <span className="text-gray-400">(150 Reviews)</span>
@@ -136,7 +135,7 @@ const Page = () => {
                   <p className="text-gray-500 w-75 p-1">
                     Enter your postal code for Delivery Availability
                   </p>
-                  <p>{product.warrantyInformation}</p>
+                  <p>{product.warranty_information}</p>
                 </div>
               </div>
 
@@ -153,7 +152,7 @@ const Page = () => {
                 </span>
                 <div>
                   <p className="font-medium">Return Delivery</p>
-                  <p className="text-gray-500">{product.returnPolicy}</p>
+                  <p className="text-gray-500">{product.return_policy}</p>
                 </div>
               </div>
             </div>
@@ -165,18 +164,18 @@ const Page = () => {
             Customer Reviews
           </h3>
 
-          {/* Reviews */}
-          {product?.reviews?.map((review, index) => (
+         
+          {/* {product?.reviews?.map((review, index) => (
             <div
               key={`${review.comment}-${index}`}
               className="mb-6 last:mb-0 rounded-xl border border-gray-100 bg-white p-5 shadow-sm transition hover:shadow-md"
             >
-              {/* Comment */}
+              Comment 
               <p className="text-sm text-gray-800 leading-relaxed mb-4">
                 “{review.comment}”
               </p>
 
-              {/* Reviewer Info */}
+               Reviewer Info 
               <div className="flex  justify-between items-center gap-4">
                 <div className="flex items-center gap-4">
                   <Image
@@ -206,7 +205,7 @@ const Page = () => {
                 </p>
               </div>
             </div>
-          ))}
+          ))} */}
         </div>
       </div>
     </section>

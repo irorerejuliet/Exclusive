@@ -10,7 +10,7 @@ const Page = () => {
 
   return (
     <div className="bg-white text-black text-xs py-20">
-      <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 space-y-10 md:space-y-0 md:px-0 px-10">
+      <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 space-y-10 md:space-y-0 md:px-0 px-10">
         {products?.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

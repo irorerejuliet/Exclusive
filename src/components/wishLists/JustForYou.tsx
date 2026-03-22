@@ -10,14 +10,14 @@ const JustForYou = () => {
           <div className="bg-primary w-4 h-10 rounded-[5px]"></div>
           <p className=" text-2xl font-normal">Just For You</p>
         </div>
-        <button className="text-white bg-primary md:py-3 py-1 px-2 md:px-5 rounded-md md:w-[159px] w-20">
+        <button className="text-white bg-primary md:py-3 py-1 px-2 md:px-5 rounded-md md:w-39.75 w-20">
           See All
         </button>
       </div>
       <div className="grid md:grid-cols-4 grid-cols-1 pt-10 justify-between items-center gap-10 space-y-10 md:space-y-0">
         {justForYouData.map(
           ({ id, quickVeiw, image, description, amount, stars, rating }) => (
-            <div key={id} className="w-[270px] ">
+            <div key={id} className="w-65.5 ">
               {/* Card */}
               <div className="relative bg-[#F5F5F5] shadow rounded-xl ">
                 <div className="absolute top-3 right-3 flex flex-col gap-2 pt-6">
@@ -38,7 +38,7 @@ const JustForYou = () => {
                 </button>
               </div>
               {/* Product card detsails */}
-              <div className="mt-4 w-[210px]">
+              <div className="mt-4 w-52.5">
                 <p className="font-semibold text-lg">{description}</p>
                 <p className="text-primary flex gap-4 font-medium">{amount}</p>
                 <div className="flex items-center gap-2 mt-1">

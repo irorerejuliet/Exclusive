@@ -31,12 +31,11 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <p>{stock}</p>
         <div className="flex justify-center items-center my-6 ">
           <Link href={`/products/${id}`}>
-            
             <Image src={thumbnail} alt={title} width={172} height={152} />
           </Link>
         </div>
       </div>
-      <button className="text-white bg-red-800  py-3 px-36.75 rounded-t-none rounded-b-sm">
+      <button className="text-white bg-primary py-3 px-36.75 rounded-t-none rounded-b-sm">
         Add to cart
       </button>
       {/* Product info below card */}
