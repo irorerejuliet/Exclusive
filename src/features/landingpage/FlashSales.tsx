@@ -1,6 +1,5 @@
 "use client";
 
-
 import ProductCard from "@/components/products/ProductCard";
 import SalesTime from "@/components/products/SalesTime";
 import CardSkeleton from "@/components/ui/CardSkeleton";

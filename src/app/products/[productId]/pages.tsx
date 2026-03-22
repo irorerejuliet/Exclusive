@@ -1,7 +1,6 @@
 "use client";
 
 import useFetch from "@/hooks/useFetch";
-import { Product } from "@/types/products";
 import formattedDate from "@/utils/formatted.Date";
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import { Heart } from "lucide-react";

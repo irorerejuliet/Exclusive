@@ -1,50 +1,55 @@
 "use client";
 
+import { Category, CategoryApiResponse } from "@/types/category";
 import Image from "next/image";
 import Link from "next/link";
-import NextLink from "next/link";
 import { useEffect, useState } from "react";
 
 const CategoryProducts = () => {
-  const [categories, setCategories] = useState<string[]>([]);
+  const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  const visibleCategories =
-    categories.length > 0 ? categories.slice(0, 10) : [];
 
   useEffect(() => {
     async function fetchCategories() {
       setLoading(true);
       try {
-        const res = await fetch("https://dummyjson.com/products/category-list");
+        const res = await fetch("/api/categories");
         if (!res.ok) throw new Error("Failed to fetch categories");
-        const data = await res.json();
-        setCategories(data);
+        const data = (await res.json()) as CategoryApiResponse;
+        console.log(data);
+        console.log(data);
+
+        setCategories(data.data);
         setError("");
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if(err instanceof Error){
+         setError(err.message);
+        } else {
+          setError("Seomething went wrong")
+        }
+       
       } finally {
         setLoading(false);
       }
     }
     fetchCategories();
   }, []);
-
+  console.log(categories, "Cat");
   return (
-    <div className="w-[217px] border-r pr-6 text-black">
-      {loading && <p>Loading....</p>}
-      {error && categories.length === 0 && <p>{error}</p>}
-      {visibleCategories.map((category: string, index: number) => (
+    <div className="w-54.25 border-r pr-6 text-black">
+      {loading && <p>Loading...</p>}
+      {error && !categories?.length && <p>{error}</p>}
+      {categories.map((category, index: number) => (
         <div
           key={index}
           className="flex justify-between items-center py-3 text-[16px] cursor-pointer hover:text-black/70 capitalize"
         >
           <Link
-            href={`/categories/${category}`}
             className="text-black hover:text-black/70 capitalize"
+            href={`/categories/${category?.id}`}
           >
-            {category}
+            {category?.name}
           </Link>
 
           {index < 2 && (
@@ -63,3 +68,4 @@ const CategoryProducts = () => {
 };
 
 export default CategoryProducts;
+
