@@ -1,9 +1,8 @@
 import WishlistsProducts from "@/components/wishLists/WishlistsProducts"
 
+
 const page = () => {
-  return (<WishlistsProducts/>
-    
-  )
+  return (<WishlistsProducts/>)
 }
 
 export default page

@@ -1,15 +1,19 @@
-"use client"
+"use client";
 
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 
 const SalesTime = () => {
-  const [time, setTime] = useState(dayjs().format("dddd, HH:mm:ss"));
+  const [time, setTime] = useState(""); // ✅ start empty
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updateTime = () => {
       setTime(dayjs().format("dddd, HH:mm:ss"));
-    }, 1000); // Update every second
+    };
+
+    updateTime(); // ✅ set immediately after mount
+
+    const interval = setInterval(updateTime, 1000);
 
     return () => clearInterval(interval);
   }, []);

@@ -4,6 +4,7 @@ import ProductCard from "@/components/products/ProductCard";
 import SalesTime from "@/components/products/SalesTime";
 import CardSkeleton from "@/components/ui/CardSkeleton";
 import useProducts from "@/hooks/useProducts";
+import { Link } from "lucide-react";
 const FlashSales = () => {
   const { products, loading } = useProducts();
 
@@ -21,9 +22,9 @@ const FlashSales = () => {
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
-        <button className="text-white bg-red-500 text-base font-medium px-10 py-4 rounded-md my-16 w-58.5 md:mx-0 mx-10">
-          View All Products
-        </button>
+          <button className="text-white bg-red-500 text-base font-medium px-10 py-4 rounded-md my-16 w-58.5 md:mx-0 mx-10">
+            View All Products
+          </button>
         <div className="w-full border-t border-gray-200"></div>
       </div>
     </section>

@@ -40,7 +40,7 @@ const CategoryProducts = () => {
     <div className="w-54.25 border-r pr-6 text-black">
       {loading && <p>Loading...</p>}
       {error && !categories?.length && <p>{error}</p>}
-      {categories.map((category, index: number) => (
+      {categories.slice(0, 10).map((category, index: number) => (
         <div
           key={index}
           className="flex justify-between items-center py-3 text-[16px] cursor-pointer hover:text-black/70 capitalize"

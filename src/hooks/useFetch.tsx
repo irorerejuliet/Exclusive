@@ -8,7 +8,7 @@ interface FetchType {
 }
 
 const useFetch = ({ url, params }: FetchType) => {
-  const [data, setData] = useState<any>(null);
+  const [data, setData] = useState<null>(null);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string>("");
 
@@ -28,8 +28,13 @@ const useFetch = ({ url, params }: FetchType) => {
 
         const result = await res.json();
         setData(result);
-      } catch (err: any) {
-        setError(err.message);
+      } catch (err: unknown) {
+        if(err instanceof Error){
+      setError(err.message);
+        }else {
+          setError("Something went wrong")
+        }
+        
       } finally {
         setLoading(false);
       }

@@ -8,9 +8,9 @@ import { Facebook, Instagram, Linkedin, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className=" bg-black text-white py-12 ">
+    <footer className=" bg-black text-white  ">
       <section className="wrapper md:py-0 py-5 md:px-0 px-6">
-        <div className="grid lg:grid-cols-5 md:grid-cols-2 justify-between ">
+        <div className="flex items-center justify-between ">
           {/* Exclusive */}
           <div>
             <Link href={"/"} className="text-2xl font-bold">
@@ -34,7 +34,7 @@ const Footer = () => {
           </div>
 
           {/* Support */}
-          <div className="ml-10">
+          <div className="">
             <h3 className="text-xl font-semibold mb-4">Support</h3>
             <p className="mb-2">111 Bijoy sarani, Dhaka,</p>
             <p className="mb-2">DH 1515, Bangladesh.</p>
@@ -57,10 +57,12 @@ const Footer = () => {
           {/* Quick Link */}
           <div>
             <h3 className="text-xl font-semibold mb-4">Quick Link</h3>
-            <Link href={""}>Privacy Policy</Link>
-            <Link href={""}>Terms Of Use</Link>
-            <Link href={""}>FAQ</Link>
-            <Link href={"/contact"}>Contact</Link>
+            <div className="flex-col flex">
+              <Link href="">Privacy Policy</Link>
+              <Link href="">Terms Of Use</Link>
+              <Link href="">FAQ</Link>
+              <Link href="/contact">Contact</Link>
+            </div>
           </div>
 
           {/* Download App */}

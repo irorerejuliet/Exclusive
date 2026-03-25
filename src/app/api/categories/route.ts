@@ -13,7 +13,7 @@ export const GET = async () => {
       return NextResponse.json(
         {
           success: false,
-          message: error.message,
+          message: error.message, 
         },
         { status: 404 },
       );
@@ -35,7 +35,42 @@ export const GET = async () => {
 
 
 
-export const POST = async => {
+export const POST = async (request: NextResponse) => {
   const supabase = await createClient()
-  const
+  const body = await request.json()
+
+  try {
+    
+const { data, error } = await supabase
+  .from("categories")
+  .insert([body])
+  .select();
+
+  if(error){
+    return NextResponse.json(
+      {
+        success: false,
+        message: error.message
+      },
+      {status: 404}
+    )
+  }
+
+  return NextResponse.json(
+    {
+      success: true,
+      message: "Category created successfully",
+      data: data
+    },
+    {status: 200}
+  )
+  } catch (error) {
+    return NextResponse.json(
+      {
+        success: false,
+        message: error instanceof Error ? error.message : "Unknow error"
+      },
+      {status: 500}
+    )
+  }
 }
