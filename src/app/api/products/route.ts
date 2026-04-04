@@ -1,16 +1,22 @@
 import { createClient } from "@/lib/supabase/server";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async () => {
+export const GET = async (request: NextRequest) => {
+  const searchParams = request.nextUrl.searchParams;
+  const categoryId = searchParams.get("categoryId");
   const supabase = await createClient();
 
   try {
-    const { data: products, error } = await supabase
-      .from("products")
-      .select("*");
+    let query = supabase.from("products").select("*");
+
+    if (categoryId) {
+      query = query.eq("category_id", categoryId);
+    }
+
+    const { data: products, error } = await query;
+
     if (error) {
       return NextResponse.json(
-        
         {
           success: false,
           message: error.message,
@@ -21,15 +27,14 @@ export const GET = async () => {
 
     return NextResponse.json({
       success: true,
-      message: "All Products are fetched successfullly",
+      message: "All products fetched successfully",
       data: products,
     });
-  } catch (error) {
+  } catch (err) {
     return NextResponse.json(
       {
         success: false,
-        message:
-          error instanceof Error ? error.message : "Something went wrong",
+        message: err.message,
       },
       { status: 500 },
     );

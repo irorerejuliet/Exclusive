@@ -4,7 +4,6 @@ import ProductCard from "@/components/products/ProductCard";
 import SalesTime from "@/components/products/SalesTime";
 import CardSkeleton from "@/components/ui/CardSkeleton";
 import useProducts from "@/hooks/useProducts";
-import { Link } from "lucide-react";
 const FlashSales = () => {
   const { products, loading } = useProducts();
 
