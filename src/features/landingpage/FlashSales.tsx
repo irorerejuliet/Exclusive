@@ -16,10 +16,13 @@ const FlashSales = () => {
         </div>
         <SalesTime />
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 px-10 md:px-0">
-          {loading && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
-          {products?.slice(0, 4).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+          {loading
+            ? [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)
+            : products
+                ?.slice(0, 4)
+                .map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
         </div>
         <div className="text-center mx-auto">
           <button className="text-white bg-red-500 text-base font-medium px-10 py-4 rounded-md my-16 w-58.5 md:mx-0 mx-10 ">

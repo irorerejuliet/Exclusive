@@ -6,7 +6,7 @@ const CartDetails = () => {
   return (
     <section className="bg-white text-black">
       <div className="wrapper ">
-        <div className="flex gap-2 items-center my-20 text-sm">
+        <div className="flex gap-2 items-center py-20 text-sm">
           <Link href={"/"}>Home</Link> /
           <Link href={"/cart"} className="font-medium">
             Cart
