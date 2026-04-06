@@ -7,9 +7,9 @@ interface FetchType {
   params?: string;
 }
 
-const useFetch = ({ url, params }: FetchType) => {
-  const [data, setData] = useState<null>(null);
-  const [isLoading, setLoading] = useState(false);
+const useFetch = <T,>({ url, params }: FetchType) => {
+  const [data, setData] = useState<T | null>(null);
+  const [isLoading, setLoading] = useState(true);
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
