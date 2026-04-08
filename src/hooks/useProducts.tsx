@@ -1,7 +1,7 @@
 "use client";
 
-import useFetch from "./useFetch";
 import { Products } from "@/types/products";
+import { useFetch } from "./useFetch";
 
 type ProductResponseData = {
   data: Products[];
