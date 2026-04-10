@@ -1,7 +1,7 @@
 "use client";
 
-import useFetch from "./useFetch";
 import { Products } from "@/types/products";
+import useFetch from "./useFetch";
 
 type ProductResponseData = {
   data: Products[];
@@ -9,7 +9,8 @@ type ProductResponseData = {
 
 const useProducts = () => {
   const { data, isLoading, error } = useFetch<ProductResponseData>({
-    url: "products",
+    queryKey: ["products"],
+    url: "/api/products",
   });
 
   return {
