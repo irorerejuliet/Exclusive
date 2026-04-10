@@ -37,19 +37,15 @@ const ProductCard = ({ product }: ProductCardProps) => {
           </Link>
         </div>
       </div>
-      
-      <button className="w-full text-white bg-red-500 py-3 rounded-b-sm hover:bg-red-600 active:bg-red-700 transition-colors">
-        Add to cart
-      </button>
-      <style>{`
-  .test-hover-btn:hover {
-    background-color: darkblue !important;
-  }
-`}</style>
-      <button className="bg-blue-500 text-white px-6 py-3 test-hover-btn">
-        TEST HOVER (plain CSS)
-      </button>
 
+      
+        <button
+          type="button"
+          className="w-full text-white bg-primary cursor-pointer rounded-b-sm hover:bg-blue-700! p-3"
+        >
+          Add to cart
+        </button>
+     
       {/* Product info */}
       <div className="mt-4 space-y-1">
         <p className="font-semibold text-base">{title}</p>

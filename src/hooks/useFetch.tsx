@@ -1,6 +1,6 @@
 "use client";
 
-import { ProductResponseData } from "@/types/products";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
