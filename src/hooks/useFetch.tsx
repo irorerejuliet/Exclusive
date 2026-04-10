@@ -1,58 +1,7 @@
 "use client";
 
-
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-
-// // import { useEffect, useState } from "react";
-
-// // interface FetchType {
-// //   url: string;
-// //   params?: string;
-// // }
-
-// // const useFetch = <T,>({ url, params }: FetchType) => {
-// //   const [data, setData] = useState<T | null>(null);
-// //   const [isLoading, setLoading] = useState(true);
-// //   const [error, setError] = useState<string>("");
-
-// //   useEffect(() => {
-// //     const getData = async () => {
-// //       setLoading(true);
-// //       try {
-// //         const fullUrl = params
-// //           ? `${process.env.NEXT_PUBLIC_API_URL}/${url}/${params}`
-// //           : `${process.env.NEXT_PUBLIC_API_URL}/${url}`;
-
-// //         const res = await fetch(fullUrl);
-
-// //         if (!res.ok) {
-// //           throw new Error("Failed to fetch data");
-// //         }
-
-// //         const result = await res.json();
-// //         setData(result);
-// //       } catch (err: unknown) {
-// //         if(err instanceof Error){
-// //       setError(err.message);
-// //         }else {
-// //           setError("Something went wrong")
-// //         }
-
-// //       } finally {
-// //         setLoading(false);
-// //       }
-// //     };
-
-// //     getData();
-// //   }, [url, params]);
-
-// //   return { data, isLoading, error };
-// // };
-
-// // export default useFetch;
-
-
 
 type UseFetchProps = {
   queryKey: string[];
