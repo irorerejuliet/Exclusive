@@ -33,19 +33,25 @@ const ProductCard = ({ product }: ProductCardProps) => {
 
         <div className="flex justify-center items-center my-6">
           <Link href={`/products/${id}`}>
-            <Image src={thumbnail} alt={title} width={172} height={152} />
+            <Image
+              src={thumbnail}
+              alt={title}
+              width={172}
+              height={152}
+              style={{ width: "auto", height: "auto" }}
+              priority={true}
+            />
           </Link>
         </div>
       </div>
 
-      
-        <button
-          type="button"
-          className="w-full text-white bg-primary cursor-pointer rounded-b-sm hover:bg-blue-700! p-3"
-        >
-          Add to cart
-        </button>
-     
+      <button
+        type="button"
+        className="w-full text-white bg-primary cursor-pointer rounded-b-sm hover:bg-blue-700! p-3"
+      >
+        Add to cart
+      </button>
+
       {/* Product info */}
       <div className="mt-4 space-y-1">
         <p className="font-semibold text-base">{title}</p>

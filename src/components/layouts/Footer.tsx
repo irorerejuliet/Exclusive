@@ -75,6 +75,7 @@ const Footer = () => {
                 alt="QR Code"
                 width={80}
                 height={80}
+                style={{ width: "auto", height: "auto" }} // Fix applied here
               />
               <div className="flex flex-col gap-2">
                 <Image
@@ -82,12 +83,14 @@ const Footer = () => {
                   alt="Google Play"
                   width={110}
                   height={40}
+                  style={{ width: "auto", height: "auto" }} // Fix applied here
                 />
                 <Image
                   src="/images/AppStore.svg"
                   alt="App Store"
                   width={110}
                   height={40}
+                  style={{ width: "auto", height: "auto" }} // Fix applied here
                 />
               </div>
             </div>
