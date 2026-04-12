@@ -13,7 +13,7 @@ const Page = () => {
       <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 space-y-10 md:space-y-0 md:px-0 px-10">
         {loading
           ? [1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => <CardSkeleton key={i} />)
-          : products?.map((product) => (
+          : products?.slice(1,4).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
       </div>

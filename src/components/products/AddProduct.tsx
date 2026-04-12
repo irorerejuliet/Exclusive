@@ -1,7 +1,8 @@
 
 "use client"
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
+import { useRouter } from "next/navigation";
 import { useState, ChangeEvent, FormEvent } from "react";
 
 interface FormData {
@@ -13,13 +14,15 @@ interface FormData {
   thumbnail: string;
 }
 
-interface Errors {
+interface CreatePostPayload {
   title?: string;
-  price?: string;
-  stock?: string;
+  price?: number;
+  stock?: number;
 }
 
 const AddProduct = () => {
+    const queryClient = useQueryClient();
+    const router = useRouter()
   const [values, setValues] = useState<FormData>({
     title: "",
     description: "",
@@ -29,42 +32,41 @@ const AddProduct = () => {
     thumbnail: "",
   });
 
-  const [errors, setErrors] = useState<Errors>({});
-
+ 
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
-    const { name, value } = e.target;
-
-    setValues((prev) => ({
-      ...prev,
-      [name]:
-        name === "price" || name === "stock" || name === "category_id"
-          ? Number(value)
-          : value,
-    }));
+    const { name, value, type } = e.target;
+    setValues((prev) => ({...prev, [name]:  type === "number" ? Number(value) : value}))
   };
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (payload: FormData) => {
+    mutationFn: async (payload: CreatePostPayload) => {
       const res = await axios.post("/api/products", payload);
       return res.data;
     },
+    onSuccess: (data) => {
+        if(data.success) {
+            queryClient.invalidateQueries({ queryKey: ["post"] });
+            router.push("/")
+        }
+    }
   });
+
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    const newErrors: Errors = {};
-
-    if (!values.title) newErrors.title = "Title is required";
-    if (values.price <= 0) newErrors.price = "Price must be greater than 0";
-    if (values.stock < 0) newErrors.stock = "Stock cannot be negative";
-
-    setErrors(newErrors);
-
-    if (Object.keys(newErrors).length > 0) return;
-
+   if (
+     !values.title ||
+     !values.description ||
+     values.price <= 0 ||
+     values.stock <= 0 ||
+     !values.thumbnail
+   ) {
+     alert("Please fill in all the required fields correctly");
+     return;
+   }
+        
     mutate(values);
   };
 
@@ -80,14 +82,13 @@ const AddProduct = () => {
             <input
               type="text"
               name="title"
+              required
               value={values.title}
               onChange={handleChange}
               className="w-full border p-2 rounded-lg"
               placeholder="Enter product title"
             />
-            {errors.title && (
-              <p className="text-red-500 text-sm">{errors.title}</p>
-            )}
+           
           </div>
 
           {/* Description */}
@@ -97,6 +98,7 @@ const AddProduct = () => {
             </label>
             <textarea
               name="description"
+              required
               value={values.description}
               onChange={handleChange}
               className="w-full border p-2 rounded-lg"
@@ -110,14 +112,12 @@ const AddProduct = () => {
             <input
               type="number"
               name="price"
+              required
               value={values.price}
               onChange={handleChange}
               className="w-full border p-2 rounded-lg"
               placeholder="Enter price"
             />
-            {errors.price && (
-              <p className="text-red-500 text-sm">{errors.price}</p>
-            )}
           </div>
 
           {/* Stock */}
@@ -126,14 +126,12 @@ const AddProduct = () => {
             <input
               type="number"
               name="stock"
+              required
               value={values.stock}
               onChange={handleChange}
               className="w-full border p-2 rounded-lg"
               placeholder="Enter stock quantity"
             />
-            {errors.stock && (
-              <p className="text-red-500 text-sm">{errors.stock}</p>
-            )}
           </div>
 
           {/* Category ID */}
