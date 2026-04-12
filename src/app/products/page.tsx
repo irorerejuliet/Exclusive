@@ -3,6 +3,7 @@
 import ProductCard from "@/components/products/ProductCard";
 import CardSkeleton from "@/components/ui/CardSkeleton";
 import useProducts from "@/hooks/useProducts";
+import Link from "next/link";
 
 const Page = () => {
   const { products, loading } = useProducts();
@@ -15,6 +16,14 @@ const Page = () => {
           : products?.map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
+      </div>
+      <div className="text-center mx-auto my-20">
+        <Link
+          href="/create-product"
+          className="text-white bg-red-500 text-base font-medium px-10 py-4 rounded-md my-16 w-58.5 md:mx-0 mx-10 "
+        >
+          Add Product
+        </Link>
       </div>
     </div>
   );
