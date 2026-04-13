@@ -1,5 +1,5 @@
-
 "use client"
+
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -14,15 +14,19 @@ interface FormData {
   thumbnail: string;
 }
 
-interface CreatePostPayload {
-  title?: string;
-  price?: number;
-  stock?: number;
+interface CreateProductPayload {
+  title: string;
+  price: number;
+  stock: number;
+  category_id: number;
+  thumbnail: string;
+  description: string;
 }
 
 const AddProduct = () => {
     const queryClient = useQueryClient();
     const router = useRouter()
+
   const [values, setValues] = useState<FormData>({
     title: "",
     description: "",
@@ -41,33 +45,53 @@ const AddProduct = () => {
   };
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (payload: CreatePostPayload) => {
+    mutationFn: async (payload: CreateProductPayload) => {
+      console.log(payload, "product payload");
+      
       const res = await axios.post("/api/products", payload);
+      console.log(res, "Product succesfully added")
       return res.data;
     },
+    // Invalidate and refetch
     onSuccess: (data) => {
-        if(data.success) {
-            queryClient.invalidateQueries({ queryKey: ["post"] });
-            router.push("/")
-        }
-    }
+      if (data?.success) {
+        queryClient.invalidateQueries({ queryKey: ["products",] });
+        router.push("/");
+      }
+    },
   });
 
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-   if (
-     !values.title ||
-     !values.description ||
-     values.price <= 0 ||
-     values.stock <= 0 ||
-     !values.thumbnail
-   ) {
-     alert("Please fill in all the required fields correctly");
-     return;
-   }
+  //  if (
+  //    !values.title ||
+  //    !values.description ||
+  //    values.price <= 0 ||
+  //    values.stock <= 0 ||
+  //    !values.thumbnail
+  //  )
+
+  const isInvalid =
+    !values.title ||
+    !values.description ||
+    values.price <= 0 ||
+    values.stock <= 0 ||
+    !values.thumbnail;
+
+  if (isInvalid) {
+    alert("Please fill all fields correctly");
+    return; // 🚨 CRITICAL FIX
+  }
         
-    mutate(values);
+   mutate({
+     title: values.title,
+     price: values.price,
+     stock: values.stock,
+     description: values.description,
+     category_id: values.category_id,
+     thumbnail: values.thumbnail
+   });
   };
 
   return (
@@ -80,6 +104,7 @@ const AddProduct = () => {
           <div>
             <label className="block mb-1 text-sm font-medium">Title</label>
             <input
+              id="title"
               type="text"
               name="title"
               required
@@ -88,7 +113,6 @@ const AddProduct = () => {
               className="w-full border p-2 rounded-lg"
               placeholder="Enter product title"
             />
-           
           </div>
 
           {/* Description */}
@@ -97,6 +121,7 @@ const AddProduct = () => {
               Description
             </label>
             <textarea
+              id="description"
               name="description"
               required
               value={values.description}
@@ -110,6 +135,7 @@ const AddProduct = () => {
           <div>
             <label className="block mb-1 text-sm font-medium">Price</label>
             <input
+            id="price"
               type="number"
               name="price"
               required
@@ -124,6 +150,7 @@ const AddProduct = () => {
           <div>
             <label className="block mb-1 text-sm font-medium">Stock</label>
             <input
+            id="stock"
               type="number"
               name="stock"
               required
@@ -140,6 +167,7 @@ const AddProduct = () => {
               Category ID
             </label>
             <input
+            id="category_id"
               type="number"
               name="category_id"
               value={values.category_id}
@@ -155,6 +183,7 @@ const AddProduct = () => {
               Thumbnail URL
             </label>
             <input
+            id="thumbnail url"
               type="text"
               name="thumbnail"
               value={values.thumbnail}

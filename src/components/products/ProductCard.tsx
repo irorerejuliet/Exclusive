@@ -1,6 +1,5 @@
 import { formatCurrency } from "@/helper/formatCurrency";
 import { Products } from "@/types/products";
-
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import Image from "next/image";
 import Link from "next/link";
@@ -22,7 +21,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
     category,
   } = product;
   return (
-    <section className="w-[352px] flex flex-col">
+    <section className="w-88 flex flex-col">
       {/* Card */}
       <div className="relative bg-[#F5F5F5] shadow rounded-t-xl p-4 flex flex-col">
         <button className="absolute top-3 left-3 bg-primary text-white py-1 px-2 rounded-md">
