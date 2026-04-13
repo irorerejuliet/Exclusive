@@ -41,7 +41,7 @@ export const GET = async (request: NextRequest) => {
   }
 };
 
-export const POST = async (request: NextResponse) => {
+export const POST = async (request: NextRequest) => {
   const supabase = await createClient();
   const body = await request.json();
 

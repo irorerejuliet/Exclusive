@@ -10,7 +10,7 @@ interface FormData {
   description: string;
   price: number;
   stock: number;
-  category_id: number;
+  
   thumbnail: string;
 }
 
@@ -18,7 +18,7 @@ interface CreateProductPayload {
   title: string;
   price: number;
   stock: number;
-  category_id: number;
+ 
   thumbnail: string;
   description: string;
 }
@@ -32,7 +32,7 @@ const AddProduct = () => {
     description: "",
     price: 0,
     stock: 0,
-    category_id: 0,
+    
     thumbnail: "",
   });
 
@@ -41,7 +41,7 @@ const AddProduct = () => {
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value, type } = e.target;
-    setValues((prev) => ({...prev, [name]:  type === "number" ? Number(value) : value}))
+    setValues((prev) => ({...prev, [name]:  type === "number" ?  Number(value) : value}))
   };
 
   const { mutate, isPending } = useMutation({
@@ -64,13 +64,7 @@ const AddProduct = () => {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  //  if (
-  //    !values.title ||
-  //    !values.description ||
-  //    values.price <= 0 ||
-  //    values.stock <= 0 ||
-  //    !values.thumbnail
-  //  )
+  
 
   const isInvalid =
     !values.title ||
@@ -81,7 +75,7 @@ const AddProduct = () => {
 
   if (isInvalid) {
     alert("Please fill all fields correctly");
-    return; // 🚨 CRITICAL FIX
+    return; 
   }
         
    mutate({
@@ -89,7 +83,6 @@ const AddProduct = () => {
      price: values.price,
      stock: values.stock,
      description: values.description,
-     category_id: values.category_id,
      thumbnail: values.thumbnail
    });
   };
@@ -158,22 +151,6 @@ const AddProduct = () => {
               onChange={handleChange}
               className="w-full border p-2 rounded-lg"
               placeholder="Enter stock quantity"
-            />
-          </div>
-
-          {/* Category ID */}
-          <div>
-            <label className="block mb-1 text-sm font-medium">
-              Category ID
-            </label>
-            <input
-            id="category_id"
-              type="number"
-              name="category_id"
-              value={values.category_id}
-              onChange={handleChange}
-              className="w-full border p-2 rounded-lg"
-              placeholder="Enter category id"
             />
           </div>
 

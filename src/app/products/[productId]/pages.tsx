@@ -29,7 +29,7 @@ const Page = () => {
   }
 
   if (error) {
-    return <h1>{error}</h1>;
+    return <h1>{error.message}</h1>;
   }
   if (!product && !isLoading)
     return <h2>NO Product found in id {productId}</h2>;
