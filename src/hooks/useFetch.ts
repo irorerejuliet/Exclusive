@@ -6,6 +6,7 @@ import axios from "axios";
 type UseFetchProps = {
   queryKey: string[];
   url: string;
+  
 };
 
 function useFetch<T>({ queryKey, url }: UseFetchProps) {

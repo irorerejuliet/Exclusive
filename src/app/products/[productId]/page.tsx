@@ -1,7 +1,8 @@
 "use client";
 
-import useFetch from "@/hooks/useFetch";
-import { Products } from "@/types/products";
+
+
+import useProduct from "@/hooks/useProduct";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -13,16 +14,13 @@ const Page = () => {
   const [currentImage, setCurrentImage] = useState("");
   const [qty, setQty] = useState(2);
 
-  const { data, isLoading, error } = useFetch({
-    url: "products",
-    params: productId as string,
-  });
-  console.log(data, "single product");
+  const { product, isLoading, error } = useProduct(productId);
+  console.log(product, "single product");
 
-  const product = data as Products;
+  
   if (isLoading) {
     return (
-      <p className="text-center py-20 text-red-800 text-lg">
+      <p className="text-center py-20 text-red-800 text-3xl font-bold">
         Loading product...
       </p>
     );
@@ -44,7 +42,7 @@ const Page = () => {
           <Link href={"/"} className="text-[#BFBFBF] text-base font-medium">
             Account
           </Link>
-          <span className="text-[#BFBFBF] text-base font-medium">/</span>
+          <span className="text-[#BFBFBF] text-base font-medium">/ Home</span>
           <Link
             href={`/categories/${product?.category}`}
             className="text-[#BFBFBF] text-base font-medium capitalize"
@@ -52,7 +50,7 @@ const Page = () => {
             {product?.category}
           </Link>
           <span className="text-[#000000] text-base font-medium">/</span>
-          <p className="text-base font-medium capitalize">{product.title}</p>
+          <p className="text-base font-medium capitalize">{product?.title}</p>
         </div>
         <div className="flex flex-col md:flex-row md:justify-between gap-8">
           <div className=" w-42.75 md:mx-0 mx-auto space-y-3">
@@ -69,7 +67,7 @@ const Page = () => {
           </div>
           <div className="md:w-125 w-75 md:mx-0 mx-auto md:h-150 h-112.5  bg-[#F5F5F5] pt-38.5 pb-32.75 px-6.75 rounded-sm md:mt-0 my-8">
             <Image
-              src={currentImage || product?.thumbnail}
+              src={product?.images[0] || currentImage}
               alt="gamepad"
               width={446}
               height={315}
@@ -81,13 +79,13 @@ const Page = () => {
             <h2 className="text-2xl font-semibold">{product?.title}</h2>
             {/* <p>{product?.date}</p> */}
             <div className="flex items-center gap-2 text-sm">
-              <div className="text-yellow-400">{product.rating}</div>
+              <div className="text-yellow-400">{product?.rating}</div>
               <span className="text-gray-400">(150 Reviews)</span>
               <span className="text-green-500">
-                {product.stock} | In Stock::
+                {product?.stock} | In Stock::
               </span>
             </div>
-            <p>Brand: {product.brand}</p>
+            <p>Brand: {product?.brand}</p>
             <p className="text-2xl font-medium">${product?.price}</p>
 
             <p className="md:text-sm text-xs font-medium">
@@ -135,7 +133,7 @@ const Page = () => {
                   <p className="text-gray-500 w-75 p-1">
                     Enter your postal code for Delivery Availability
                   </p>
-                  <p>{product.warranty_information}</p>
+                  <p>{product?.warranty_information}</p>
                 </div>
               </div>
 
@@ -152,7 +150,7 @@ const Page = () => {
                 </span>
                 <div>
                   <p className="font-medium">Return Delivery</p>
-                  <p className="text-gray-500">{product.return_policy}</p>
+                  <p className="text-gray-500">{product?.return_policy}</p>
                 </div>
               </div>
             </div>
@@ -164,7 +162,6 @@ const Page = () => {
             Customer Reviews
           </h3>
 
-         
           {/* {product?.reviews?.map((review, index) => (
             <div
               key={`${review.comment}-${index}`}
