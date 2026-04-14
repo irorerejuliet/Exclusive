@@ -28,7 +28,7 @@
 
 "use client"
 
-import { ProductResponseData } from "@/types/products"
+import { ProductResponseData } from "@/types/products";
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
@@ -38,7 +38,7 @@ const useProducts = ()  => {
   const fetchProducts = useQuery({
     queryKey: ['produts'],
     queryFn: async () => {
-      const res = await axios< ProductResponseData>("api/products");
+      const res = await axios<ProductResponseData>("api/products");
       return res.data
     }
   })

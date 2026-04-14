@@ -1,17 +1,25 @@
-import { Products } from "@/types/products";
-import useFetch from "./useFetch";
+import { ProductSignleResponseData } from "@/types/products";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import { useParams } from "next/navigation";
 
-const useProduct = (productId?: string) => {
-  const { data, isLoading, error } = useFetch<Products>({
-    queryKey: ["product", productId ?? ""],
-    url: `/api/products/${productId}`,
-    
+const useProduct = () => {
+  const { productId } = useParams<{ productId: string }>();
+  const { data, status, error } = useQuery({
+    queryKey: ["products", productId ?? ""],
+    queryFn: async () => {
+      const res = await axios<ProductSignleResponseData>(
+        `/api/products/${productId}`,
+      );
+      console.log("checking api ", res.data);
+      return res.data;
+    },
+    enabled: productId ? true : false,
   });
-
   return {
-    product: data,
-    isLoading,
+    product: data?.data,
     error,
+    status,
   };
 };
- export  default useProduct
+export default useProduct;

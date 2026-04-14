@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
+
 export const GET = async (request: NextRequest) => {
   const searchParams = request.nextUrl.searchParams;
   const categoryId = searchParams.get("categoryId");
@@ -30,11 +31,11 @@ export const GET = async (request: NextRequest) => {
       message: "All products fetched successfully",
       data: products,
     });
-  } catch (err) {
+  } catch (error ) {
     return NextResponse.json(
       {
         success: false,
-        message: err.message,
+        message: error.message,
       },
       { status: 500 },
     );

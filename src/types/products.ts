@@ -1,8 +1,12 @@
-
 export interface ProductResponseData {
   success: boolean;
   message: string;
   data: Products[];
+}
+export interface ProductSignleResponseData {
+  success: boolean;
+  message: string;
+  data: Products;
 }
 
 export interface Products {
