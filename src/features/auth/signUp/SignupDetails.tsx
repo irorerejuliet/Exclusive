@@ -12,6 +12,10 @@ import { useState } from "react";
 const SignupDetails = () => {
   const supabase = createClient();
 
+  const [loading, setLoading] = useState(false)
+  const [status, setStatus] = useState("")
+  
+
   const {
     register,
     handleSubmit,
@@ -19,57 +23,35 @@ const SignupDetails = () => {
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
-      name: "",
       email: "",
       password: "",
-      confirmPassword: "",
     },
   });
 
-  // const onSubmit = (data: SignupFormData) => {
-  //   console.log("Form Data:", data);
-  // };
+  
+  const onSubmit = async (data: SignupFormData) => {
+    const { email, password } = data;
 
-  // const onSubmit = async (data: SignupFormData) => {
-  //   const { email, password } = data;
+    setLoading(true)
+    setStatus("")
 
-  //   const { data: result, error } = await supabase.auth.signUp({
-  //     email,
-  //     password,
-  //   });
+    const { data: result, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-  //   if (error) {
-  //     console.log("Signup error:", error.message);
-  //     return;
-  //   }
+    setLoading(false)
 
-  //   console.log("User created:", result.user);
-  // };
+    if (error) {
+      setStatus(error.message)
+      return;
+    }
 
-const [loading, setLoading] = useState(false);
+    setStatus("Check your email to confirm your account")
+    console.log("User created:", result.user);
+  };
 
-const onSubmit = async (data: SignupFormData) =>{
-  if(loading) return;
-  setLoading(true)
-
-  const {email, password} = data;
-
-  const {error} = await supabase.auth.signUp({
-    email,
-    password,
-  })
-
-  setLoading(false)
-
-  if(error) {
-    console.log("Signup error:", error.message);
-    return
-  }
-}
-
-
-
-
+  
   return (
     <section className="flex gap-60  items-center  bg-white text-black">
       <div className="my-28 ">
@@ -89,35 +71,28 @@ const onSubmit = async (data: SignupFormData) =>{
           onSubmit={handleSubmit(onSubmit)}
         >
           <CustomInput
-            type="text"
-            placeholder="Name"
-            register={register("name")}
-            error={errors.name}
-          />
-          <CustomInput
-            type="text"
-            placeholder="Email or Phone Number"
+            type="email"
+            placeholder="you@gmail.com"
             register={register("email")}
             error={errors.email}
           />
           <CustomInput
-            type="text"
+            type="password"
             placeholder="Password"
             register={register("password")}
             error={errors.password}
           />
-          <CustomInput
-            type="password"
-            placeholder="Confirm Password"
-            register={register("confirmPassword")}
-            error={errors.confirmPassword}
-          />
 
-          <button className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500">
+          <button type="submit" disabled={loading} className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500">
             {loading ? "Creating acount...." : "Create Account"}
           </button>
 
-          <button className=" w-[371px] gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7">
+          {status && (
+            <p className="text-sm text-red-400" role="status">{status}</p>
+          )}
+
+         
+          <button className=" w-92.75 gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7">
             <Image
               src="/images/Icon-Google.svg"
               alt="googleIcon"
