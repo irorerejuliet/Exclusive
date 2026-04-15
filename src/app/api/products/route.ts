@@ -32,13 +32,15 @@ export const GET = async (request: NextRequest) => {
       data: products,
     });
   } catch (error ) {
-    return NextResponse.json(
-      {
-        success: false,
-        message: error.message,
-      },
-      { status: 500 },
-    );
+    if(error instanceof Error){
+      return NextResponse.json(
+        {
+          success: false,
+          message: error.message,
+        },
+        { status: 500 },
+      );
+    }
   }
 };
 

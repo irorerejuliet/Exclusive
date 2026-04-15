@@ -5,10 +5,15 @@ import Image from "next/image";
 import { loginSchema } from "@/schema/auth";
 import CustomInput from "../../../components/CustomInput";
 import { useForm } from "react-hook-form";
+import { createClient } from "@/lib/supabase/client";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
+
 const LoginDetails = () => {
+  const supabase = createClient()
+
+
   const {
     register,
     handleSubmit,
@@ -21,10 +26,21 @@ const LoginDetails = () => {
     },
   });
 
-  const onSubmit = (data: LoginFormData) => {
-    console.log("Form Data:", data);
-  };
+  const onSubmit = async (data: LoginFormData) => {
+    const { email, password } = data;
 
+    const { data: result, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (error) {
+      console.log("Login error:", error.message);
+      return;
+    }
+
+    console.log("Logged in:", result.user);
+  };
   return (
     <div className="flex gap-60 items-center  py-28 bg-white text-black">
       <div>

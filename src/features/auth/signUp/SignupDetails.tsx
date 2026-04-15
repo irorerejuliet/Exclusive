@@ -1,16 +1,17 @@
-"use client"
+"use client";
 
+import { createClient } from "@/lib/supabase/client";
 import CustomInput from "../../../components/CustomInput";
 import { SignupFormData, signupSchema } from "../../../schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-
-
-
+import { useState } from "react";
 
 const SignupDetails = () => {
+  const supabase = createClient();
+
   const {
     register,
     handleSubmit,
@@ -25,9 +26,49 @@ const SignupDetails = () => {
     },
   });
 
-  const onSubmit = (data: SignupFormData) => {
-    console.log("Form Data:", data);
-  };
+  // const onSubmit = (data: SignupFormData) => {
+  //   console.log("Form Data:", data);
+  // };
+
+  // const onSubmit = async (data: SignupFormData) => {
+  //   const { email, password } = data;
+
+  //   const { data: result, error } = await supabase.auth.signUp({
+  //     email,
+  //     password,
+  //   });
+
+  //   if (error) {
+  //     console.log("Signup error:", error.message);
+  //     return;
+  //   }
+
+  //   console.log("User created:", result.user);
+  // };
+
+const [loading, setLoading] = useState(false);
+
+const onSubmit = async (data: SignupFormData) =>{
+  if(loading) return;
+  setLoading(true)
+
+  const {email, password} = data;
+
+  const {error} = await supabase.auth.signUp({
+    email,
+    password,
+  })
+
+  setLoading(false)
+
+  if(error) {
+    console.log("Signup error:", error.message);
+    return
+  }
+}
+
+
+
 
   return (
     <section className="flex gap-60  items-center  bg-white text-black">
@@ -73,7 +114,7 @@ const SignupDetails = () => {
           />
 
           <button className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500">
-            create Account
+            {loading ? "Creating acount...." : "Create Account"}
           </button>
 
           <button className=" w-[371px] gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7">
@@ -90,9 +131,9 @@ const SignupDetails = () => {
             Already have an acount?
             <Link
               href="/login"
-              className="underline text-sm font-normal inline-block hover:bg-blue-900 hover:text-white "
+              className="underline text-lg font-bold  text-primary inline-block hover:bg-blue-900 hover:text-white ml-2 "
             >
-              Log in
+              Login
             </Link>
           </p>
         </form>
