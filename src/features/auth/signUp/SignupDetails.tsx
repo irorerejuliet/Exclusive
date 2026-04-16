@@ -8,12 +8,15 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 const SignupDetails = () => {
   const supabase = createClient();
+  const router = useRouter()
 
   const [loading, setLoading] = useState(false)
   const [status, setStatus] = useState("")
+  const [error, setError] = useState(false)
   
 
   const {
@@ -30,26 +33,36 @@ const SignupDetails = () => {
 
   
   const onSubmit = async (data: SignupFormData) => {
+    setLoading(true);
+    setStatus("");
+    setError(false);
+
     const { email, password } = data;
-
-    setLoading(true)
-    setStatus("")
-
-    const { data: result, error } = await supabase.auth.signUp({
+    const { error } = await supabase.auth.signUp({
       email,
       password,
     });
 
-    setLoading(false)
+    setLoading(false);
 
     if (error) {
-      setStatus(error.message)
+      setError(true);
+      setStatus(error.message);
       return;
     }
 
-    setStatus("Check your email to confirm your account")
-    console.log("User created:", result.user);
-  };
+    
+    setError(false);
+    setStatus("Account created, Check your email to confirm your account");
+
+    
+    setTimeout(() => {
+      router.push("/login");
+    }, 2500);
+  };;
+
+
+ 
 
   
   return (
@@ -65,7 +78,6 @@ const SignupDetails = () => {
       </div>
       <div className=" space-y-10 ">
         <h4 className="text-3xl font-medium">Create an account</h4>
-        <p className="text-base font-normal">Enter your details below</p>
         <form
           className="flex flex-col space-y-8 "
           onSubmit={handleSubmit(onSubmit)}
@@ -75,24 +87,33 @@ const SignupDetails = () => {
             placeholder="you@gmail.com"
             register={register("email")}
             error={errors.email}
+           
           />
           <CustomInput
             type="password"
             placeholder="Password"
             register={register("password")}
             error={errors.password}
+            
           />
 
-          <button type="submit" disabled={loading} className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500">
+          <button
+            type="submit"
+            disabled={loading}
+            className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500"
+          >
             {loading ? "Creating acount...." : "Create Account"}
           </button>
 
           {status && (
-            <p className="text-sm text-red-400" role="status">{status}</p>
+            <p
+              className={`text-sm ${error ? "text-red-500" : "text-green-600"}`}
+              role="alert"
+            >
+              {status}
+            </p>
           )}
-
-         
-          <button className=" w-92.75 gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7">
+          <button type="button" className=" w-92.75 gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7">
             <Image
               src="/images/Icon-Google.svg"
               alt="googleIcon"

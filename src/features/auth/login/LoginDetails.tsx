@@ -6,13 +6,19 @@ import { loginSchema } from "@/schema/auth";
 import CustomInput from "../../../components/CustomInput";
 import { useForm } from "react-hook-form";
 import { createClient } from "@/lib/supabase/client";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 
 const LoginDetails = () => {
   const supabase = createClient()
+  const router = useRouter()
 
+
+  const [loading, setLoading] = useState(false);
+  const [status, setStatus] = useState("");
 
   const {
     register,
@@ -29,24 +35,33 @@ const LoginDetails = () => {
   const onSubmit = async (data: LoginFormData) => {
     const { email, password } = data;
 
-    const { data: result, error } = await supabase.auth.signInWithPassword({
+    const {  error } = await supabase.auth.signInWithPassword({
       email,
       password,
     });
 
+    setLoading(false);
     if (error) {
-      console.log("Login error:", error.message);
+      setStatus(error.message);
       return;
     }
 
-    console.log("Logged in:", result.user);
+    setStatus("Login Successfully");
+
+    // Connect to your app
+    router.push("/"); 
   };
   return (
     <div className="flex gap-60 items-center  py-28 bg-white text-black">
       <div>
-        <Image src="/images/beatsnoop.svg" alt="beatsnoop" width={805} height={781}/>
+        <Image
+          src="/images/beatsnoop.svg"
+          alt="beatsnoop"
+          width={805}
+          height={781}
+        />
       </div>
-      <div className="w-[371px] space-y-10 ">
+      <div className="w-92.75 space-y-10 ">
         <h4 className="text-3xl font-medium">Log in to Exclusive</h4>
         <p className="text-base font-normal">Enter your details below</p>
         <form
@@ -55,21 +70,25 @@ const LoginDetails = () => {
         >
           {/* Email */}
           <CustomInput
-            type="text"
+            type="email"
             placeholder="Email or Phone Number"
             register={register("email")}
             error={errors.email}
           />
           {/* Password */}
           <CustomInput
-            type="text"
+            type="password"
             placeholder="Password"
             register={register("password")}
             error={errors.password}
           />
           <div className="flex justify-between items-center">
-            <button className="text-white bg-primary rounded-md py-2 px-4">
-              Log in
+            <button
+              type="submit"
+              disabled={loading}
+              className="text-white bg-primary rounded-md py-2 px-4"
+            >
+              {loading ? "Loggin in" : "Log in"}
             </button>
 
             <p className="text-base font-normal text-primary">
