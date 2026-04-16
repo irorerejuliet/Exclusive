@@ -28,14 +28,14 @@ export const activityData = [
 export const foundersData = [
   {
     id: 1,
-    image: "/images/Tom-cruise.svg",
+    image: "/images/juliet.jpg",
     title: "Tom Cruise",
     subTitle: "Founder & Chairman",
   },
   {
     id: 2,
-    image: "/images/EmmaWatson.svg",
-    title: "Emma Watson",
+    image: "/images/osato-removebg.png",
+    title: "Ehimwenma Annable",
     subTitle: "Managing Director",
   },
   {
