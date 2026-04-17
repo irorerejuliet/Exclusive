@@ -9,6 +9,7 @@ import Link from "next/link";
 
 const FlashSales = () => {
   const { products, status, error} = useProducts();
+  
 
   
 if (status === "error") {
@@ -32,9 +33,11 @@ if (status === "pending" && products.length === 0) {
 }
 
 if (status === "success" && products.length === 0) {
-  <div>
-    <p>No product</p>
-  </div>;
+  return (
+    <div>
+      <p>No product</p>
+    </div>
+  );
 }
 
   return (
@@ -51,7 +54,11 @@ if (status === "success" && products.length === 0) {
             : products
                 ?.slice(0, 4)
                 .map((product) => (
-                  <ProductCard key={product.id} product={product} />
+                  <ProductCard
+                    key={product.id}
+                    product={product}
+                    
+                  />
                 ))}
         </div>
         <div className="text-center mx-auto my-20">
@@ -63,8 +70,6 @@ if (status === "success" && products.length === 0) {
           </Link>
         </div>
         <div className="w-full border-t border-gray-200"></div>
-
-
       </div>
     </section>
   );

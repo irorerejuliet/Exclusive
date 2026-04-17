@@ -3,6 +3,7 @@ import { Products } from "@/types/products";
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
 
 interface ProductCardProps {
   product: Products;
@@ -20,6 +21,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
     description,
     category,
   } = product;
+
+
+const [isFavourited, setIsFavorited] = useState(false)
+
+
+
   return (
     <section className="w-88 flex flex-col">
       {/* Card */}

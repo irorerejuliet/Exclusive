@@ -1,21 +1,16 @@
 "use client";
 
-import { createClient } from "@/lib/supabase/client";
 import CustomInput from "../../../components/CustomInput";
 import { SignupFormData, signupSchema } from "../../../schema/auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useState } from "react";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-toastify";
 
 const SignupDetails = () => {
-  const supabase = createClient();
-
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
-  const [isError, setIsError] = useState(false);
-
   const {
     register,
     handleSubmit,
@@ -28,35 +23,21 @@ const SignupDetails = () => {
     },
   });
 
+  const { mutate, status, error } = useMutation({
+    mutationFn: async (payload: SignupFormData) => {
+      const res = await axios.post("/api/auth/signup", payload);
+      return res.data;
+    },
+    onSuccess: (data) => {
+      toast.success(data?.message);
+    },
+    onError: (error: AxiosError) => {
+      return toast.error(error?.response?.data?.message);
+    },
+  });
+
   const onSubmit = async (data: SignupFormData) => {
-    setLoading(true);
-    setStatus("");
-    setIsError(false);
-
-    const { email, password } = data;
-
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    setLoading(false);
-
-    if (error) {
-      setIsError(true);
-      setStatus(error.message);
-      return;
-    }
-
-    setIsError(false);
-    setStatus(
-      "Account created! Please check your email to verify your account.",
-    );
-
-    // optional redirect (better UX is staying here, but this is fine too)
-    setTimeout(() => {
-      window.location.href = "/login";
-    }, 2000);
+    mutate(data);
   };
 
   return (
@@ -94,18 +75,18 @@ const SignupDetails = () => {
 
           <button
             type="submit"
-            disabled={loading}
+            disabled={status === "pending"}
             className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? "Creating account..." : "Create Account"}
+            {status === "pending" ? "Creating account..." : "Create Account"}
           </button>
 
           {status && (
             <p
-              className={`text-sm ${isError ? "text-red-500" : "text-green-600"}`}
+              className={`text-sm ${status === "error" ? "text-red-500" : "text-green-600"}`}
               role="alert"
             >
-              {status}
+              {error?.response?.data?.message}
             </p>
           )}
 

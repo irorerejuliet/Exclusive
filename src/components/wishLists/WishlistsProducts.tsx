@@ -13,7 +13,7 @@ const WishlistsProducts = () => {
         </div>
         <div className="flex flex-col md:flex-row justify-between items-start gap-10 my-10">
           {wishlistData.map(({ id, image, description, price, deleteBtn }) => (
-            <div key={id} className="w-[270px]">
+            <div key={id} className="w-67.5">
               <div className="relative bg-[#F5F5F5] pt-6  rounded-md">
                 <Image
                   src={deleteBtn}
