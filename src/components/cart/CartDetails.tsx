@@ -8,7 +8,7 @@ const CartDetails = () => {
 
   return (
     <div>
-      {cart.map((item: any) => (
+      {cart.map((item) => (
         <div key={item.id} className="grid grid-cols-4 p-4">
           <div className="flex items-center gap-2">
             <Image src={item.image} alt="" width={50} height={50} />

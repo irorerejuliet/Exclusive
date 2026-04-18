@@ -24,12 +24,12 @@ export const CartProvider = ({ children }) => {
     });
   };
 
-  // ❌ REMOVE ITEM
+  
   const removeFromCart = (id) => {
     setCart((prev) => prev.filter((item) => item.id !== id));
   };
 
-  // ➕ INCREASE / ➖ DECREASE
+  
   const updateQuantity = (id, type) => {
     setCart((prev) =>
       prev.map((item) =>
