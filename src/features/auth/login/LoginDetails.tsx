@@ -5,21 +5,23 @@ import Image from "next/image";
 import { loginSchema } from "@/schema/auth";
 import CustomInput from "../../../components/CustomInput";
 import { useForm } from "react-hook-form";
-import { createClient } from "@/lib/supabase/client";
-import { useRouter } from "next/navigation";
+import { useMutation } from "@tanstack/react-query";
+import axios, { AxiosError } from "axios";
+import { toast } from "react-toastify";
+import { ApiError } from "next/dist/server/api-utils";
+import Link from "next/link";
 import { useState } from "react";
+import { Eye, EyeOff } from "lucide-react";
+
+
 
 type LoginFormData = z.infer<typeof loginSchema>;
 
 
 const LoginDetails = () => {
-  const supabase = createClient()
-  const router = useRouter()
+  const [showPassword, setShowPassword] = useState(false);
 
-
-  const [loading, setLoading] = useState(false);
-  const [status, setStatus] = useState("");
-
+  
   const {
     register,
     handleSubmit,
@@ -32,27 +34,29 @@ const LoginDetails = () => {
     },
   });
 
-  const onSubmit = async (data: LoginFormData) => {
-    const { email, password } = data;
 
-    const {  error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
+  const {mutate, status, error} = useMutation({
+    mutationFn: async (payload: LoginFormData) =>{
+      const res = await axios.post("/api/auth/login", payload)
+      return res.data
+    },
 
-    setLoading(false);
-    if (error) {
-      setStatus(error.message);
-      return;
+     onSuccess: (data) =>{
+      toast.success(data?.message)
+    },
+
+    onError: (error: AxiosError<ApiError>) =>{
+      return toast.error(error?.response?.data?.message)
     }
+   
+  })
 
-    setStatus("Login Successfully");
+  const onSubmit = async (data: LoginFormData) =>{
+    mutate(data)
+  }
 
-    // Connect to your app
-    router.push("/"); 
-  };
   return (
-    <div className="flex gap-60 items-center  py-28 bg-white text-black">
+    <div className="flex  items-center  py-28 bg-white text-black">
       <div>
         <Image
           src="/images/beatsnoop.svg"
@@ -61,39 +65,83 @@ const LoginDetails = () => {
           height={781}
         />
       </div>
-      <div className="w-92.75 space-y-10 ">
-        <h4 className="text-3xl font-medium">Log in to Exclusive</h4>
-        <p className="text-base font-normal">Enter your details below</p>
+      <div className="w-full max-w-md mx-auto space-y-8 rounded-2xl bg-white p-8 shadow-lg">
+        {/* Header */}
+        <div className="space-y-2 text-center">
+          <h4 className="text-3xl font-semibold text-gray-900">
+            Log in to Exclusive
+          </h4>
+          <p className="text-sm text-gray-500">
+            Enter your details below to continue
+          </p>
+        </div>
+
+        <button
+          type="button"
+          className="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
+        >
+          <Image
+            src="/images/Icon-Google.svg"
+            alt="Google"
+            width={20}
+            height={20}
+          />
+          Continue with Google
+        </button>
+
+        {/* Divider */}
+        <div className="flex items-center gap-3">
+          <div className="h-px flex-1 bg-gray-200" />
+          <span className="text-xs text-gray-400">OR</span>
+          <div className="h-px flex-1 bg-gray-200" />
+        </div>
+
         <form
-          className="flex flex-col space-y-8"
+          className="flex flex-col space-y-5"
           onSubmit={handleSubmit(onSubmit)}
         >
-          {/* Email */}
           <CustomInput
             type="email"
-            placeholder="Email or Phone Number"
+            placeholder="Email"
             register={register("email")}
             error={errors.email}
           />
-          {/* Password */}
-          <CustomInput
-            type="password"
-            placeholder="Password"
-            register={register("password")}
-            error={errors.password}
-          />
-          <div className="flex justify-between items-center">
+
+          <div className="relative">
+            <CustomInput
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              register={register("password")}
+              error={errors.password}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
+
+          <div className="flex flex-col gap-4 pt-2">
             <button
               type="submit"
-              disabled={loading}
-              className="text-white bg-primary rounded-md py-2 px-4"
+              disabled={status === "pending"}
+              className="w-full rounded-md bg-primary py-2.5 text-white font-medium hover:opacity-90 transition disabled:opacity-60"
             >
-              {loading ? "Loggin in" : "Log in"}
+              {status === "pending" ? "Logging in..." : "Log in"}
             </button>
 
-            <p className="text-base font-normal text-primary">
-              Forget password
-            </p>
+            <div className="flex items-center justify-between text-sm">
+              <Link href="/sign-up" className="text-primary hover:underline">
+                Create account
+              </Link>
+
+              <p className="text-primary cursor-pointer hover:underline">
+                Forgot password?
+              </p>
+            </div>
           </div>
         </form>
       </div>

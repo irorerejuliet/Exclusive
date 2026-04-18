@@ -9,8 +9,16 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
+import { Eye, EyeOff } from "lucide-react";
+import { useState } from "react";
+
+type ApiError = {
+  message: string;
+};
 
 const SignupDetails = () => {
+
+  const [showPassword, setShowPassword] = useState(false);
   const {
     register,
     handleSubmit,
@@ -31,7 +39,7 @@ const SignupDetails = () => {
     onSuccess: (data) => {
       toast.success(data?.message);
     },
-    onError: (error: AxiosError) => {
+    onError: (error: AxiosError<ApiError>) => {
       return toast.error(error?.response?.data?.message);
     },
   });
@@ -41,22 +49,24 @@ const SignupDetails = () => {
   };
 
   return (
-    <section className="flex gap-60 items-center bg-white text-black">
-      <div className="my-28">
+    <section className="flex flex-col lg:flex-row items-center bg-white text-black">
+      <div className="my-10 lg:my-28 w-full lg:w-auto lg:flex justify-center  hidden">
         <Image
           src="/images/beatsnoop.svg"
           alt="beatsnoop"
           width={805}
           height={400}
-          className="w-full"
+          className="w-full max-w-md lg:max-w-none"
         />
       </div>
 
-      <div className="space-y-10">
-        <h4 className="text-3xl font-medium">Create an account</h4>
+      <div className="space-y-10 max-w-md mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg w-full">
+        <h4 className="text-2xl sm:text-3xl font-semibold text-gray-900 text-center">
+          Create an account
+        </h4>
 
         <form
-          className="flex flex-col space-y-8"
+          className="flex flex-col space-y-6"
           onSubmit={handleSubmit(onSubmit)}
         >
           <CustomInput
@@ -66,24 +76,36 @@ const SignupDetails = () => {
             error={errors.email}
           />
 
-          <CustomInput
-            type="password"
-            placeholder="Password"
-            register={register("password")}
-            error={errors.password}
-          />
+          <div className="relative">
+            <CustomInput
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              register={register("password")}
+              error={errors.password}
+            />
+
+            <button
+              type="button"
+              onClick={() => setShowPassword((prev) => !prev)}
+              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+            >
+              {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
+            </button>
+          </div>
 
           <button
             type="submit"
             disabled={status === "pending"}
-            className="text-white bg-primary rounded-md py-3 px-7 hover:bg-blue-500 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="text-white bg-primary rounded-md py-3 px-7 font-medium hover:opacity-90 transition disabled:opacity-50 disabled:cursor-not-allowed w-full"
           >
             {status === "pending" ? "Creating account..." : "Create Account"}
           </button>
 
           {status && (
             <p
-              className={`text-sm ${status === "error" ? "text-red-500" : "text-green-600"}`}
+              className={`text-sm text-center ${
+                status === "error" ? "text-red-500" : "text-green-600"
+              }`}
               role="alert"
             >
               {error?.response?.data?.message}
@@ -92,7 +114,7 @@ const SignupDetails = () => {
 
           <button
             type="button"
-            className="w-92.75 gap-3 border border-gray-200 flex items-center rounded-md py-3 px-7"
+            className="w-full gap-3 border border-gray-200 flex items-center justify-center rounded-md py-3 px-7 hover:bg-gray-50 transition"
           >
             <Image
               src="/images/Icon-Google.svg"
@@ -100,14 +122,16 @@ const SignupDetails = () => {
               width={24}
               height={24}
             />
-            <span className="text-base font-normal">Sign up with Google</span>
+            <span className="text-base font-medium text-gray-700">
+              Sign up with Google
+            </span>
           </button>
 
-          <p>
+          <p className="text-center text-sm text-gray-600">
             Already have an account?
             <Link
               href="/login"
-              className="underline text-lg font-bold text-primary ml-2 hover:bg-blue-900 hover:text-white"
+              className="underline text-primary font-semibold ml-2 hover:opacity-80 transition"
             >
               Login
             </Link>

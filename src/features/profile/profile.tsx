@@ -1,123 +1,161 @@
+"use client";
+
+import React from "react";
 import Link from "next/link";
+import {
+  User,
+  Package,
+  Heart,
+  MapPin,
+  Settings,
+  LogOut,
+  Bell,
+  HelpCircle,
+} from "lucide-react";
 
 const ProfilePage = () => {
-  return (
-    <div>
-      <div className="flex justify-between items-center">
-        <div className="flex gap-2 items-center my-20 text-sm">
-        <Link href={"/"}>Home</Link> /
-          <Link href={"/account"} className="font-medium">
-            My Account
-          </Link>
-        </div>
-        <p className="text-sm font-medium">
-          Welcome! <span className="text-primary">Md Rimel</span>
-        </p>
-      </div>
-      <div className="grid items-center md:grid-cols-2 grid-cols-1 pb-24">
-        <div>
-          <div>
-            <h4 className="text-base font-medium">Manage My Account</h4>
-            <div className="ml-6 space-y-1 py-3">
-              <Link href={"/about"} className="text-base font-normal text-primary">
-                My Profile
-              </Link>
-              <p className="text-base font-normal text-[#B0B0B0]">
-                Address Book
-              </p>
-              <p className="text-base font-normal text-[#B0B0B0]">
-                My Payment Options
-              </p>
-            </div>
-          </div>
-          <div className="pb-4">
-            <h4 className="text-base font-medium py-2">My Orders</h4>
-            <div className="ml-6 space-y-1">
-              <p className="text-base font-normal text-[#B0B0B0]">My Returns</p>
-              <p className="text-base font-normal text-[#B0B0B0]">
-                My Cancellations
-              </p>
-            </div>
-          </div>
-          <h4 className="text-base font-medium">My WishList</h4>
-        </div>
+  // Navigation items based on your project requirements
+  const sidebarLinks = [
+    { name: "Manage My Account", icon: <User size={20} />, active: true },
+    { name: "My Orders", icon: <Package size={20} />, active: false },
+    { name: "My Wishlist", icon: <Heart size={20} />, active: false },
+    { name: "Addresses", icon: <MapPin size={20} />, active: false },
+    { name: "Notifications", icon: <Bell size={20} />, active: false },
+    { name: "Help Center", icon: <HelpCircle size={20} />, active: false },
+  ];
 
-        {/* Edit Profile */}
-        <div className="shadow-md w-[870px] p-10">
-          <h4 className="text-xl text-primary font-medium">
-            Edit Your Profile
-          </h4>
-          <div className="flex gap-10">
-            <div className="space-y-6">
-              <div className="">
-                <label htmlFor="name">First Name</label>
-                <input
-                  type="text"
-                  placeholder="Md"
-                  className="shadow bg-[#F5F5F5] py-2 px-4 w-[330px] rounded-4 mt-2"
-                />
-              </div>
-              <div>
-                <label htmlFor="name">Last Name</label>
-                <input
-                  type="text"
-                  placeholder="Rimel"
-                  className="shadow bg-[#F5F5F5] py-2 px-4 w-[330px] rounded-4 mt-2"
-                />
-              </div>
-            </div>
-            <div className="space-y-6">
-              <div>
-                <label htmlFor="name">Email</label>
-                <input
-                  type="text"
-                  placeholder="irorerejuliet@gmail.com"
-                  className="shadow bg-[#F5F5F5] py-2 px-4 w-[330px] rounded-4 mt-2"
-                />
-              </div>
-              <div>
-                <label htmlFor="name">Address</label>
-                <input
-                  type="text"
-                  placeholder="Kingston, 5236, United state"
-                  className="shadow bg-[#F5F5F5] py-2 px-4 w-[330px] rounded-4 mt-2"
-                />
-              </div>
-            </div>
+  return (
+    <div className="min-h-screen bg-gray-50 text-black px-4 sm:px-8 lg:px-16 py-10">
+      {/* Breadcrumbs */}
+      <nav className="text-sm text-gray-500 mb-10">
+        <Link href="/" className="hover:text-black transition">
+          Home
+        </Link>
+        <span className="mx-2">/</span>
+        <span className="text-black font-medium">My Account</span>
+      </nav>
+
+      <div className="flex flex-col lg:flex-row gap-12">
+        {/* Sidebar Navigation */}
+        <aside className="w-full lg:w-1/4 space-y-8">
+          <div>
+            <h3 className="font-semibold text-lg mb-4">Manage My Account</h3>
+            <ul className="space-y-3">
+              {sidebarLinks.map((link) => (
+                <li key={link.name}>
+                  <button
+                    className={`flex items-center gap-3 w-full px-3 py-2 rounded-md transition ${
+                      link.active
+                        ? "bg-primary/10 text-primary font-medium"
+                        : "text-gray-600 hover:bg-gray-100"
+                    }`}
+                  >
+                    {link.icon}
+                    <span>{link.name}</span>
+                  </button>
+                </li>
+              ))}
+            </ul>
           </div>
-          <div className="pt-10">
-            <h4 className="pb-4">Password Changes</h4>
-            <input
-              type="text"
-              placeholder="Current Password"
-              className="shadow bg-[#F5F5F5] py-2 px-4 w-full rounded-4 focus:outline-none"
-            />
-            <input
-              type="text"
-              placeholder="New Password"
-              className="shadow bg-[#F5F5F5] py-2 px-4 w-full rounded-4 my-4 focus:outline-none"
-            />
-            <input
-              type="text"
-              placeholder="Comfirm Password"
-              className="shadow bg-[#F5F5F5] py-2 px-4 w-full rounded-4  focus:outline-none"
-            />
-            <div className="flex justify-end items-center gap-5 pt-8">
-              <p className="text-base font-medium">Cancel</p>
-              <button className="text-base font-medium bg-primary rounded-4 text-white w-[214px] py-2 px-4 ">
+
+          <div className="pt-6 border-t border-gray-200">
+            <button className="flex items-center gap-3 text-red-500 hover:text-red-600 transition px-3">
+              <LogOut size={20} />
+              <span className="font-medium">Logout</span>
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Content Area */}
+        <main className="w-full lg:w-3/4 bg-white shadow-sm rounded-xl p-6 sm:p-10 border border-gray-100">
+          <h2 className="text-2xl font-semibold text-primary mb-8">
+            Edit Your Profile
+          </h2>
+
+          <form className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {/* Form Fields */}
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                First Name
+              </label>
+              <input
+                type="text"
+                placeholder="Md"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Last Name
+              </label>
+              <input
+                type="text"
+                placeholder="Rimel"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">Email</label>
+              <input
+                type="email"
+                placeholder="rimel1111@gmail.com"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <label className="text-sm font-medium text-gray-700">
+                Address
+              </label>
+              <input
+                type="text"
+                placeholder="Kingston, 5236, United Kingdom"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+            </div>
+
+            {/* Password Section */}
+            <div className="md:col-span-2 mt-4 space-y-4">
+              <h3 className="font-medium text-gray-900">Password Changes</h3>
+              <input
+                type="password"
+                placeholder="Current Password"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+              <input
+                type="password"
+                placeholder="New Password"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+              <input
+                type="password"
+                placeholder="Confirm New Password"
+                className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
+              />
+            </div>
+
+            {/* Actions */}
+            <div className="md:col-span-2 flex justify-end items-center gap-6 mt-6">
+              <button
+                type="button"
+                className="text-gray-600 hover:text-black transition font-medium"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                className="bg-primary text-white px-10 py-4 rounded-md font-medium hover:opacity-90 transition shadow-lg shadow-primary/20"
+              >
                 Save Changes
               </button>
             </div>
-          </div>
-        </div>
+          </form>
+        </main>
       </div>
     </div>
   );
 };
-<input
-  type="text"
-  placeholder="What are looking for "
-  className="focus:outline-none"
-/>;
 
 export default ProfilePage;

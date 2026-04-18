@@ -1,6 +1,5 @@
 import { createClient } from "@/lib/supabase/server";
 import { SignupFormData } from "@/schema/auth";
-import { User } from "@supabase/supabase-js";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
@@ -10,7 +9,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       success: false,
       message: "Invalide Credencials",
-    });
+    },
+    {status: 400}
+);
   }
 
   const supabase = await createClient();
