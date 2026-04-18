@@ -1,3 +1,4 @@
+import { useCart } from "@/context/CartContext";
 import { formatCurrency } from "@/helper/formatCurrency";
 import { Products } from "@/types/products";
 import { ratingAndStars } from "@/utils/ratingAndStars";
@@ -10,6 +11,8 @@ interface ProductCardProps {
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
+
+   const { addToCart } = useCart();
   const {
     id,
     stock,
@@ -23,7 +26,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
   } = product;
 
 
-const [isFavourited, setIsFavorited] = useState(false)
+
 
 
 
@@ -51,13 +54,18 @@ const [isFavourited, setIsFavorited] = useState(false)
         </div>
       </div>
 
-      <button
+      {/* <button
         type="button"
         className="w-full text-white bg-primary cursor-pointer rounded-b-sm hover:bg-blue-700! p-3"
       >
         Add to cart
+      </button> */}
+      <button
+        onClick={() => addToCart(product)}
+        className="bg-black text-white px-4 py-2 mt-2"
+      >
+        Add to Cart
       </button>
-
       {/* Product info */}
       <div className="mt-4 space-y-1">
         <p className="font-semibold text-base">{title}</p>

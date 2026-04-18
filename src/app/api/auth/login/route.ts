@@ -45,6 +45,7 @@ export async function POST(req: NextRequest) {
       {
         success: false,
         message: "Something went wrong",
+        error: error instanceof Error ? error.message : "Try again later"
       },
       { status: 500 },
     );

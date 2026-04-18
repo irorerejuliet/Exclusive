@@ -12,6 +12,7 @@ import { ApiError } from "next/dist/server/api-utils";
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 
 
@@ -20,6 +21,8 @@ type LoginFormData = z.infer<typeof loginSchema>;
 
 const LoginDetails = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
+  const searchParams = useSearchParams();
 
   
   const {
@@ -35,21 +38,27 @@ const LoginDetails = () => {
   });
 
 
-  const {mutate, status, error} = useMutation({
-    mutationFn: async (payload: LoginFormData) =>{
-      const res = await axios.post("/api/auth/login", payload)
-      return res.data
+  const { mutate, status, error } = useMutation({
+    mutationFn: async (payload: LoginFormData) => {
+      const res = await axios.post("/api/auth/login", payload);
+      return res.data;
     },
 
-     onSuccess: (data) =>{
-      toast.success(data?.message)
+    onSuccess: (data) => {
+      toast.success(data?.message);
+
+      const redirectUrl = searchParams.get("redirect");
+
+      const safeRedirect =
+        redirectUrl && redirectUrl.startsWith("/") ? redirectUrl : "/";
+
+      router.replace(safeRedirect);
     },
 
-    onError: (error: AxiosError<ApiError>) =>{
-      return toast.error(error?.response?.data?.message)
-    }
-   
-  })
+    onError: (error: AxiosError<ApiError>) => {
+      return toast.error(error?.response?.data?.message);
+    },
+  });
 
   const onSubmit = async (data: LoginFormData) =>{
     mutate(data)
@@ -132,6 +141,17 @@ const LoginDetails = () => {
             >
               {status === "pending" ? "Logging in..." : "Log in"}
             </button>
+
+            {status && (
+              <p
+                className={`text-sm text-center ${
+                  status === "error" ? "text-red-500" : "text-green-600"
+                }`}
+                role="alert"
+              >
+                {error?.response?.data?.message}
+              </p>
+            )}
 
             <div className="flex items-center justify-between text-sm">
               <Link href="/sign-up" className="text-primary hover:underline">
