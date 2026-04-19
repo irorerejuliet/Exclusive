@@ -5,7 +5,7 @@ import Image from 'next/image';
 
 const Activity = () => {
   return (
-    <div className="my-40 md:flex flex-row justify-center gap-40 items-center">
+    <div className="my-40 flex lg:flex-row flex-col lg:space-y-0 justify-center gap-10 lg:gap-40 items-center">
       {activityData.map(({ id, image, title, likes }) => (
         <div
           key={id}

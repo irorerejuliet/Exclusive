@@ -1,6 +1,7 @@
 "use client";
-import DeliveryService from "../landingpage/DeliveryService";
+
 import Activity from "./Activity";
+import DeliveryService from "./DeliveryService";
 import Founders from "./Founders";
 import Stories from "./Stories";
 

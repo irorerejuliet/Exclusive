@@ -32,20 +32,23 @@ const Navbar = () => {
   const cartCount = useCartCount();
 
   return (
-    <header className="bg-white text-black border-b">
-      <nav className="flex justify-between items-center py-4 wrapper relative">
-        {/* LEFT: Hamburger + Logo */}
+    <header className="bg-white text-black border-b md:fixed md:top-0 md:left-0 md:w-full md:z-50">
+      <nav className="flex justify-between items-center py-4 wrapper relative px-4">
+        {/* LEFT */}
         <div className="flex items-center gap-3">
           <button className="md:hidden" onClick={() => setOpen(!open)}>
             {open ? <X size={24} /> : <Menu size={24} />}
           </button>
 
-          <Link href="/" className="text-2xl md:text-4xl font-bold">
+          <Link
+            href="/"
+            className="text-2xl md:text-4xl font-bold hidden lg:block"
+          >
             Exclusive
           </Link>
         </div>
 
-        {/* DESKTOP NAV LINKS */}
+        {/* DESKTOP NAV */}
         <div className="hidden md:flex gap-6 items-center text-base">
           {navLinks.map((link) => (
             <Link key={link.name} href={link.href}>
@@ -54,9 +57,8 @@ const Navbar = () => {
           ))}
         </div>
 
-        {/* DESKTOP RIGHT SIDE */}
+        {/* DESKTOP RIGHT */}
         <div className="hidden md:flex gap-4 items-center">
-          {/* Search */}
           <div className="flex gap-2 border border-gray-200 shadow rounded-md py-2 px-4">
             <input
               type="text"
@@ -71,7 +73,6 @@ const Navbar = () => {
             />
           </div>
 
-          {/* Icons */}
           <div className="flex gap-4 items-center">
             <Image
               src="/images/HeartIcon.svg"
@@ -80,7 +81,6 @@ const Navbar = () => {
               height={28}
             />
 
-            {/* Cart */}
             <Link href="/cart" className="relative">
               <ShoppingCart size={24} />
               {cartCount > 0 && (
@@ -90,7 +90,6 @@ const Navbar = () => {
               )}
             </Link>
 
-            {/* Profile */}
             <div className="relative">
               <button
                 onClick={() => setProfileOpen(!profileOpen)}
@@ -122,7 +121,7 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* MOBILE RIGHT ICONS */}
+        {/* MOBILE RIGHT */}
         <div className="flex md:hidden items-center gap-4">
           <Link href="/cart" className="relative">
             <ShoppingCart size={22} />
@@ -137,39 +136,90 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* MOBILE DRAWER */}
+      {/* 🔥 MOBILE DRAWER (REDESIGNED) */}
       <div
-        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300
+        className={`fixed top-0 left-0 h-full w-[85%] max-w-sm bg-white shadow-2xl z-50 
+        transform transition-transform duration-300 ease-in-out
         ${open ? "translate-x-0" : "-translate-x-full"}`}
       >
-        <div className="p-4 flex flex-col gap-4">
-          {/* Close button */}
-          <button onClick={() => setOpen(false)}>
-            <X />
-          </button>
-
-          {/* Nav Links */}
-          <div className="flex flex-col gap-3 text-lg">
-            {navLinks.map((link) => (
-              <Link key={link.name} href={link.href}>
-                {link.name}
-              </Link>
-            ))}
+        <div className="h-full flex flex-col">
+          {/* HEADER */}
+          <div className="flex items-center justify-between p-4 border-b">
+            <Link href="/" className="text-2xl md:text-4xl font-bold ">
+              Exclusive
+            </Link>
+            <button onClick={() => setOpen(false)}>
+              <X />
+            </button>
           </div>
 
-          {/* Categories */}
-          <div className="mt-4">
-            <p className="text-sm text-gray-500 font-semibold mb-2">
-              Categories
-            </p>
+          {/* SEARCH */}
+          <div className="p-4 border-b">
+            <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
+              <input
+                type="text"
+                placeholder="Search products..."
+                className="bg-transparent w-full text-sm focus:outline-none"
+              />
+            </div>
+          </div>
 
-            <div className="flex flex-col gap-2 text-base">
+          {/* NAV LINKS */}
+          <div className="p-4 border-b">
+            <p className="text-xs text-gray-500 uppercase mb-3">Navigation</p>
+            <div className="flex flex-col gap-3">
+              {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-base font-medium hover:text-red-500 transition"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))}
+              {/* {navLinks.map((link) => (
+                <Link
+                  key={link.name}
+                  href={link.href}
+                  className="text-base font-medium hover:text-red-500 transition"
+                  onClick={() => setOpen(false)}
+                >
+                  {link.name}
+                </Link>
+              ))} */}
+            </div>
+          </div>
+
+          {/* CATEGORIES */}
+          <div className="p-4 flex-1 overflow-y-auto">
+            <p className="text-xs text-gray-500 uppercase mb-3">Categories</p>
+
+            <div className="grid grid-cols-2 gap-2">
               {categories.map((cat) => (
-                <Link key={cat} href="#">
+                <Link
+                  key={cat}
+                  href="#"
+                  className="text-sm bg-gray-100 hover:bg-gray-200 
+                  px-3 py-2 rounded-md transition"
+                >
                   {cat}
                 </Link>
               ))}
             </div>
+          </div>
+
+          {/* FOOTER */}
+          <div className="p-4 border-t flex items-center justify-between">
+            <button className="flex items-center gap-2 text-sm">
+              <User size={18} />
+              Account
+            </button>
+
+            <Link href="/cart" className="flex items-center gap-2 text-sm">
+              <ShoppingCart size={18} />
+              Cart ({cartCount})
+            </Link>
           </div>
         </div>
       </div>

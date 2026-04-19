@@ -28,8 +28,8 @@ export const activityData = [
 export const foundersData = [
   {
     id: 1,
-    image: "/images/efe.jpg",
-    title: "Tom Cruise",
+    image: "/images/efe.png",
+    title: "Oghosa Osayantin",
     subTitle: "Founder & Chairman",
   },
   {
