@@ -1,5 +1,6 @@
 "use client";
-import { Menu, X, User } from "lucide-react";
+import { useCartCount } from "@/hooks/useCart";
+import { Menu, X, User, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
@@ -7,6 +8,7 @@ import { useState } from "react";
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
+  const cartCount = useCartCount();
 
   return (
     <header className="bg-white text-black">
@@ -46,12 +48,18 @@ const Navbar = () => {
               height={32}
             />
 
-            <Image
-              src="/images/Cart1Icon.svg"
-              alt="cartIcon"
-              width={32}
-              height={32}
-            />
+            {/* Cart */}
+            <Link
+              href="/cart"
+              className="relative text-gray-700 hover:text-primary"
+            >
+              <ShoppingCart size={24} />
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
 
             {/* PROFILE SECTION */}
             <div className="relative">

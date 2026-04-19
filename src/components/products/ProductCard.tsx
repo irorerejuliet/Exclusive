@@ -1,18 +1,20 @@
-import { useCart } from "@/context/CartContext";
+"use client"
 import { formatCurrency } from "@/helper/formatCurrency";
+import { useAddToCart } from "@/hooks/useCart";
 import { Products } from "@/types/products";
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
+import { log } from "node:console";
+
 
 interface ProductCardProps {
   product: Products;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-
-   const { addToCart } = useCart();
+const addToCart = useAddToCart();
+   
   const {
     id,
     stock,
@@ -61,7 +63,17 @@ const ProductCard = ({ product }: ProductCardProps) => {
         Add to cart
       </button> */}
       <button
-        onClick={() => addToCart(product)}
+        onClick={() =>
+          
+          addToCart({
+            id: id.toString(),
+            name: title,
+            price: Number(price),
+            image_url: thumbnail,
+            description: description,
+            quantity: 1,
+          })
+        }
         className="bg-black text-white px-4 py-2 mt-2"
       >
         Add to Cart
