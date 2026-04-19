@@ -1,9 +1,30 @@
 "use client";
+
 import { useCartCount } from "@/hooks/useCart";
 import { Menu, X, User, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+
+const navLinks = [
+  { name: "Home", href: "/" },
+  { name: "Contact", href: "/contact" },
+  { name: "About", href: "/about" },
+  { name: "SignUp", href: "/sign-up" },
+];
+
+const categories = [
+  "Beauty",
+  "Fragrances",
+  "Furniture",
+  "Groceries",
+  "Home Decoration",
+  "Kitchen Accessories",
+  "Laptops",
+  "Mens Shirts",
+  "Mens Shoes",
+  "Mens Watches",
+];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -11,67 +32,75 @@ const Navbar = () => {
   const cartCount = useCartCount();
 
   return (
-    <header className="bg-white text-black">
-      <nav className="flex justify-between items-center py-4 relative wrapper ">
-        <Link href={"/"} className="text-4xl font-bold">
-          Exclusive
-        </Link>
+    <header className="bg-white text-black border-b">
+      <nav className="flex justify-between items-center py-4 wrapper relative">
+        {/* LEFT: Hamburger + Logo */}
+        <div className="flex items-center gap-3">
+          <button className="md:hidden" onClick={() => setOpen(!open)}>
+            {open ? <X size={24} /> : <Menu size={24} />}
+          </button>
 
-        <div className="hidden md:flex gap-6 items-center text-base font-normal">
-          <Link href={"/"}>Home</Link>
-          <Link href={"/contact"}>Contact</Link>
-          <Link href={"/about"}>About</Link>
-          <Link href={"/sign-up"}>SignUp</Link>
+          <Link href="/" className="text-2xl md:text-4xl font-bold">
+            Exclusive
+          </Link>
         </div>
 
-        {/* Search + Icons */}
-        <div className="hidden md:flex gap-4 items-center ">
-          <div className="flex gap-1 border border-gray-200 shadow rounded-md py-2 px-4 text-black ">
+        {/* DESKTOP NAV LINKS */}
+        <div className="hidden md:flex gap-6 items-center text-base">
+          {navLinks.map((link) => (
+            <Link key={link.name} href={link.href}>
+              {link.name}
+            </Link>
+          ))}
+        </div>
+
+        {/* DESKTOP RIGHT SIDE */}
+        <div className="hidden md:flex gap-4 items-center">
+          {/* Search */}
+          <div className="flex gap-2 border border-gray-200 shadow rounded-md py-2 px-4">
             <input
               type="text"
-              placeholder="What are looking for "
+              placeholder="What are you looking for?"
               className="focus:outline-none"
             />
             <Image
               src="/images/SearchIcon.svg"
-              alt="searchIcon"
-              width={24}
-              height={24}
+              alt="search"
+              width={20}
+              height={20}
             />
           </div>
 
+          {/* Icons */}
           <div className="flex gap-4 items-center">
             <Image
               src="/images/HeartIcon.svg"
-              alt="heartIcon"
-              width={32}
-              height={32}
+              alt="wishlist"
+              width={28}
+              height={28}
             />
 
             {/* Cart */}
-            <Link
-              href="/cart"
-              className="relative text-gray-700 hover:text-primary"
-            >
+            <Link href="/cart" className="relative">
               <ShoppingCart size={24} />
               {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">
+                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
                   {cartCount}
                 </span>
               )}
             </Link>
 
-            {/* PROFILE SECTION */}
+            {/* Profile */}
             <div className="relative">
               <button
-                onClick={() => setProfileOpen((prev) => !prev)}
-                className="flex items-center justify-center w-8 h-8 rounded-full bg-gray-100"
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full"
               >
                 <User size={18} />
               </button>
 
               {profileOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md flex flex-col text-sm">
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md text-sm flex flex-col">
                   <Link href="/profile" className="px-4 py-2 hover:bg-gray-100">
                     My Profile
                   </Link>
@@ -93,30 +122,65 @@ const Navbar = () => {
           </div>
         </div>
 
-        {/* Mobile Menu Button */}
-        <button
-          className="block md:hidden"
-          onClick={() => setOpen((prev) => !prev)}
-        >
-          {open ? <X size={24} /> : <Menu size={24} />}
-        </button>
+        {/* MOBILE RIGHT ICONS */}
+        <div className="flex md:hidden items-center gap-4">
+          <Link href="/cart" className="relative">
+            <ShoppingCart size={22} />
+            {cartCount > 0 && (
+              <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                {cartCount}
+              </span>
+            )}
+          </Link>
 
-        {/* Mobile Menu */}
-        <div
-          className={`${
-            open ? "flex" : "hidden"
-          } flex-col md:hidden absolute top-full left-0 text-lg font-semibold text-red-900 px-4 pt-4 pb-6 gap-4 z-50`}
-        >
-          <Link href={"/"}>Home</Link>
-          <Link href={"/contact"}>Contact</Link>
-          <Link href={"/about"}>About</Link>
-          <Link href={"/signup"}>SignUp</Link>
-
-          {/* PROFILE (mobile) */}
-          <Link href={"/profile"}>Profile</Link>
+          <User size={20} />
         </div>
       </nav>
-      <div className="w-full border-t border-gray-200"></div>
+
+      {/* MOBILE DRAWER */}
+      <div
+        className={`fixed top-0 left-0 h-full w-64 bg-white shadow-lg z-50 transform transition-transform duration-300
+        ${open ? "translate-x-0" : "-translate-x-full"}`}
+      >
+        <div className="p-4 flex flex-col gap-4">
+          {/* Close button */}
+          <button onClick={() => setOpen(false)}>
+            <X />
+          </button>
+
+          {/* Nav Links */}
+          <div className="flex flex-col gap-3 text-lg">
+            {navLinks.map((link) => (
+              <Link key={link.name} href={link.href}>
+                {link.name}
+              </Link>
+            ))}
+          </div>
+
+          {/* Categories */}
+          <div className="mt-4">
+            <p className="text-sm text-gray-500 font-semibold mb-2">
+              Categories
+            </p>
+
+            <div className="flex flex-col gap-2 text-base">
+              {categories.map((cat) => (
+                <Link key={cat} href="#">
+                  {cat}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* OVERLAY */}
+      {open && (
+        <div
+          onClick={() => setOpen(false)}
+          className="fixed inset-0 bg-black/40 z-40"
+        />
+      )}
     </header>
   );
 };

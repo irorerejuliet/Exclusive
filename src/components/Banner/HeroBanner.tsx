@@ -1,6 +1,6 @@
 "use client";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const HeroBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -10,58 +10,87 @@ const HeroBanner = () => {
     "/images/phone17.png",
     "/images/phone1.jpeg",
     "/images/iphone13.png",
-    "/images/phone5.png",
   ];
 
+  // Auto-slide
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setActiveIndex((prev) => (prev + 1) % heroImages.length);
+    }, 4000);
+
+    return () => clearInterval(interval);
+  }, []);
+
   return (
-    <div className="flex-1 bg-black w-223 text-white rounded-sm px-20 py-20 relative overflow-hidden lg:block hidden wrapper">
-      <div className="space-y-3">
-        <div className="flex items-center gap-2">
-          <Image
-            src="/images/AplleLogo.svg"
-            alt="apple"
-            width={50}
-            height={50}
-          />
-          <p className="text-sm opacity-70">iPhone 14 Series</p>
+    <div className="relative overflow-hidden rounded-xl 
+    bg-gradient-to-br from-black via-gray-900 to-black text-white 
+    px-6 py-12 sm:px-10 lg:px-20 lg:py-20">
+
+      {/* 🔥 Background Glow Effects */}
+      <div className="absolute w-72 h-72 bg-red-500/20 blur-3xl rounded-full top-0 left-0" />
+      <div className="absolute w-72 h-72 bg-purple-500/20 blur-3xl rounded-full bottom-0 right-0" />
+
+      <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
+
+        {/* TEXT */}
+        <div className="max-w-lg space-y-5 text-center lg:text-left">
+
+          {/* Badge */}
+          <span className="inline-block bg-red-600 text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+            Limited Offer
+          </span>
+
+          {/* Title */}
+          <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight">
+            iPhone Deals <br />
+            <span className="text-red-500">Up to 10% Off</span>
+          </h1>
+
+          {/* Subtext */}
+          <p className="text-gray-300 text-sm sm:text-base">
+            Experience premium performance with exclusive discounts on the latest iPhones.
+          </p>
+
+          {/* CTA */}
+          <div className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+            <button className="bg-red-600 hover:bg-red-700 transition px-6 py-3 rounded-lg font-semibold shadow-lg">
+              Shop Now
+            </button>
+
+            <button className="border border-gray-500 hover:border-white px-6 py-3 rounded-lg">
+              Explore Deals
+            </button>
+          </div>
         </div>
 
-        <h1 className="text-5xl font-semibold leading-tight w-74.5">
-          Up to 10% off Voucher
-        </h1>
+        {/* IMAGE */}
+        <div className="relative flex justify-center items-center">
 
-        <button className="mt-10 flex items-center gap-2 border-b text-2xl">
-          Shop now
+          {/* Glow behind image */}
+          <div className="absolute w-64 h-64 bg-red-500/30 blur-2xl rounded-full" />
+
           <Image
-            src="/images/arrow-right.svg"
-            alt="arrow-right"
-            width={50}
-            height={50}
+            src={heroImages[activeIndex]}
+            alt="hero"
+            width={400}
+            height={400}
+            className="relative w-52 sm:w-72 lg:w-[420px] object-contain transition-all duration-700"
           />
-        </button>
+        </div>
       </div>
 
-      <div className="">
-        {/* Hero Image */}
-        <Image
-          src={heroImages[activeIndex]}
-          alt="hero"
-          width={450}
-          height={450}
-          className="absolute right-40 bottom-10  w-112.5"
-        />
-
-        {/* Loading Dots */}
-        <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2">
-          {heroImages.map((_, index) => (
-            <div
-              key={index}
-              onClick={() => setActiveIndex(index)}
-              className={`w-3 h-3 rounded-full cursor-pointer transition-all
-              ${activeIndex === index ? "bg-[#FF0000]" : "bg-gray-500"}`}
-            />
-          ))}
-        </div>
+      {/* DOTS */}
+      <div className="flex justify-center mt-8 gap-3">
+        {heroImages.map((_, index) => (
+          <div
+            key={index}
+            onClick={() => setActiveIndex(index)}
+            className={`h-2 rounded-full cursor-pointer transition-all
+            ${activeIndex === index 
+              ? "bg-red-500 w-6" 
+              : "bg-gray-500 w-2"}`}
+          />
+        ))}
       </div>
     </div>
   );

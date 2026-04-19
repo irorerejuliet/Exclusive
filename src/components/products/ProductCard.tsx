@@ -1,20 +1,21 @@
-"use client"
+"use client";
 import { formatCurrency } from "@/helper/formatCurrency";
 import { useAddToCart } from "@/hooks/useCart";
 import { Products } from "@/types/products";
 import { ratingAndStars } from "@/utils/ratingAndStars";
+import { FileHeart, Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { log } from "node:console";
-
+import { useState } from "react";
 
 interface ProductCardProps {
   product: Products;
 }
 
 const ProductCard = ({ product }: ProductCardProps) => {
-const addToCart = useAddToCart();
-   
+  const addToCart = useAddToCart();
+  const [liked, setLiked] = useState(false);
+
   const {
     id,
     stock,
@@ -27,70 +28,96 @@ const addToCart = useAddToCart();
     category,
   } = product;
 
-
-
-
-
-
   return (
-    <section className="w-88 flex flex-col">
-      {/* Card */}
-      <div className="relative bg-[#F5F5F5] shadow rounded-t-xl p-4 flex flex-col">
-        <button className="absolute top-3 left-3 bg-primary text-white py-1 px-2 rounded-md">
-          {discount_percentage}
+    <section className="group w-full max-w-[260px] flex flex-col">
+      {/* CARD */}
+      <div
+        className="relative bg-gray-100 rounded-xl overflow-hidden 
+      transition-all duration-300 group-hover:shadow-xl"
+      >
+        {/* Discount Badge */}
+        <span className="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-md z-10">
+          -{discount_percentage}%
+        </span>
+
+        {/* Wishlist Button */}
+        <button
+          onClick={() => setLiked(!liked)}
+          className="absolute top-3 right-3 z-10 bg-white/80 backdrop-blur 
+          p-2 rounded-full shadow hover:bg-white transition"
+        >
+          {liked ? (
+            <Heart className="text-red-500" />
+          ) : (
+            <FileHeart className="text-gray-700 hover:text-red-500" />
+          )}
         </button>
 
-        <p>{stock}</p>
+        {/* Stock Badge */}
+        <span className="absolute top-12 right-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded">
+          {stock > 0 ? "In Stock" : "Out"}
+        </span>
 
-        <div className="flex justify-center items-center my-6">
-          <Link href={`/products/${id}`}>
+        {/* IMAGE */}
+        <Link href={`/products/${id}`}>
+          <div className="flex justify-center items-center h-[180px] p-4">
             <Image
               src={thumbnail}
               alt={title}
-              width={172}
-              height={152}
-              style={{ width: "auto", height: "auto" }}
-              priority={true}
+              width={160}
+              height={160}
+              className="object-contain transition-transform duration-300 group-hover:scale-105"
+              priority
             />
-          </Link>
-        </div>
+          </div>
+        </Link>
+
+        {/* ADD TO CART (HOVER) */}
+        <button
+          onClick={() =>
+            addToCart({
+              id: id.toString(),
+              name: title,
+              price: Number(price),
+              image_url: thumbnail,
+              description: description,
+              quantity: 1,
+            })
+          }
+          className="absolute bottom-0 left-0 w-full bg-black text-white py-3 
+          translate-y-full group-hover:translate-y-0 transition-all duration-300"
+        >
+          Add to Cart
+        </button>
       </div>
 
-      {/* <button
-        type="button"
-        className="w-full text-white bg-primary cursor-pointer rounded-b-sm hover:bg-blue-700! p-3"
-      >
-        Add to cart
-      </button> */}
-      <button
-        onClick={() =>
-          
-          addToCart({
-            id: id.toString(),
-            name: title,
-            price: Number(price),
-            image_url: thumbnail,
-            description: description,
-            quantity: 1,
-          })
-        }
-        className="bg-black text-white px-4 py-2 mt-2"
-      >
-        Add to Cart
-      </button>
-      {/* Product info */}
-      <div className="mt-4 space-y-1">
-        <p className="font-semibold text-base">{title}</p>
-        <p className="text-xs font-normal">{description}</p>
-        <p className="uppercase text-base font-semibold">{category}</p>
-
-        <p className="text-black/50 line-through font-medium">
-          {formatCurrency(Number(price))}
+      {/* INFO */}
+      <div className="mt-3 space-y-1 px-1">
+        {/* CATEGORY */}
+        <p className="text-xs uppercase text-gray-500 tracking-wide">
+          {category}
         </p>
 
+        {/* TITLE */}
+        <p className="font-semibold text-sm line-clamp-1">{title}</p>
+
+        {/* DESCRIPTION */}
+        <p className="text-xs text-gray-500 line-clamp-2">{description}</p>
+
+        {/* PRICE */}
         <div className="flex items-center gap-2 mt-1">
-          <div className="flex">{ratingAndStars(rating)}</div>
-          <span className="text-gray-500">{rating}</span>
+          <span className="text-base font-bold text-black">
+            {formatCurrency(Number(price))}
+          </span>
+          <span className="text-xs text-gray-400 line-through">
+            {formatCurrency(Number(price) * 1.2)}
+          </span>
+        </div>
+
+        {/* RATING */}
+        <div className="flex items-center gap-2 mt-1">
+          <div className="flex text-yellow-500">{ratingAndStars(rating)}</div>
+          <span className="text-xs text-gray-500">({rating})</span>
         </div>
       </div>
     </section>
