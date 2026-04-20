@@ -9,13 +9,13 @@
 
 // const useProducts = () => {
 //   const { data, isLoading, error } = useFetch<ProductResponseData>({
- 
+
 //     queryKey: ["products"],
 //     url: "/api/products",
-    
+
 //   });
 //    console.log(" checking by bam",data);
-    
+
 //   return {
 //     loading: isLoading,
 //     products: data?.data || [],
@@ -25,30 +25,26 @@
 
 // export default useProducts;
 
-
-"use client"
+"use client";
 
 import { ProductResponseData } from "@/types/products";
-import { useQuery } from "@tanstack/react-query"
-import axios from "axios"
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-
-
-const useProducts = ()  => {
+const useProducts = () => {
   const fetchProducts = useQuery({
-    queryKey: ['produts'],
+    queryKey: ["products"],
     queryFn: async () => {
       const res = await axios<ProductResponseData>("api/products");
-      return res.data
-    }
-  })
-
+      return res.data;
+    },
+  });
 
   return {
     products: fetchProducts?.data?.data || [],
     error: fetchProducts?.error,
-    status: fetchProducts?.status
-  }
-}
+    status: fetchProducts?.status,
+  };
+};
 
-export default useProducts
+export default useProducts;

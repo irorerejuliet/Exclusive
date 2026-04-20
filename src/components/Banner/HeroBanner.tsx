@@ -6,10 +6,10 @@ const HeroBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
   const heroImages = [
-    "/images/phone5.png",
-    "/images/phone17.png",
-    "/images/phone1.jpeg",
+    "/images/iphone1.png",
+    "/images/iphone17.png",
     "/images/iphone13.png",
+    "/images/iphones.png",
   ];
 
   // Auto-slide

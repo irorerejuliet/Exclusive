@@ -1,36 +1,34 @@
 import { wishlistTypes } from "./types/wishlistTypes";
 
+
 export const wishlistData: wishlistTypes[] = [
   {
     id: 1,
-    image: "/images/GucciBag.svg",
-    description: "Gucci duffle bag",
-    price: 400,
-    deleteBtn: "/images/delete.svg",
+    title: "Wireless Headphones",
+    price: 120,
+    rating: 4.5,
+    stock: 10,
+    brand: "juliet",
+    description: "High quality sound with noise cancellation",
+    category: "electronics",
+    thumbnail: "/headphones.png",
+    discount_percentage: 20,
+    created_at: "2026-01-01",
   },
   {
     id: 2,
-    image: "/images/LiquidCpuCooler.svg",
-    description: "RGB liquid CPU Cooler",
-    price: 1960,
-    deleteBtn: "/images/delete.svg",
-  },
-  {
-    id: 3,
-    image: "/images/ShooterGamepad.svg",
-    description: "GP11 Shooter USB Gamepad",
-    price: 550,
-    deleteBtn: "/images/delete.svg",
-  },
-  {
-    id: 4,
-    image: "/images/SatinJacket.svg",
-    description: "Quilted Satin Jacket",
-    price: 750,
-    deleteBtn: "/images/delete.svg",
+    title: "Smart Watch",
+    price: 200,
+    rating: 4.2,
+    stock: 5,
+    brand: "juliet",
+    description: "Track your fitness and notifications",
+    category: "wearables",
+    thumbnail: "/watch.png",
+    discount_percentage: 15,
+    created_at: "2026-01-02",
   },
 ];
-
 export const justForYouData = [
   {
     id: 1,

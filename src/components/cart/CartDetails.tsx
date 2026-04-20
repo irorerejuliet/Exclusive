@@ -121,13 +121,11 @@ const CartDetails = () => {
           )}
 
           {/* ACTION BUTTONS */}
-          <div className="flex flex-col md:flex-row justify-between items-center gap-4 my-8">
-            <button className="border border-gray-400 px-6 py-2 rounded w-full md:w-auto">
+          <div className=" my-8">
+            <Link href={"/"} className="border border-gray-400 px-6 py-2 rounded w-full md:w-auto">
               Return To Shop
-            </button>
-            <button className="border border-gray-300 px-6 py-2 rounded w-full md:w-auto">
-              Update Cart
-            </button>
+            </Link>
+           
           </div>
 
           {/* COUPON + TOTAL */}

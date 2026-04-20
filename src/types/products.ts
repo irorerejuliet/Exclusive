@@ -18,11 +18,11 @@ export interface Products {
   category: string;
   discount_percentage: number;
   price: string;
-  tags: string[];
+  tags?: string[];
   brand?: string;
-  weight: number;
-  warranty_information: string;
-  shipping_information: string;
+  weight?: number;
+  warranty_information?: string;
+  shipping_information?: string;
   availability_status: string;
   return_policy?: string;
   minimum_order_quantity?: number;
@@ -30,4 +30,5 @@ export interface Products {
   thumbnail: string;
   sku: string;
   id: string;
+  isFavorite: boolean;
 }

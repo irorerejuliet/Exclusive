@@ -1,7 +1,13 @@
 export interface wishlistTypes {
   id: number;
-  image: string;
+  title: string;
   description: string;
   price: number;
-  deleteBtn: string;
+  rating: number;
+  thumbnail: string;
+  brand: string;
+  discount_percentage: number;
+  stock: number;
+  category: string;
+  created_at: string;
 }

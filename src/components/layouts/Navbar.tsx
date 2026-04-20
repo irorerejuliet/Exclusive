@@ -5,26 +5,9 @@ import { Menu, X, User, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { categories, navLinks } from "../constant/navLinks";
 
-const navLinks = [
-  { name: "Home", href: "/" },
-  { name: "Contact", href: "/contact" },
-  { name: "About", href: "/about" },
-  { name: "SignUp", href: "/sign-up" },
-];
 
-const categories = [
-  "Beauty",
-  "Fragrances",
-  "Furniture",
-  "Groceries",
-  "Home Decoration",
-  "Kitchen Accessories",
-  "Laptops",
-  "Mens Shirts",
-  "Mens Shoes",
-  "Mens Watches",
-];
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
@@ -32,9 +15,8 @@ const Navbar = () => {
   const cartCount = useCartCount();
 
   return (
-    <header className="bg-white text-black border-b md:fixed md:top-0 md:left-0 md:w-full md:z-50">
+    <header className="bg-white text-black border-b fixed top-0 left-0 w-full z-50">
       <nav className="flex justify-between items-center py-4 wrapper relative px-4">
-        {/* LEFT */}
         <div className="flex items-center gap-3">
           <button className="md:hidden" onClick={() => setOpen(!open)}>
             {open ? <X size={24} /> : <Menu size={24} />}
@@ -74,12 +56,15 @@ const Navbar = () => {
           </div>
 
           <div className="flex gap-4 items-center">
-            <Image
-              src="/images/HeartIcon.svg"
-              alt="wishlist"
-              width={28}
-              height={28}
-            />
+            <Link href={"/wishlists"}>
+             
+              <Image
+                src="/images/HeartIcon.svg"
+                alt="wishlist"
+                width={28}
+                height={28}
+              />
+            </Link>
 
             <Link href="/cart" className="relative">
               <ShoppingCart size={24} />
@@ -136,7 +121,6 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* 🔥 MOBILE DRAWER (REDESIGNED) */}
       <div
         className={`fixed top-0 left-0 h-full w-[85%] max-w-sm bg-white shadow-2xl z-50 
         transform transition-transform duration-300 ease-in-out
@@ -153,7 +137,6 @@ const Navbar = () => {
             </button>
           </div>
 
-          {/* SEARCH */}
           <div className="p-4 border-b">
             <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
               <input

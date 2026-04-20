@@ -1,5 +1,6 @@
 "use client";
 
+import Reviews from "@/components/products/Reviews";
 import useProduct from "@/hooks/useProduct";
 
 import { Heart } from "lucide-react";
@@ -19,183 +20,183 @@ const Page = () => {
 
   if (status === "error") {
     return (
-      <p className="text-center py-20 text-red-800 text-3xl font-bold">
+      <p className="text-center py-20 text-red-600 text-2xl font-semibold">
         Loading product...
       </p>
     );
   }
 
   if (error) {
-    return <h1>{error.message}</h1>;
+    return <h1 className="text-center py-10 text-red-600">{error.message}</h1>;
   }
-  if (!product && !status) return <h2>NO Product found in id {productId}</h2>;
+
+  if (!product && !status)
+    return (
+      <h2 className="text-center py-10">NO Product found in id {productId}</h2>
+    );
 
   return (
     <section className="bg-white">
-      <div className="wrapper ">
-        <p className="text-2xl font-medium text-green-600 flex  justify-end pt-10">
-          FREE SHOPPING ON ORDER $50+
+      <div className="wrapper px-4 md:px-0">
+        {/* TOP MESSAGE */}
+        <p className="text-green-600 text-sm md:text-base font-medium text-right pt-6 md:pt-10">
+          FREE SHIPPING ON ORDER $50+
         </p>
 
-        <div className="flex items-center gap-4 py-20">
-          <Link href={"/"} className="text-[#BFBFBF] text-base font-medium">
-            Account
-          </Link>
-          <span className="text-[#BFBFBF] text-base font-medium">/ Home</span>
+        {/* BREADCRUMB */}
+        <div className="flex flex-wrap items-center gap-2 py-6 md:py-10 text-sm md:text-base text-gray-500">
+          <Link href="/acount">Account</Link>
+          <span>/</span>
+          <Link href={"/"}>Home</Link>
+          <span>/</span>
           <Link
             href={`/categories/${product?.category}`}
-            className="text-[#BFBFBF] text-base font-medium capitalize"
+            className="capitalize hover:text-black"
           >
             {product?.category}
           </Link>
-          <span className="text-[#000000] text-base font-medium">/</span>
-          <p className="text-base font-medium capitalize">{product?.title}</p>
+          <span>/</span>
+          <p className="text-black font-medium capitalize">{product?.title}</p>
         </div>
 
-        <div className="flex flex-col md:flex-row md:justify-between gap-8">
-          <div className=" w-42.75 md:mx-0 mx-auto space-y-3">
+        {/* MAIN GRID */}
+        <div className="flex flex-col lg:flex-row gap-10">
+          {/* THUMBNAILS */}
+          <div className="flex lg:flex-col gap-3 lg:w-[120px] mx-auto lg:mx-0">
             {product?.images?.map((image, index) => (
               <div
                 key={`${image}-${index}`}
-                className="p-2 bg-[#F5F5F5] rounded-sm flex justify-center items-center"
-                role="button"
+                className="bg-gray-100 rounded-md p-2 cursor-pointer hover:shadow-md transition"
                 onClick={() => setCurrentImage(image)}
               >
-                <Image src={image} alt="gampad" width={121} height={121} />
+                <Image
+                  src={image}
+                  alt="product"
+                  width={90}
+                  height={90}
+                  className="object-contain"
+                />
               </div>
             ))}
           </div>
 
-          {/* <div className="md:w-125 w-75 md:mx-0 mx-auto md:h-150 h-112.5  bg-[#F5F5F5] pt-38.5 pb-32.75 px-6.75 rounded-sm md:mt-0 my-8">
-            <Image
-              src={product?.images[0] || currentImage}
-              alt="gamepad"
-              width={446}
-              height={315}
-              className="w-full h-full"
-            />
-          </div> */}
-
-          {/* Replace the block at line 69-77 with this: */}
-
-          <div className="md:w-125 w-75 md:mx-0 mx-auto md:h-150 h-112.5  bg-[#F5F5F5] pt-38.5 pb-32.75 px-6.75 rounded-sm md:mt-0 my-8">
+          {/* MAIN IMAGE */}
+          <div className="flex-1 bg-gray-100 rounded-xl flex items-center justify-center p-6 ">
             {product?.images?.[0] || currentImage ? (
               <Image
                 src={currentImage || product?.images?.[0] || ""}
                 alt={product?.title || "Product image"}
-                width={446}
-                height={315}
+                width={500}
+                height={400}
                 className="w-full h-full object-contain"
-                priority // Recommended for the main product image
+                priority
               />
             ) : (
-              <div className="w-full h-full flex items-center justify-center text-gray-400">
-                Loading image...
-              </div>
+              <div className="text-gray-400">Loading image...</div>
             )}
           </div>
 
-          {/* Product Details */}
-          <div className="max-w-sm font-sans space-y-4 text-black px-4">
-            <h2 className="text-2xl font-semibold">{product?.title}</h2>
+          {/* DETAILS */}
+          <div className="lg:w-[420px] space-y-5 text-black">
+            <h2 className="text-2xl md:text-3xl font-semibold leading-tight">
+              {product?.title}
+            </h2>
 
-            <div className="flex items-center gap-2 text-sm">
-              <div className="text-yellow-400">{product?.rating}</div>
+            <div className="flex items-center gap-3 text-sm">
+              <span className="text-yellow-500 font-medium">
+                {product?.rating}
+              </span>
               <span className="text-gray-400">(150 Reviews)</span>
-              <span className="text-green-500">
-                {product?.stock} | In Stock::
+              <span className="text-green-600 font-medium">
+                {product?.stock} in stock
               </span>
             </div>
 
-            <p>Brand: {product?.brand}</p>
-            <p className="text-2xl font-medium">${product?.price}</p>
+            <p className="text-gray-600 text-sm">
+              Brand: <span className="font-medium">{product?.brand}</span>
+            </p>
 
-            <p className="md:text-sm text-xs font-medium">
+            <p className="text-3xl font-semibold text-black">
+              ${product?.price}
+            </p>
+
+            <p className="text-sm text-gray-600 leading-relaxed">
               {product?.description}
             </p>
 
             <hr />
 
+            {/* ACTIONS */}
             <div className="flex items-center gap-3">
-              <div className="flex items-center border rounded">
+              {/* QTY */}
+              <div className="flex items-center border rounded-md overflow-hidden">
                 <button
-                  className="px-3 border"
+                  className="px-3 py-2 bg-gray-100 hover:bg-gray-200"
                   onClick={() => setQty((q) => q - 1)}
                 >
                   -
                 </button>
                 <span className="px-4">{qty}</span>
                 <button
-                  className="px-3 bg-red-400  text-white"
+                  className="px-3 py-2 bg-red-500 text-white hover:bg-red-600"
                   onClick={() => setQty((q) => q + 1)}
                 >
                   +
                 </button>
               </div>
 
-              <button className="flex-1 border-secondary bg-red-400 text-white py-2 rounded">
+              {/* BUY */}
+              <button className="flex-1 bg-red-500 hover:bg-red-600 text-white py-2 rounded-md font-medium transition">
                 Buy Now
               </button>
 
-              <button className="border rounded p-2">
+              {/* WISHLIST */}
+              <button className="border rounded-md p-2 hover:bg-gray-100 transition">
                 <Heart size={18} />
               </button>
             </div>
 
-            <div className="border rounded p-4 space-y-3 text-sm lg:w-99.75">
-              <div className="flex gap-3 items-start">
+            {/* INFO CARDS */}
+            <div className="border rounded-lg p-4 space-y-4 text-sm bg-gray-50">
+              <div className="flex gap-3">
                 <Image
                   src="/images/DelivryIcon.svg"
-                  alt="delivryIcon"
-                  width={40}
-                  height={40}
-                  className="w-6.5"
+                  alt="delivery"
+                  width={30}
+                  height={30}
                 />
                 <div>
                   <p className="font-medium">Free Delivery</p>
-                  <p className="text-gray-500 w-75 p-1">
-                    Enter your postal code for Delivery Availability
+                  <p className="text-gray-500 text-xs">
+                    Enter postal code for availability
                   </p>
-                  <p>{product?.warranty_information}</p>
+                  <p className="text-xs mt-1">
+                    {product?.warranty_information}
+                  </p>
                 </div>
               </div>
 
               <hr />
 
-              <div className="flex gap-3 items-start">
-                <span>
-                  <Image
-                    src="/images/ReturnIcon.svg"
-                    alt="returnIcon"
-                    width={26}
-                    height={26}
-                  />
-                </span>
+              <div className="flex gap-3">
+                <Image
+                  src="/images/ReturnIcon.svg"
+                  alt="return"
+                  width={26}
+                  height={26}
+                />
                 <div>
-                  <p className="font-medium">Return Delivery</p>
-                  <p className="text-gray-500">{product?.return_policy}</p>
+                  <p className="font-medium">Return Policy</p>
+                  <p className="text-gray-500 text-xs">
+                    {product?.return_policy}
+                  </p>
                 </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div className="border-b mt-10"></div>
-
-        <div className="w-full mt-20 rounded-lg border border-red-200 bg-white shadow-md p-6">
-          <h3 className="text-2xl font-semibold text-red-700 mb-6 border-b border-red-100 pb-2">
-            Customer Reviews
-          </h3>
-
-          {/* Reviews mapping (currently disabled) */}
-          {/*
-          {product?.reviews?.map((review, index) => (
-            <div key={`${review.comment}-${index}`}>
-              <p>{review.comment}</p>
-            </div>
-          ))}
-          */}
-        </div>
+   <Reviews/>
       </div>
     </section>
   );
