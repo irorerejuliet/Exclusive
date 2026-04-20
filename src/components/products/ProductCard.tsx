@@ -21,24 +21,22 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
   const queryClient = useQueryClient();
 
   const addToCart = useAddToCart();
- const { mutate, isPending } = useMutation({
-   mutationFn: async (productId: string) => {
-     const res = await axios.post(`/api/wishlist`, { productId });
-     return res.data;
-   },
-
-   onSuccess: (data) => {
-     if (data?.success) {
-       toast.success(
-         data.action === "added"
-           ? "Added to wishlist"
-           : "Removed from wishlist",
-       );
-
-       queryClient.invalidateQueries({ queryKey: ["wishlist"] });
-     }
-   },
- });
+  const { mutate, isPending } = useMutation({
+    mutationFn: async (payload: { productId: string; isFavorite: boolean }) => {
+      const res = await axios.post(`/api/products/isFavorite`, payload);
+      return res.data;
+    },
+    onSuccess: (data, variable) => {
+      if (data?.success) {
+        toast.success(variable?.isFavorite ? "Added to wishist": "Remove from wishlist");
+        // Invalidate and refetch
+        queryClient.invalidateQueries({ queryKey: ["products"] });
+      }
+    },
+    onError: (error: AxiosError<AxiosError>) => {
+      toast.error(error?.response?.data?.message || "Failed to add to wislist");
+    },
+  });
 
   const {
     id,
@@ -59,25 +57,26 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
         <span className="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-md z-10">
           -{discount_percentage}%
         </span>
-
-        <button
-          onClick={() => {
-            mutate({
-              productId: id,
-              isFavorite,
-            });
-          }}
-          disabled={isPending}
-        >
-          {isFavorite ? "❤️" : "🤍"}
-        </button>
-
-        <span className="absolute top-12 right-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded">
-          {stock > 0 ? "In Stock" : "Out"}
-        </span>
-
+        <div className="absolute right-2 top-1 border border-gray-200 rounded-full bg-white">
+          <button
+            onClick={() => {
+              mutate({
+                productId: id,
+                isFavorite,
+              });
+            }}
+            disabled={isPending}
+          >
+            {isFavorite ? "❤️" : "🤍"}
+          </button>
+        </div>
+        <div>
+          <span className="absolute top-12 right-3 bg-black/70 text-white text-[10px] px-2 py-1 rounded">
+            {stock > 0 ? "In Stock" : "Out"}
+          </span>
+        </div>
         <Link href={`/products/${id}`}>
-          <div className="flex justify-center items-center h-[180px] p-4">
+          <div className="flex justify-center items-center h-45 p-4">
             <Image
               src={thumbnail}
               alt={title}
@@ -87,7 +86,6 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
             />
           </div>
         </Link>
-
         <button
           onClick={() =>
             addToCart({
@@ -99,10 +97,11 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
               quantity: 1,
             })
           }
-          className="absolute bottom-0 left-0 w-full bg-black text-white py-3 translate-y-full group-hover:translate-y-0 transition"
+          className="absolute bottom-0 left-0 w-full bg-black text-white py-1 text-xs"
         >
           Add to Cart
         </button>
+        {/* translate-y-full group-hover:translate-y-0 transition */}
       </div>
 
       <div className="mt-3 space-y-1 px-1">
