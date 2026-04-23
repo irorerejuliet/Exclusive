@@ -1,29 +1,4 @@
-// "use client";
 
-// import { Products } from "@/types/products";
-// import useFetch from "./useFetch";
-
-// type ProductResponseData = {
-//   data: Products[];
-// };
-
-// const useProducts = () => {
-//   const { data, isLoading, error } = useFetch<ProductResponseData>({
-
-//     queryKey: ["products"],
-//     url: "/api/products",
-
-//   });
-//    console.log(" checking by bam",data);
-
-//   return {
-//     loading: isLoading,
-//     products: data?.data || [],
-//     error,
-//   };
-// };
-
-// export default useProducts;
 
 "use client";
 

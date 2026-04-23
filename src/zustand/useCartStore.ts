@@ -9,13 +9,16 @@ export type CartItem = {
   description: string;
   quantity: number;
 };
+
 interface CartState {
   cartItems: CartItem[];
 
-  // Cart Actions
   addToCart: (item: CartItem) => void;
   removeFromCart: (id: string) => void;
   clearCart: () => void;
+
+  // 🔥 ADD THIS
+  updateQuantity: (id: string, quantity: number) => void;
 }
 
 export const useCartStore = create<CartState>()(
@@ -26,6 +29,7 @@ export const useCartStore = create<CartState>()(
       addToCart: (item) =>
         set((state) => {
           const exists = state.cartItems.find((i) => i.id === item.id);
+
           if (exists) {
             return {
               cartItems: state.cartItems.map((i) =>
@@ -35,6 +39,7 @@ export const useCartStore = create<CartState>()(
               ),
             };
           }
+
           return { cartItems: [...state.cartItems, item] };
         }),
 
@@ -44,6 +49,14 @@ export const useCartStore = create<CartState>()(
         })),
 
       clearCart: () => set({ cartItems: [] }),
+
+      // 🔥 THIS IS WHAT FIXES YOUR + / -
+      updateQuantity: (id, quantity) =>
+        set((state) => ({
+          cartItems: state.cartItems
+            .map((item) => (item.id === id ? { ...item, quantity } : item))
+            .filter((item) => item.quantity > 0),
+        })),
     }),
     { name: "cart-storage" },
   ),

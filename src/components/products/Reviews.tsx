@@ -24,7 +24,7 @@ const Reviews = () => {
   ];
 
   return (
-    <section>
+    <section className="pb-20">
       {/* REVIEWS */}
       <div className="mt-16 bg-white border rounded-xl p-6 md:p-8 shadow-sm">
         {/* HEADER */}

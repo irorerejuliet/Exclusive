@@ -2,7 +2,11 @@
 
 import Reviews from "@/components/products/Reviews";
 import useProduct from "@/hooks/useProduct";
-
+import {
+  useCartItems,
+  useAddToCart,
+  useUpdateCartQuantity,
+} from "@/hooks/useCart";
 import { Heart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -12,11 +16,18 @@ import { useState } from "react";
 const Page = () => {
   const { productId } = useParams<{ productId: string }>();
   console.log(productId, "prod");
+
   const [currentImage, setCurrentImage] = useState("");
-  const [qty, setQty] = useState(2);
+
+  const cartItems = useCartItems();
+  const addToCart = useAddToCart();
+  const updateQuantity = useUpdateCartQuantity();
 
   const { product, status, error } = useProduct();
   console.log(product, "single product");
+
+  const cartItem = cartItems.find((item) => item.id === product?.id);
+  const qty = cartItem?.quantity || 0;
 
   if (status === "error") {
     return (
@@ -97,7 +108,7 @@ const Page = () => {
           </div>
 
           {/* DETAILS */}
-          <div className="lg:w-[420px] space-y-5 text-black">
+          <div className="lg:w-105 space-y-5 text-black">
             <h2 className="text-2xl md:text-3xl font-semibold leading-tight">
               {product?.title}
             </h2>
@@ -130,16 +141,39 @@ const Page = () => {
             <div className="flex items-center gap-3">
               {/* QTY */}
               <div className="flex items-center border rounded-md overflow-hidden">
+                {/* MINUS */}
                 <button
                   className="px-3 py-2 bg-gray-100 hover:bg-gray-200"
-                  onClick={() => setQty((q) => q - 1)}
+                  onClick={() => {
+                    if (!product || !cartItem) return;
+
+                    updateQuantity(product.id, cartItem.quantity - 1);
+                  }}
                 >
                   -
                 </button>
+
                 <span className="px-4">{qty}</span>
+
+                {/* PLUS */}
                 <button
                   className="px-3 py-2 bg-red-500 text-white hover:bg-red-600"
-                  onClick={() => setQty((q) => q + 1)}
+                  onClick={() => {
+                    if (!product) return;
+
+                    if (!cartItem) {
+                      addToCart({
+                        id: product.id,
+                        name: product.title,
+                        image_url: product.images?.[0],
+                        price: Number(product.price),
+                        description: product.description,
+                        quantity: 1,
+                      });
+                    } else {
+                      updateQuantity(product.id, cartItem.quantity + 1);
+                    }
+                  }}
                 >
                   +
                 </button>
@@ -196,7 +230,7 @@ const Page = () => {
           </div>
         </div>
 
-   <Reviews/>
+        <Reviews />
       </div>
     </section>
   );

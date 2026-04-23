@@ -6,6 +6,8 @@ export const useAddToCart = () => useCartStore((state) => state.addToCart);
 export const useRemoveFromCart = () =>
   useCartStore((state) => state.removeFromCart);
 export const useClearCart = () => useCartStore((state) => state.clearCart);
+export const useUpdateCartQuantity = () =>
+  useCartStore((state) => state.updateQuantity);
 
 // Derived values
 export const useCartCount = () =>

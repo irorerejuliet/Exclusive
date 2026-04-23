@@ -36,8 +36,7 @@ export const GET = async (
       );
     }
 
-    console.log("Fetched product:", data); // ✅ log here
-
+    console.log("Fetched product:", data);
     return NextResponse.json({
       success: true,
       message: `${productId} fetched successfully`,

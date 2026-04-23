@@ -1,19 +1,23 @@
+// import { ProductResponseData } from "@/types/products";
 // import { useQuery } from "@tanstack/react-query";
 // import axios from "axios";
 
 // const useWishlist = () => {
-//   const query = useQuery({
-//     queryKey: ["wishlists"],
+//   const fetchedWishlist = useQuery({
+//     queryKey: ["wishlist"],
 //     queryFn: async () => {
-//       const res = await axios.get("/api/products/wishlists");
+//       const res = await axios.get<ProductResponseData>(
+//         "/api/products/wishlist",
+//       );
 //       return res.data;
 //     },
 //   });
 
 //   return {
-//     wishlists: query.data?.data || [],
-//     status: query.status,
-//     error: query.error,
+//     wishlist: fetchedWishlist.data?.data || [],
+//     error: fetchedWishlist.error,
+//     status: fetchedWishlist.status,
+//     isLoading: fetchedWishlist.isLoading,
 //   };
 // };
 
