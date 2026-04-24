@@ -15,23 +15,8 @@ const CartDetails = () => {
   const cartItems = useCartItems();
   const subtotal = useCartSubtotal();
   const removeFromCart = useRemoveFromCart();
-  
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 const router = useRouter()
-//   const handleCheckout = () => {
-//   if (cartItems.length === 0) {
-//     setErrorMessage("Your cart is empty");
-    
-//   }
-
-//   setTimeout(() => {
-//     setErrorMessage(null)
-//   }, 3000)
-// return;
-
-//   setErrorMessage(null); 
-//   router.push("/checkout");
-// };
 
 
 
@@ -53,7 +38,7 @@ const handleCheckout = () => {
   return (
     <section className="bg-white text-black min-h-screen py-28">
       <div className="max-w-6xl mx-auto px-4">
-        {/* BREADCRUMB */}
+        
         <div className="flex gap-2 items-center py-8 text-xl font-bold text-gray-700">
           <Link href="/products" className="hover:text-black transition">
             Shop
@@ -70,7 +55,7 @@ const handleCheckout = () => {
         </div>
 
         <div className="border rounded-xl p-4 md:p-6 shadow-sm">
-          {/* HEADER */}
+         
           <div className="hidden md:grid grid-cols-5 font-semibold bg-gray-100 p-4 rounded-lg text-sm">
             <div>Product</div>
             <div>Price</div>
@@ -79,7 +64,7 @@ const handleCheckout = () => {
             <div>Action</div>
           </div>
 
-          {/* EMPTY STATE */}
+          
           {cartItems.length === 0 ? (
             <p className="py-16 text-center text-gray-500">
               Your cart is empty
