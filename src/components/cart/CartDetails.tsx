@@ -8,19 +8,63 @@ import {
 
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
 
 const CartDetails = () => {
   const cartItems = useCartItems();
   const subtotal = useCartSubtotal();
   const removeFromCart = useRemoveFromCart();
+  
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+const router = useRouter()
+//   const handleCheckout = () => {
+//   if (cartItems.length === 0) {
+//     setErrorMessage("Your cart is empty");
+    
+//   }
+
+//   setTimeout(() => {
+//     setErrorMessage(null)
+//   }, 3000)
+// return;
+
+//   setErrorMessage(null); 
+//   router.push("/checkout");
+// };
+
+
+
+const handleCheckout = () => {
+  if (cartItems.length === 0) {
+    setErrorMessage("Your cart is empty");
+
+    setTimeout(() => {
+      setErrorMessage(null);
+    }, 3000);
+
+    return;
+  }
+
+  setErrorMessage(null);
+  router.push("/checkout");
+};
 
   return (
     <section className="bg-white text-black min-h-screen py-28">
       <div className="max-w-6xl mx-auto px-4">
         {/* BREADCRUMB */}
-        <div className="flex gap-2 items-center py-8 text-sm text-gray-600">
-          <Link href="/">Home</Link> /
-          <Link href="/cart" className="font-medium text-black">
+        <div className="flex gap-2 items-center py-8 text-xl font-bold text-gray-700">
+          <Link href="/products" className="hover:text-black transition">
+            Shop
+          </Link>
+
+          <span className="text-gray-400">/</span>
+
+          <Link
+            href="/cart"
+            className="text-black font-semibold hover:text-red-500 transition"
+          >
             Cart
           </Link>
         </div>
@@ -138,9 +182,15 @@ const CartDetails = () => {
                 <span>${subtotal}</span>
               </div>
 
-              <button className="bg-black text-white w-full py-3 rounded mt-4">
+              <button
+                onClick={handleCheckout}
+                className={`w-full py-3 rounded mt-4 ${cartItems.length === 0 ? "bg-gray-300 cursor-not-allowed" : "bg-black text-white"}`}
+              >
                 Proceed to checkout
               </button>
+              {errorMessage && (
+                <p className="text-red-500 text-sm mt-2">{errorMessage}</p>
+              )}
             </div>
           </div>
         </div>

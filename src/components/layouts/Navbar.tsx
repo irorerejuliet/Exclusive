@@ -6,6 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { categories, navLinks } from "../constant/navLinks";
+import { useRouter } from "next/navigation";
+
 
 
 
@@ -13,6 +15,15 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const cartCount = useCartCount();
+
+  const [search, setSearch] = useState("")
+  const router = useRouter()
+
+  const handleSearch = () => {
+    if(!search.trim()) return
+    
+    router.push(`/products?earch=${encodeURIComponent(search)}`)
+  }
 
   return (
     <header className="bg-white text-black border-b fixed top-0 left-0 w-full z-50">
@@ -44,20 +55,26 @@ const Navbar = () => {
           <div className="flex gap-2 border border-gray-200 shadow rounded-md py-2 px-4">
             <input
               type="text"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") handleSearch();
+              }}
               placeholder="What are you looking for?"
               className="focus:outline-none"
             />
-            <Image
-              src="/images/SearchIcon.svg"
-              alt="search"
-              width={20}
-              height={20}
-            />
+            <button onClick={handleSearch}>
+              <Image
+                src="/images/SearchIcon.svg"
+                alt="search"
+                width={20}
+                height={20}
+              />
+            </button>
           </div>
 
           <div className="flex gap-4 items-center">
             <Link href={"/wishlists"}>
-             
               <Image
                 src="/images/HeartIcon.svg"
                 alt="wishlist"
@@ -141,6 +158,11 @@ const Navbar = () => {
             <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
               <input
                 type="text"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onKeyDown={(e) =>{
+                  if(e.key === "Enter") handleSearch()
+                }}
                 placeholder="Search products..."
                 className="bg-transparent w-full text-sm focus:outline-none"
               />
@@ -161,16 +183,6 @@ const Navbar = () => {
                   {link.name}
                 </Link>
               ))}
-              {/* {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-base font-medium hover:text-red-500 transition"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))} */}
             </div>
           </div>
 

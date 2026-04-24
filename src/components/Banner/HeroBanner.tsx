@@ -9,7 +9,7 @@ const HeroBanner = () => {
     "/images/iphone1.png",
     "/images/iphone17.png",
     "/images/iphone13.png",
-    "/images/iphones.png",
+    "/images/iphone-18.png"
   ];
 
   // Auto-slide
@@ -33,20 +33,20 @@ const HeroBanner = () => {
         <div className="absolute w-72 h-72 bg-purple-500/20 blur-3xl rounded-full bottom-0 right-0" />
 
         <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
-          {/* TEXT */}
+       
           <div className="max-w-lg space-y-5 text-center lg:text-left">
-            {/* Badge */}
+         
             <span className="inline-block bg-red-600 text-xs px-3 py-1 rounded-full uppercase tracking-wide">
               Limited Offer
             </span>
 
-            {/* Title */}
+           
             <h1 className="text-3xl sm:text-4xl lg:text-6xl font-bold leading-tight">
               iPhone Deals <br />
               <span className="text-red-500">Up to 10% Off</span>
             </h1>
 
-            {/* Subtext */}
+            
             <p className="text-gray-300 text-sm sm:text-base">
               Experience premium performance with exclusive discounts on the
               latest iPhones.

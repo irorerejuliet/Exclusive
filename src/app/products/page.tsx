@@ -20,7 +20,7 @@ const Page = () => {
 
   if (status === "pending") {
     return (
-      <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 px-10">
+      <div className="wrapper grid lg:grid-cols-4  md:grid-cols-3 grid-cols-1 gap-10.25 px-10">
         {[...Array(8)].map((_, i) => (
           <CardSkeleton key={i} />
         ))}
@@ -37,8 +37,8 @@ const Page = () => {
   }
 
   return (
-    <div className="bg-white text-black text-xs py-20">
-      <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 px-10">
+    <div className="bg-white text-black text-xs py-20 ">
+      <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 px-10 py-20">
         {products.map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}

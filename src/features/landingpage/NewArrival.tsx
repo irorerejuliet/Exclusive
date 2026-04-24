@@ -60,9 +60,9 @@ const NewArrival = () => {
           </div>
 
           {/* SPEAKER + PERFUME (two cards) */}
-          <div className="grid sm:grid-cols-2 gap-5">
+          <div className="grid sm:grid-cols-2 gap-5 pb-20">
             {/* Speakers */}
-            <div className="bg-[#1F1F1F] text-white p-6 rounded-lg relative">
+            <div className="bg-[#1F1F1F] text-white px-6 rounded-lg relative">
               <Image
                 src="/images/Speakers.svg"
                 alt="speaker"
