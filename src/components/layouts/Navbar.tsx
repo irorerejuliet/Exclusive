@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { categories, navLinks } from "../constant/navLinks";
 import { useRouter } from "next/navigation";
+import SearchBar from "./SearchBar";
 
 
 
@@ -52,26 +53,7 @@ const Navbar = () => {
 
         {/* DESKTOP RIGHT */}
         <div className="hidden md:flex gap-4 items-center">
-          <div className="flex gap-2 border border-gray-200 shadow rounded-md py-2 px-4">
-            <input
-              type="text"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") handleSearch();
-              }}
-              placeholder="What are you looking for?"
-              className="focus:outline-none"
-            />
-            <button onClick={handleSearch}>
-              <Image
-                src="/images/SearchIcon.svg"
-                alt="search"
-                width={20}
-                height={20}
-              />
-            </button>
-          </div>
+        <SearchBar/>
 
           <div className="flex gap-4 items-center">
             <Link href={"/wishlists"}>
@@ -155,7 +137,7 @@ const Navbar = () => {
           </div>
 
           <div className="p-4 border-b">
-            <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
+            {/* <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
               <input
                 type="text"
                 value={search}
@@ -166,7 +148,8 @@ const Navbar = () => {
                 placeholder="Search products..."
                 className="bg-transparent w-full text-sm focus:outline-none"
               />
-            </div>
+            </div> */}
+            <SearchBar/>
           </div>
 
           {/* NAV LINKS */}

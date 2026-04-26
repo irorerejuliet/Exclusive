@@ -17,7 +17,7 @@ interface CartState {
   removeFromCart: (id: string) => void;
   clearCart: () => void;
 
-  // 🔥 ADD THIS
+  
   updateQuantity: (id: string, quantity: number) => void;
 }
 

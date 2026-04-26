@@ -8,7 +8,7 @@ const HeroBanner = () => {
   const heroImages = [
     "/images/iphone1.png",
     "/images/iphone17.png",
-    "/images/iphone13.png",
+    "/images/iphone-12.png",
     "/images/iphone-18.png"
   ];
 
