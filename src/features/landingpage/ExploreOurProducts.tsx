@@ -5,7 +5,7 @@ import Image from "next/image";
 import ProductCard from "@/components/products/ProductCard";
 
 const ExploreOurProducts = () => {
-  const { products, loading } = useProducts();
+  const { products, status } = useProducts();
 
 
   return (
@@ -35,9 +35,9 @@ const ExploreOurProducts = () => {
       </div>
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 space-y-10 md:space-y-0 md:px-0 px-10">
-        {loading && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
+        {status && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
         {products &&
-          !loading &&
+          !status &&
           products
             .slice(6, 10)
             .map((product) => (

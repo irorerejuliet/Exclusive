@@ -4,7 +4,7 @@ import CardSkeleton from "@/components/ui/CardSkeleton";
 import useProducts from "@/hooks/useProducts";
 
 const BestSellingProduct = () => {
-  const { products, loading } = useProducts();
+  const { products, status } = useProducts();
 
 
   return (
@@ -20,7 +20,7 @@ const BestSellingProduct = () => {
         </button>
       </div>
       <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 space-y-10 md:space-y-0 md:px-0 px-10">
-        {loading && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
+        {status && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
         {products?.slice(12, 16).map((product) => (
           <ProductCard key={product.id} product={product} />
         ))}
