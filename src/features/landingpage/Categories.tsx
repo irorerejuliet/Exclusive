@@ -84,9 +84,12 @@ if (status === "success" && products.length === 0) {
           </div>
         </div>
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 items-center space-y-10 md:space-y-0 md:px-0 px-10">
-          {products.slice(startIndex, startIndex + 4).map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
+         {products.slice(startIndex, startIndex + 4).map((product) => (
+  <ProductCard
+    key={product.id}
+    product={product}
+  />
+))}
         </div>
         <div className="w-full border-t border-gray-200 mt-20"></div>
       </div>

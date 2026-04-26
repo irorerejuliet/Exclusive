@@ -5,7 +5,35 @@ import Image from "next/image";
 import ProductCard from "@/components/products/ProductCard";
 
 const ExploreOurProducts = () => {
-  const { products, status } = useProducts();
+  const { products, status, error } = useProducts();
+
+  if(status == "error") {
+     return (
+       <div className="border border-red-200 bg-red-50 p-4 rounded">
+         <p className="text-red-600">
+           {error?.message || "Failed to load products."}
+         </p>
+       </div>
+     );
+  }
+
+  if (status === "pending" && products.length === 0) {
+    return (
+      <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 space-y-10 md:space-y-0 md:px-0 px-10">
+        {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
+          <CardSkeleton key={i} />
+        ))}
+      </div>
+    );
+  }
+
+  if (status === "success" && products.length === 0) {
+    return (
+      <div>
+        <p>No product</p>
+      </div>
+    );
+  }
 
 
   return (
@@ -35,12 +63,8 @@ const ExploreOurProducts = () => {
       </div>
 
       <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 space-y-10 md:space-y-0 md:px-0 px-10">
-        {status && [1, 2, 3, 4].map((_, i) => <CardSkeleton key={i} />)}
-        {products &&
-          !status &&
-          products
-            .slice(6, 10)
-            .map((product) => (
+      
+        {products?.slice(6, 10).map((product) => (
               <ProductCard key={product.id} product={product} />
             ))}
       </div>
