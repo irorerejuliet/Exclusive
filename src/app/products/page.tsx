@@ -3,7 +3,6 @@
 import ProductCard from "@/components/products/ProductCard";
 import CardSkeleton from "@/components/ui/CardSkeleton";
 import useProducts from "@/hooks/useProducts";
-import Link from "next/link";
 import { useState } from "react";
 
 const Page = () => {

@@ -38,10 +38,10 @@ const Footer = () => {
           {/* Support */}
           <div>
             <h3 className="text-lg font-semibold mb-4">Support</h3>
-            <p className="text-sm mb-2">111 Bijoy sarani, Dhaka</p>
-            <p className="text-sm mb-2">DH 1515, Bangladesh</p>
-            <p className="text-sm mb-2">exclusive@gmail.com</p>
-            <p className="text-sm mb-2">+88015-88888-9999</p>
+            <p className="text-sm mb-2">Nigeria</p>
+            <p className="text-sm mb-2">Osun, Osogbo</p>
+            <p className="text-sm mb-2">irorerejuliet@gmail.com</p>
+            <p className="text-sm mb-2">+2349022149874</p>
           </div>
 
           {/* Account */}
@@ -60,9 +60,9 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold mb-4">Quick Link</h3>
             <div className="flex flex-col gap-2 text-sm">
-              <Link href="#">Privacy Policy</Link>
-              <Link href="#">Terms Of Use</Link>
-              <Link href="#">FAQ</Link>
+              <Link href="/PrivacyAndPolicy">Privacy Policy</Link>
+              <Link href="/termsAndCondition">Terms Of Use</Link>
+              <Link href="/frequentlyAskQuestion">FAQ</Link>
               <Link href="/contact">Contact</Link>
             </div>
           </div>
@@ -96,10 +96,30 @@ const Footer = () => {
             </div>
 
             <div className="flex gap-4 text-lg">
-              <Facebook />
-              <Twitter />
-              <Instagram />
-              <Linkedin />
+              <Link
+                href={
+                  "https://www.facebook.com/share/16iQ3qRGjV/?mibextid=wwXIfr"
+                }
+              >
+                <Facebook />
+              </Link>
+              <Link href={"https://x.com/irorerejuliet1?s=21"}>
+                <Twitter />
+              </Link>
+              <Link
+                href={
+                  "https://www.instagram.com/irorere_julet?igsh=dW9tem9sbWM0Z2Vk&utm_source=qr"
+                }
+              >
+                <Instagram />
+              </Link>
+              <Link
+                href={
+                  "https://www.linkedin.com/public-profile/settings?trk=d_flagship3_profile_self_view_public_profile"
+                }
+              >
+                <Linkedin />
+              </Link>
             </div>
           </div>
         </div>
