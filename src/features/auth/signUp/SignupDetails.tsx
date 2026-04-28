@@ -11,6 +11,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 type ApiError = {
   message: string;
@@ -19,6 +20,7 @@ type ApiError = {
 const SignupDetails = () => {
 
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter()
   const {
     register,
     handleSubmit,
@@ -33,11 +35,13 @@ const SignupDetails = () => {
 
   const { mutate, status, error } = useMutation({
     mutationFn: async (payload: SignupFormData) => {
-      const res = await axios.post("/api/auth/signup", payload);
+      const res = await axios.post("/api/auth/signup", payload, {withCredentials: true});
       return res.data;
     },
     onSuccess: (data) => {
       toast.success(data?.message);
+      router.push("/")
+      router.refresh()
     },
     onError: (error: AxiosError<ApiError>) => {
       return toast.error(error?.response?.data?.message);
