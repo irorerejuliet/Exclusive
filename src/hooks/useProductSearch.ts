@@ -1,15 +1,26 @@
+
+import { ProductResponseData } from "@/types/products";
 import { useQuery } from "@tanstack/react-query";
-import { searchProducts } from "@/lib/searchProducts";
+import axios from "axios";
 
 export default function useProductSearch(query: string) {
-  return useQuery({
-    queryKey: ["products", query], // 🔥 IMPORTANT FIX
-    queryFn: () => searchProducts(query),
+  const fetchProducts = useQuery({
+    queryKey: ["products", query],
+    queryFn: async () => {
+      const res = await axios("/api/products/search", {
+        params: {
+          q: query,
+        },
+      });
 
-    enabled: query.trim().length >= 2, // don't run on empty input
-
-    staleTime: 1000 * 60, // cache for 1 min
-
-    refetchOnWindowFocus: false,
+      return res.data;
+    },
+    enabled: query.trim().length > 0,
   });
+
+  return {
+    products: fetchProducts.data || [],
+    error: fetchProducts.error,
+    status: fetchProducts.status,
+  };
 }
