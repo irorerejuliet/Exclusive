@@ -55,7 +55,7 @@ const Page = () => {
         </p>
 
         {/* BREADCRUMB */}
-        <div className="flex flex-wrap items-center gap-2 py-6 md:py-10 text-sm md:text-base text-gray-500">
+        <div className="flex flex-wrap items-center gap-2 py-6 md:py-10 text-sm md:text-base text-gray-500 bg-red-900">
           <Link href="/acount">Account</Link>
           <span>/</span>
           <Link href={"/"}>Home</Link>
@@ -73,7 +73,7 @@ const Page = () => {
         {/* MAIN GRID */}
         <div className="flex flex-col lg:flex-row gap-10">
           {/* THUMBNAILS */}
-          <div className="flex lg:flex-col gap-3 lg:w-[120px] mx-auto lg:mx-0">
+          <div className="flex lg:flex-col gap-3 lg:w-30 mx-auto lg:mx-0">
             {product?.images?.map((image, index) => (
               <div
                 key={`${image}-${index}`}

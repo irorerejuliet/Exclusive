@@ -6,7 +6,6 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { categories, navLinks } from "../constant/navLinks";
-import { useRouter } from "next/navigation";
 import SearchBar from "./SearchBar";
 
 
@@ -17,14 +16,7 @@ const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const cartCount = useCartCount();
 
-  const [search, setSearch] = useState("")
-  const router = useRouter()
-
-  const handleSearch = () => {
-    if(!search.trim()) return
-    
-    router.push(`/products?earch=${encodeURIComponent(search)}`)
-  }
+  
 
   return (
     <header className="bg-white text-black border-b fixed top-0 left-0 w-full z-50">

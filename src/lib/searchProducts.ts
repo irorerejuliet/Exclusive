@@ -1,21 +1,11 @@
-import { Products } from "@/types/products";
-import { createClient } from "./supabase/client";
+import axios from "axios";
 
-export const searchProducts = async (query: string): Promise<Products[]> => {
-  const supabase = createClient();
+export const searchProducts = async (query: string) => {
+  if (!query || query.trim().length < 2) return [];
 
-  if (!query.trim()) return [];
+  const res = await axios.get("/api/products/search", {
+    params: { q: query },
+  });
 
-  const { data, error } = await supabase
-    .from("products")
-    .select("*")
-    .ilike("title", `%${query}%`)
-    .limit(20);
-
-  if (error) {
-    console.error("Search Error:", error.message);
-    return [];
-  }
-
-  return data ?? [];
+  return res.data;
 };
