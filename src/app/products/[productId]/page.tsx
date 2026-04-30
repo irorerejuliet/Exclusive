@@ -55,11 +55,11 @@ const Page = () => {
         </p>
 
         {/* BREADCRUMB */}
-        <div className="flex flex-wrap items-center gap-2 py-6 md:py-10 text-sm md:text-base text-gray-500 bg-red-900">
+        <div className="flex flex-wrap items-center gap-2 py-6 md:py-10 text-sm md:text-base text-gray-500">
           <Link href="/acount">Account</Link>
           <span>/</span>
           <Link href={"/"}>Home</Link>
-          <span>/</span>
+          
           <Link
             href={`/categories/${product?.category}`}
             className="capitalize hover:text-black"

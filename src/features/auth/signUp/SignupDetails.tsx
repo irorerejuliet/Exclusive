@@ -25,6 +25,7 @@ const SignupDetails = () => {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
@@ -40,8 +41,9 @@ const SignupDetails = () => {
     },
     onSuccess: (data) => {
       toast.success(data?.message);
+      reset()
       router.push("/")
-      router.refresh()
+       router.refresh();
     },
     onError: (error: AxiosError<ApiError>) => {
       return toast.error(error?.response?.data?.message);

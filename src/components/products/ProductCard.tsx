@@ -67,7 +67,7 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
             }}
             disabled={isPending}
           >
-            {isFavorite ? "🤍" : "❤️"}
+            {isFavorite ? "❤️" : "🤍" }
           </button>
         </div>
         <div>
