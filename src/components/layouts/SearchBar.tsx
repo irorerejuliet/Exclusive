@@ -1,20 +1,33 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function SearchBar() {
   const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+
   const [query, setQuery] = useState("");
 
-  const handleSearch = (value: string) => {
-    setQuery(value);
-  };
+  useEffect(() => {
+    // Clear the input when leaving the search page
+    if (pathname !== "/searchPage") {
+      setQuery("");
+      return;
+    }
+
+    // Populate the input from the URL while on the search page
+    setQuery(searchParams.get("query") || "");
+  }, [pathname, searchParams]);
 
   const onSubmit = () => {
-    if (!query.trim()) return;
-    router.push(`/searchPage?query=${query}`);
+    const trimmedQuery = query.trim();
+
+    if (!trimmedQuery) return;
+
+    router.push(`/searchPage?query=${encodeURIComponent(trimmedQuery)}`);
   };
 
   return (
@@ -22,7 +35,7 @@ export default function SearchBar() {
       <input
         type="text"
         value={query}
-        onChange={(e) => handleSearch(e.target.value)}
+        onChange={(e) => setQuery(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") onSubmit();
         }}
@@ -31,7 +44,6 @@ export default function SearchBar() {
       />
 
       <button onClick={onSubmit}>
-        {" "}
         <Image
           src="/images/SearchIcon.svg"
           alt="Search"
@@ -42,4 +54,3 @@ export default function SearchBar() {
     </div>
   );
 }
-
