@@ -26,11 +26,26 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
       const res = await axios.post(`/api/products/isFavorite`, payload);
       return res.data;
     },
+    // onSuccess: (data, variables) => {
+    //   if (data?.success) {
+    //     toast.success(variables?.isFavorite ? "Added to wishist": "Remove from wishlist");
+    //     // Invalidate and refetch
+    //     queryClient.invalidateQueries({ queryKey: ["products"] });
+    //   }
+    // },
     onSuccess: (data, variables) => {
       if (data?.success) {
-        toast.success(variables?.isFavorite ? "Added to wishist": "Remove from wishlist");
-        // Invalidate and refetch
-        queryClient.invalidateQueries({ queryKey: ["products"] });
+        toast.success(
+          variables?.isFavorite ? "Removed from wishlist" : "Added to wishlist",
+        );
+
+        queryClient.invalidateQueries({
+          queryKey: ["products"],
+        });
+
+        queryClient.invalidateQueries({
+          queryKey: ["wishlist-count"],
+        });
       }
     },
     onError: (error: AxiosError<AxiosError>) => {

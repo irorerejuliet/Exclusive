@@ -1,9 +1,10 @@
-// hooks/useWishlist.ts
+"use client";
+
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export const useWishlistCount = () => {
-  const { data } = useQuery({
+  const { data = 0 } = useQuery({
     queryKey: ["wishlist-count"],
     queryFn: async () => {
       const response = await axios.get("/api/products/isFavorite/count");
@@ -11,5 +12,6 @@ export const useWishlistCount = () => {
     },
   });
 
-  return data ?? 0;
+  return data;
 };
+

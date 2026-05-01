@@ -1,12 +1,19 @@
-
-import prisma from "@/lib/prisma";
+import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-export async function GET() {
-  const count = await prisma.product.count({
-    where: {
-      isFavorite: true,
-    },
-  });
 
-  return NextResponse.json({ count });
-}
+export const GET = async () => {
+  const supabase = await createClient();
+
+  const { data, error } = await supabase
+    .from("products")
+    .select("id", { count: "exact" })
+    .eq("isFavorite", true);
+
+  if (error) {
+    return NextResponse.json({ message: error.message }, { status: 500 });
+  }
+
+  return NextResponse.json({
+    count: data.length,
+  });
+};
