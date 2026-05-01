@@ -7,6 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { categories, navLinks } from "../constant/navLinks";
 import SearchBar from "./SearchBar";
+import { useWishlistCount } from "@/hooks/useWishlist";
 
 
 
@@ -15,7 +16,7 @@ const Navbar = () => {
   const [open, setOpen] = useState(false);
   const [profileOpen, setProfileOpen] = useState(false);
   const cartCount = useCartCount();
-
+const wishlistCount = useWishlistCount();
   
 
   return (
@@ -45,16 +46,22 @@ const Navbar = () => {
 
         {/* DESKTOP RIGHT */}
         <div className="hidden md:flex gap-4 items-center">
-        <SearchBar/>
+          <SearchBar />
 
           <div className="flex gap-4 items-center">
-            <Link href={"/wishlists"}>
+            <Link href="/wishlists" className="relative">
               <Image
                 src="/images/HeartIcon.svg"
                 alt="wishlist"
                 width={28}
                 height={28}
               />
+
+              {wishlistCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {wishlistCount}
+                </span>
+              )}
             </Link>
 
             <Link href="/cart" className="relative">
@@ -141,7 +148,7 @@ const Navbar = () => {
                 className="bg-transparent w-full text-sm focus:outline-none"
               />
             </div> */}
-            <SearchBar/>
+            <SearchBar />
           </div>
 
           {/* NAV LINKS */}
