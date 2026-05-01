@@ -1,24 +1,15 @@
-// import { ProductResponseData } from "@/types/products";
-// import { useQuery } from "@tanstack/react-query";
-// import axios from "axios";
+// hooks/useWishlist.ts
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-// const useWishlist = () => {
-//   const fetchedWishlist = useQuery({
-//     queryKey: ["wishlist"],
-//     queryFn: async () => {
-//       const res = await axios.get<ProductResponseData>(
-//         "/api/products/wishlist",
-//       );
-//       return res.data;
-//     },
-//   });
+export const useWishlistCount = () => {
+  const { data } = useQuery({
+    queryKey: ["wishlist-count"],
+    queryFn: async () => {
+      const response = await axios.get("/api/products/isFavorite/count");
+      return response.data.count;
+    },
+  });
 
-//   return {
-//     wishlist: fetchedWishlist.data?.data || [],
-//     error: fetchedWishlist.error,
-//     status: fetchedWishlist.status,
-//     isLoading: fetchedWishlist.isLoading,
-//   };
-// };
-
-// export default useWishlist;
+  return data ?? 0;
+};
