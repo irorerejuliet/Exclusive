@@ -1,10 +1,10 @@
 import LoginDetails from '@/features/auth/login/LoginDetails'
 
 
-const page = () => {
+const Login = () => {
   return (
     <LoginDetails/>
   )
 }
 
-export default page
+export default Login

@@ -1,36 +1,31 @@
 "use client";
 
+import { useFavorite } from "@/hooks/useFavorite";
+import ProductCard from "../products/ProductCard";
+import useProduct from "@/hooks/useProduct";
+import { Products } from "@/types/products";
+import useProducts from "@/hooks/useProducts";
 
 
 
-import { wishlistData } from "../constant/wishlistData";
-
-
-
- 
 const WishlistsProducts = () => {
+  const { status, error, products } = useProducts();
+
+  if (status === "error") return <p>{error?.message}</p>;
+
   return (
-    <section className="bg-[#FAFAFA] min-h-screen">
+    <section className="bg-[#FAFAFA] min-h-screen text-black">
       <div className="max-w-6xl mx-auto px-4 py-24">
-        {/* HEADER */}
         <div className="flex justify-between items-center">
           <h2 className="text-2xl font-semibold">
-            Wishlist ({wishlistData.length})
+            Wishlist ({products?.length || 0})
           </h2>
-
-          <button className="hidden md:block px-6 py-3 border rounded-full hover:bg-black hover:text-white transition">
-            Move All To Bag
-          </button>
         </div>
 
-        {/* GRID */}
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 mt-10">
-          {/* {wishlistData.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-            />
-          ))} */}
+          {products?.map((product: Products) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
       </div>
     </section>

@@ -1,25 +1,13 @@
-// import { useQuery } from "@tanstack/react-query";
+import { ProductResponseData } from "@/types/products";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
-
-// const fetchWishlist = async () => {
-//   const {
-//     data: { user },
-//   } = await supabase.auth.getUser();
-//   if (!user) return [];
-
-//   const { data, error } = await supabase
-//     .from("wishlist")
-//     .select("product_id")
-//     .eq("user_id", user.id);
-
-//   if (error) throw error;
-
-//   return data.map((item) => item.product_id as string);
-// };
-
-// export const useWishlist = () => {
-//   return useQuery({
-//     queryKey: ["wishlist"],
-//     queryFn: fetchWishlist,
-//   });
-// };
+export const useFavorite = () => {
+  return useQuery({
+    queryKey: ["isFavorite"],
+    queryFn: async () => {
+      const res = await axios<ProductResponseData>("/api/products/isFavorite");
+      return res.data.data;
+    },
+  });
+};

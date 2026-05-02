@@ -136,18 +136,7 @@ const wishlistCount = useWishlistCount();
           </div>
 
           <div className="p-4 border-b">
-            {/* <div className="flex items-center gap-2 bg-gray-100 rounded-lg px-3 py-2">
-              <input
-                type="text"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                onKeyDown={(e) =>{
-                  if(e.key === "Enter") handleSearch()
-                }}
-                placeholder="Search products..."
-                className="bg-transparent w-full text-sm focus:outline-none"
-              />
-            </div> */}
+            
             <SearchBar />
           </div>
 

@@ -11,7 +11,9 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { redirect, useRouter } from "next/navigation";
+import { createClient } from "@/lib/supabase/client";
+
 
 type ApiError = {
   message: string;
@@ -21,6 +23,7 @@ const SignupDetails = () => {
 
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter()
+  const Supabase =  createClient()
   const {
     register,
     handleSubmit,
@@ -53,6 +56,25 @@ const SignupDetails = () => {
   const onSubmit = async (data: SignupFormData) => {
     mutate(data);
   };
+
+
+  const signInWithGoogle = async () => {
+    const { error } = await Supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${location.origin}/auth/callback`,
+      },
+    });
+
+    if(error){
+      console.error("Google OAuth error:", error.message)
+    }
+  }
+
+
+
+
+
 
   return (
     <section className="flex flex-col lg:flex-row items-center bg-white text-black">
@@ -120,6 +142,7 @@ const SignupDetails = () => {
 
           <button
             type="button"
+            onClick={signInWithGoogle}
             className="w-full gap-3 border border-gray-200 flex items-center justify-center rounded-md py-3 px-7 hover:bg-gray-50 transition"
           >
             <Image
