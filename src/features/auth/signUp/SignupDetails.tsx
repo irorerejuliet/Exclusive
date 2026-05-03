@@ -43,10 +43,14 @@ const SignupDetails = () => {
       return res.data;
     },
     onSuccess: (data) => {
+       reset({
+         email: "",
+         password: "",
+       });
+
       toast.success(data?.message);
-      reset()
       router.push("/")
-       router.refresh();
+    
     },
     onError: (error: AxiosError<ApiError>) => {
       return toast.error(error?.response?.data?.message);
