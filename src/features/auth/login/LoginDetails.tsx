@@ -106,7 +106,7 @@ const LoginDetails = () => {
         </div>
 
         <form
-          className="flex flex-col space-y-5"
+          className="flex flex-col space-y-5  "
           onSubmit={handleSubmit(onSubmit)}
         >
           <CustomInput
@@ -116,7 +116,7 @@ const LoginDetails = () => {
             error={errors.email}
           />
 
-          <div className="relative">
+          <div className="relative ">
             <CustomInput
               type={showPassword ? "text" : "password"}
               placeholder="Password"

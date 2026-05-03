@@ -8,7 +8,7 @@ const CheckoutDetails = () => {
   const subtotal = useCartSubtotal();
 
   return (
-    <section className="bg-gradient-to-b from-gray-50 to-white min-h-screen py-20 text-gray-900">
+    <section className="bg-linear-to-b from-gray-50 to-white min-h-screen py-20 text-gray-900">
       <div className="wrapper mx-auto px-4 grid lg:grid-cols-2 gap-12">
         {/* LEFT SIDE - FORM */}
         <div className="bg-white/80 backdrop-blur border border-gray-200 p-8 rounded-2xl shadow-lg space-y-8">
