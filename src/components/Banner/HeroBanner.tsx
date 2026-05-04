@@ -2,6 +2,7 @@
 import { Bounce } from "react-awesome-reveal";
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 const HeroBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
@@ -55,9 +56,11 @@ const HeroBanner = () => {
                 </button>
               </Bounce>
               <Bounce>
-                <button className="border border-gray-500 hover:border-white px-6 py-3 rounded-lg">
-                  Explore Deals
-                </button>
+                <Link href={"/products"}>
+                  <button className="border border-gray-500 hover:border-white px-6 py-3 rounded-lg">
+                    Explore Deals
+                  </button>
+                </Link>
               </Bounce>
             </div>
           </div>
