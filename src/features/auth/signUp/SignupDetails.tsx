@@ -14,43 +14,49 @@ import { useState } from "react";
 import { redirect, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-
 type ApiError = {
   message: string;
 };
 
 const SignupDetails = () => {
-
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter()
-  const Supabase =  createClient()
+  const router = useRouter();
+  const supabase = createClient();
+
   const {
     register,
     handleSubmit,
     formState: { errors },
-    reset
+    reset,
   } = useForm<SignupFormData>({
     resolver: zodResolver(signupSchema),
     defaultValues: {
+      firstname: "",
+      lastname: "",
       email: "",
       password: "",
+      confirmPassword: "",
     },
   });
 
   const { mutate, status, error } = useMutation({
     mutationFn: async (payload: SignupFormData) => {
-      const res = await axios.post("/api/auth/signup", payload, {withCredentials: true});
+      const res = await axios.post("/api/auth/signup", payload, {
+        withCredentials: true,
+      });
       return res.data;
     },
     onSuccess: (data) => {
-       reset({
-         email: "",
-         password: "",
-       });
+      reset({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
 
       toast.success(data?.message);
-      router.push("/")
-    
+      router.push("/");
     },
     onError: (error: AxiosError<ApiError>) => {
       return toast.error(error?.response?.data?.message);
@@ -61,28 +67,22 @@ const SignupDetails = () => {
     mutate(data);
   };
 
-
   const signInWithGoogle = async () => {
-    const { error } = await Supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
 
-    if(error){
-      console.error("Google OAuth error:", error.message)
+    if (error) {
+      console.error("Google OAuth error:", error.message);
     }
-  }
-
-
-
-
-
+  };
 
   return (
     <section className="flex flex-col lg:flex-row items-center bg-white text-black">
-      <div className="my-10 lg:my-28 w-full lg:w-auto lg:flex justify-center  hidden">
+      <div className="my-10 lg:my-28 w-full lg:w-auto lg:flex justify-center hidden">
         <Image
           src="/images/beatsnoop.svg"
           alt="beatsnoop"
@@ -101,6 +101,22 @@ const SignupDetails = () => {
           className="flex flex-col space-y-6"
           onSubmit={handleSubmit(onSubmit)}
         >
+          {/* FIRST NAME */}
+          <CustomInput
+            type="text"
+            placeholder="First Name"
+            register={register("firstname")}
+            error={errors.firstname}
+          />
+
+          {/* LAST NAME */}
+          <CustomInput
+            type="text"
+            placeholder="Last Name"
+            register={register("lastname")}
+            error={errors.lastname}
+          />
+
           <CustomInput
             type="email"
             placeholder="you@gmail.com"
@@ -124,6 +140,14 @@ const SignupDetails = () => {
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>
           </div>
+
+          {/* CONFIRM PASSWORD */}
+          <CustomInput
+            type="password"
+            placeholder="Confirm Password"
+            register={register("confirmPassword")}
+            error={errors.confirmPassword}
+          />
 
           <button
             type="submit"
