@@ -117,7 +117,7 @@ const ProfilePage = () => {
             </div>
 
             {/* Password Section */}
-            <div className="md:col-span-2 mt-4 space-y-4">
+            {/* <div className="md:col-span-2 mt-4 space-y-4">
               <h3 className="font-medium text-gray-900">Password Changes</h3>
               <input
                 type="password"
@@ -134,7 +134,7 @@ const ProfilePage = () => {
                 placeholder="Confirm New Password"
                 className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
               />
-            </div>
+            </div> */}
 
             {/* Actions */}
             <div className="md:col-span-2 flex justify-end items-center gap-6 mt-6">
