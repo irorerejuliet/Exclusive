@@ -5,7 +5,7 @@ import Image from "next/image";
 
 import CustomInput from "../../../components/CustomInput";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { ApiError } from "next/dist/server/api-utils";
@@ -24,7 +24,7 @@ const LoginDetails = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter()
   const searchParams = useSearchParams();
-
+const queryClient = useQueryClient();
   
   const {
     register,
@@ -52,7 +52,9 @@ const LoginDetails = () => {
 
       const safeRedirect =
         redirectUrl && redirectUrl.startsWith("/") ? redirectUrl : "/";
-
+queryClient.invalidateQueries({
+  queryKey: ["user"],
+});
       router.replace(safeRedirect);
     },
 
@@ -113,6 +115,7 @@ const LoginDetails = () => {
           <CustomInput
             type="email"
             placeholder="Email"
+            autoComplete="username"
             register={register("email")}
             error={errors.email}
           />
@@ -121,6 +124,7 @@ const LoginDetails = () => {
             <CustomInput
               type={showPassword ? "text" : "password"}
               placeholder="Password"
+              autoComplete="current-password"
               register={register("password")}
               error={errors.password}
             />

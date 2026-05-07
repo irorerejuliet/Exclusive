@@ -26,7 +26,7 @@ export async function GET() {
     .from("profiles")
     .select("*")
     .eq("id", user.id)
-    .single();
+    .maybeSingle();
 
   if (error) {
     return NextResponse.json(

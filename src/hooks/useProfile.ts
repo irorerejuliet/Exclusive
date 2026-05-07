@@ -1,19 +1,20 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
-
-export default function useProfile(){
+export default function useProfile() {
   const profileQuery = useQuery({
     queryKey: ["profile"],
     queryFn: async () => {
-      const res = await axios("/api/profile")
-      return res.data
-    }
-  })
+      const res = await axios("/api/profile", {
+        withCredentials: true,
+      });
+      return res.data;
+    },
+  });
 
   return {
     profile: profileQuery?.data?.profile,
     error: profileQuery.error,
-    status: profileQuery.status
-  }
+    status: profileQuery.status,
+  };
 }

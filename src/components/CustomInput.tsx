@@ -17,13 +17,14 @@ const CustomInput = ({
   className = "",
   register,
   error,
+  autoComplete,
 }: CustomInputProps) => {
   return (
     <div>
       <input
         type={type}
         placeholder={placeholder}
-        autoComplete="off"
+        autoComplete={autoComplete}
         {...register}
         className={`border-b-2 border-gray-300  focus:outline-none w-92.75 ${className}`}
       />

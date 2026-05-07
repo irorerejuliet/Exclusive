@@ -1,13 +1,18 @@
 import { cn } from "@/lib/utils";
 
-
 function Skeleton({ className, ...props }: React.ComponentProps<"div">) {
   return (
     <div
       data-slot="skeleton"
-      className={cn("bg-gray-200 animate-pulse rounded-md", className)}
+      className={cn(
+        "relative overflow-hidden bg-gray-200 rounded-md",
+        className,
+      )}
       {...props}
-    />
+    >
+      {/* shimmer layer */}
+      <div className="absolute inset-0 -translate-x-full animate-shimmer bg-gradient-to-r from-transparent via-white/50 to-transparent" />
+    </div>
   );
 }
 

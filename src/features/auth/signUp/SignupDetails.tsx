@@ -6,7 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import Image from "next/image";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
@@ -22,6 +22,7 @@ const SignupDetails = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const supabase = createClient();
+  const queryClient = useQueryClient();
 
   const {
     register,
@@ -39,33 +40,37 @@ const SignupDetails = () => {
     },
   });
 
-  const { mutate, status, error } = useMutation({
-    mutationFn: async (payload: SignupFormData) => {
-      const res = await axios.post("/api/auth/signup", payload, {
-        withCredentials: true,
-      });
-      return res.data;
-    },
-    onSuccess: (data) => {
-      reset({
-        firstname: "",
-        lastname: "",
-        email: "",
-        password: "",
-        confirmPassword: "",
-      });
+ 
+ const { mutate, status, error } = useMutation({
+   mutationFn: async (payload: SignupFormData) => {
+     const res = await axios.post("/api/auth/signup", payload, {
+       withCredentials: true,
+     });
+     return res.data;
+   },
 
-      toast.success(data?.message);
-      router.push("/");
-    },
-    onError: (error: AxiosError<ApiError>) => {
-      return toast.error(error?.response?.data?.message);
-    },
-  });
+   onSuccess: async (data) => {
+     reset({
+       firstname: "",
+       lastname: "",
+       email: "",
+       password: "",
+       confirmPassword: "",
+     });
 
-  const onSubmit = async (data: SignupFormData) => {
-    mutate(data);
-  };
+     toast.success(data?.message);
+
+     await queryClient.invalidateQueries({
+       queryKey: ["user"],
+     });
+
+     router.push("/");
+   },
+
+   onError: (error: AxiosError<ApiError>) => {
+     toast.error(error?.response?.data?.message);
+   },
+ });
 
   const signInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -79,6 +84,8 @@ const SignupDetails = () => {
       console.error("Google OAuth error:", error.message);
     }
   };
+
+  const onSubmit = (data: SignupFormData) => mutate(data);
 
   return (
     <section className="flex flex-col lg:flex-row items-center bg-white text-black">
@@ -122,7 +129,7 @@ const SignupDetails = () => {
             placeholder="you@gmail.com"
             register={register("email")}
             error={errors.email}
-            autoComplete="off"
+            autoComplete="username"
           />
 
           <div className="relative">
@@ -131,7 +138,7 @@ const SignupDetails = () => {
               placeholder="Password"
               register={register("password")}
               error={errors.password}
-              autoComplete="off"
+              autoComplete="new-password"
             />
 
             <button
@@ -159,17 +166,11 @@ const SignupDetails = () => {
             {status === "pending" ? "Creating account..." : "Create Account"}
           </button>
 
-          {status && (
-            <p
-              className={`text-sm text-center ${
-                status === "error" ? "text-red-500" : "text-green-600"
-              }`}
-              role="alert"
-            >
-              {error?.response?.data?.message}
-            </p>
-          )}
-
+          {status === "error" && (
+  <p className="text-sm text-center text-red-500">
+    {error?.response?.data?.message}
+  </p>
+)}
           <button
             type="button"
             onClick={signInWithGoogle}

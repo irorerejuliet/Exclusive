@@ -8,6 +8,10 @@ import { useState } from "react";
 import { categories, navLinks } from "../constant/navLinks";
 import SearchBar from "./SearchBar";
 import { useWishlistCount } from "@/hooks/useWishlist";
+import useUser from "@/hooks/useUser";
+import { createClient } from "@/lib/supabase/client";
+import { useQueryClient } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
 
 
 
@@ -17,7 +21,11 @@ const Navbar = () => {
   const [profileOpen, setProfileOpen] = useState(false);
   const cartCount = useCartCount();
 const wishlistCount = useWishlistCount();
-  
+const { user } = useUser();
+  const isLoggedIn = !!user;
+  const supabase = createClient();
+  const queryClient = useQueryClient();
+  const router = useRouter();
 
   return (
     <header className="bg-white text-black border-b fixed top-0 left-0 w-full z-50">
@@ -37,11 +45,19 @@ const wishlistCount = useWishlistCount();
 
         {/* DESKTOP NAV */}
         <div className="hidden md:flex gap-6 items-center text-base">
-          {navLinks.map((link) => (
-            <Link key={link.name} href={link.href}>
-              {link.name}
-            </Link>
-          ))}
+          {navLinks
+            .filter((link) => {
+              if (isLoggedIn && link.name === "SignUp") {
+                return false;
+              }
+
+              return true;
+            })
+            .map((link) => (
+              <Link key={link.name} href={link.href}>
+                {link.name}
+              </Link>
+            ))}
         </div>
 
         {/* DESKTOP RIGHT */}
@@ -73,34 +89,63 @@ const wishlistCount = useWishlistCount();
               )}
             </Link>
 
-            <div className="relative">
-              <button
-                onClick={() => setProfileOpen(!profileOpen)}
-                className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full"
-              >
-                <User size={18} />
-              </button>
+            {isLoggedIn ? (
+              <div className="relative">
+                <button
+                  onClick={() => setProfileOpen(!profileOpen)}
+                  className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full"
+                >
+                  <User size={18} />
+                </button>
 
-              {profileOpen && (
-                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md text-sm flex flex-col">
-                  <Link href="/profile" className="px-4 py-2 hover:bg-gray-100">
-                    My Profile
-                  </Link>
-                  <Link href="/orders" className="px-4 py-2 hover:bg-gray-100">
-                    Orders
-                  </Link>
-                  <Link
-                    href="/settings"
-                    className="px-4 py-2 hover:bg-gray-100"
-                  >
-                    Settings
-                  </Link>
-                  <button className="text-left px-4 py-2 hover:bg-gray-100 text-red-500">
-                    Logout
-                  </button>
-                </div>
-              )}
-            </div>
+                {profileOpen && (
+                  <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md text-sm flex flex-col">
+                    <Link
+                      href="/profile"
+                      className="px-4 py-2 hover:bg-gray-100"
+                    >
+                      My Profile
+                    </Link>
+
+                    <Link
+                      href="/orders"
+                      className="px-4 py-2 hover:bg-gray-100"
+                    >
+                      Orders
+                    </Link>
+
+                    <Link
+                      href="/settings"
+                      className="px-4 py-2 hover:bg-gray-100"
+                    >
+                      Settings
+                    </Link>
+
+                    <button
+                      onClick={async () => {
+                        await supabase.auth.signOut();
+
+                        queryClient.invalidateQueries({
+                          queryKey: ["user"],
+                        });
+
+                        router.push("/"); 
+                      }}
+                      className="text-left px-4 py-2 hover:bg-gray-100 text-red-500"
+                    >
+                      Logout
+                    </button>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <Link
+                href="/login"
+                className="px-4 py-2 bg-black text-white rounded-md"
+              >
+                Login
+              </Link>
+            )}
           </div>
         </div>
 
@@ -115,7 +160,7 @@ const wishlistCount = useWishlistCount();
             )}
           </Link>
 
-          <User size={20} />
+          {isLoggedIn ? <User size={20} /> : <Link href="/login">Login</Link>}
         </div>
       </nav>
 
@@ -136,7 +181,6 @@ const wishlistCount = useWishlistCount();
           </div>
 
           <div className="p-4 border-b">
-            
             <SearchBar />
           </div>
 
@@ -144,16 +188,24 @@ const wishlistCount = useWishlistCount();
           <div className="p-4 border-b">
             <p className="text-xs text-gray-500 uppercase mb-3">Navigation</p>
             <div className="flex flex-col gap-3">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.name}
-                  href={link.href}
-                  className="text-base font-medium hover:text-red-500 transition"
-                  onClick={() => setOpen(false)}
-                >
-                  {link.name}
-                </Link>
-              ))}
+              {navLinks
+                .filter((link) => {
+                  if (isLoggedIn && link.name === "SignUp") {
+                    return false;
+                  }
+
+                  return true;
+                })
+                .map((link) => (
+                  <Link
+                    key={link.name}
+                    href={link.href}
+                    className="text-base font-medium hover:text-red-500 transition"
+                    onClick={() => setOpen(false)}
+                  >
+                    {link.name}
+                  </Link>
+                ))}
             </div>
           </div>
 
