@@ -1,5 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
-import { LoginFormData } from "@/schema/auth";
+import { LoginFormData } from "@/schema/auth/loginSchema";
+
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

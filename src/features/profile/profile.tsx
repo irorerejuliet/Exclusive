@@ -2,27 +2,32 @@
 
 import React from "react";
 import Link from "next/link";
-import {
-  User,
-  Package,
-  Heart,
-  MapPin,
-  Settings,
-  LogOut,
-  Bell,
-  HelpCircle,
-} from "lucide-react";
+
+import useProfile from "@/hooks/useProfile";
+import { sidebarLinks } from "@/components/constant/sidebarLinks";
+import { LogOut } from "lucide-react";
 
 const ProfilePage = () => {
-  // Navigation items based on your project requirements
-  const sidebarLinks = [
-    { name: "Manage My Account", icon: <User size={20} />, active: true },
-    { name: "My Orders", icon: <Package size={20} />, active: false },
-    { name: "My Wishlist", icon: <Heart size={20} />, active: false },
-    { name: "Addresses", icon: <MapPin size={20} />, active: false },
-    { name: "Notifications", icon: <Bell size={20} />, active: false },
-    { name: "Help Center", icon: <HelpCircle size={20} />, active: false },
-  ];
+
+
+const {profile, status, error} = useProfile()
+
+if (status === "pending") {
+  return <p>Loading profile .....</p>
+}
+
+if (status === "error") {
+  return (
+    <div className="border border-red-200 bg-red-50 p-4 rounded">
+      <p className="text-red-600">
+        {error?.message || "Failed to load products."}
+      </p>
+    </div>
+  );
+}
+
+
+  
 
   return (
     <div className="min-h-screen bg-gray-50 text-black px-4 sm:px-8 lg:px-16 py-10">
@@ -41,20 +46,24 @@ const ProfilePage = () => {
           <div>
             <h3 className="font-semibold text-lg mb-4">Manage My Account</h3>
             <ul className="space-y-3">
-              {sidebarLinks.map((link) => (
-                <li key={link.name}>
-                  <button
-                    className={`flex items-center gap-3 w-full px-3 py-2 rounded-md transition ${
-                      link.active
-                        ? "bg-primary/10 text-primary font-medium"
-                        : "text-gray-600 hover:bg-gray-100"
-                    }`}
-                  >
-                    {link.icon}
-                    <span>{link.name}</span>
-                  </button>
-                </li>
-              ))}
+              {sidebarLinks.map((link) => {
+                const Icon = link.icon;
+
+                return (
+                  <li key={link.name}>
+                    <button
+                      className={`flex items-center gap-3 w-full px-3 py-2 rounded-md transition ${
+                        link.active
+                          ? "bg-primary/10 text-primary font-medium"
+                          : "text-gray-600 hover:bg-gray-100"
+                      }`}
+                    >
+                      <Icon size={20} />
+                      <span>{link.name}</span>
+                    </button>
+                  </li>
+                );
+              })}
             </ul>
           </div>
 
@@ -80,7 +89,7 @@ const ProfilePage = () => {
               </label>
               <input
                 type="text"
-                placeholder="Md"
+                value={profile?.firstname || ""}
                 className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
               />
             </div>
@@ -91,7 +100,7 @@ const ProfilePage = () => {
               </label>
               <input
                 type="text"
-                placeholder="Rimel"
+                value={profile?.firstname || ""}
                 className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
               />
             </div>
@@ -100,12 +109,12 @@ const ProfilePage = () => {
               <label className="text-sm font-medium text-gray-700">Email</label>
               <input
                 type="email"
-                placeholder="rimel1111@gmail.com"
+                value={profile?.email}
                 className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
               />
             </div>
 
-            <div className="space-y-2">
+            {/* <div className="space-y-2">
               <label className="text-sm font-medium text-gray-700">
                 Address
               </label>
@@ -114,7 +123,7 @@ const ProfilePage = () => {
                 placeholder="Kingston, 5236, United Kingdom"
                 className="w-full bg-gray-50 border border-transparent focus:border-primary focus:bg-white outline-none rounded-md p-3 transition"
               />
-            </div>
+            </div> */}
 
             {/* Password Section */}
             {/* <div className="md:col-span-2 mt-4 space-y-4">

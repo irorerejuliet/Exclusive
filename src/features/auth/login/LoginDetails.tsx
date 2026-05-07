@@ -2,7 +2,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import type z from "zod";
 import Image from "next/image";
-import { loginSchema } from "@/schema/auth";
+
 import CustomInput from "../../../components/CustomInput";
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
@@ -13,6 +13,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { loginSchema } from "@/schema/auth/loginSchema";
 
 
 

@@ -122,6 +122,7 @@ const SignupDetails = () => {
             placeholder="you@gmail.com"
             register={register("email")}
             error={errors.email}
+            autoComplete="off"
           />
 
           <div className="relative">
@@ -130,6 +131,7 @@ const SignupDetails = () => {
               placeholder="Password"
               register={register("password")}
               error={errors.password}
+              autoComplete="off"
             />
 
             <button

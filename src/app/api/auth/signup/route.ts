@@ -3,28 +3,54 @@ import { SignupFormData } from "@/schema/auth";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  const body = (await req.json()) as SignupFormData;
-
-  if (!body.email || !body.password) {
-    return NextResponse.json({
-      success: false,
-      message: "Invalide Credencials",
-    },
-    {status: 400}
-);
-  }
-
-  const supabase = await createClient();
-
-  const { data, error } = await supabase.auth.signUp(body);
-
   try {
-    if (error && !data?.user) {
-      console.log(error);
+    const body = (await req.json()) as SignupFormData;
+
+    const { firstname, lastname, email, password } = body;
+
+    if (!email || !password) {
       return NextResponse.json(
         {
           success: false,
-          message: error.message || "Failed to create user",
+          message: "Invalid Credentials",
+        },
+        { status: 400 },
+      );
+    }
+
+    const supabase = await createClient();
+
+    // CREATE AUTH USER
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
+
+    if (error || !data.user) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: error?.message || "Failed to create user",
+        },
+        {
+          status: 400,
+        },
+      );
+    }
+
+    // INSERT USER PROFILE
+    const { error: profileError } = await supabase.from("profiles").insert({
+      id: data.user.id,
+      firstname,
+      lastname,
+      email,
+    });
+
+    if (profileError) {
+      return NextResponse.json(
+        {
+          success: false,
+          message: profileError.message,
         },
         {
           status: 400,
@@ -34,20 +60,19 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({
       success: true,
-      message: "user register",
-      data: data,
+      message: "User registered successfully",
+      data,
     });
-  } catch (error) {
-    if (error) {
-      return NextResponse.json(
-        {
-          success: false,
-          message: "Something went wrong",
-        },
-        {
-          status: 500,
-        },
-      );
-    }
+  } catch (error: any) {
+    console.error("SIGNUP ERROR:", error);
+
+    return NextResponse.json(
+      {
+        success: false,
+        message: error?.message || error?.error_description || "Unknown error",
+        debug: error,
+      },
+      { status: 500 },
+    );
   }
 }
