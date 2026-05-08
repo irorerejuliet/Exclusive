@@ -98,13 +98,13 @@ const SignupDetails = () => {
         />
       </div>
 
-      <div className="space-y-10 max-w-md mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg w-full">
+      <div className="space-y-10 max-w-md mx-auto bg-white p-6 sm:p-8 rounded-2xl shadow-lg w-full lg:my-0 my-20">
         <h4 className="text-2xl sm:text-3xl font-semibold text-gray-900 text-center">
           Create an account
         </h4>
 
         <form
-          className="flex flex-col space-y-6"
+          className="flex flex-col space-y-6 "
           onSubmit={handleSubmit(onSubmit)}
         >
           {/* FIRST NAME */}
@@ -143,7 +143,7 @@ const SignupDetails = () => {
             <button
               type="button"
               onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+              className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500"
             >
               {showPassword ? <EyeOff size={20} /> : <Eye size={20} />}
             </button>

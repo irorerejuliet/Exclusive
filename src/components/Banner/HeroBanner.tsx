@@ -92,6 +92,57 @@ const HeroBanner = () => {
           ))}
         </div>
       </div>
+      {/* MOBILE HERO */}
+      {/* MOBILE HERO */}
+      <div className="lg:hidden w-full flex justify-center">
+        <div className="w-full max-w-md flex flex-col items-center text-center space-y-6 mx-auto">
+          {/* Badge */}
+          <span className="bg-red-600 text-xs px-3 py-1 rounded-full uppercase tracking-wide">
+            Limited Offer
+          </span>
+
+          {/* Image first (important for mobile e-commerce UX) */}
+          <div className="relative w-full flex justify-center items-center">
+            <div className="absolute w-48 h-48 bg-red-500/20 blur-2xl rounded-full" />
+
+            <Image
+              src={heroImages[activeIndex]}
+              alt="hero"
+              width={300}
+              height={300}
+              className="w-44 object-contain transition-all duration-700"
+            />
+          </div>
+
+          {/* Text (simplified for mobile) */}
+          <div className="space-y-2">
+            <h1 className="text-2xl font-bold">iPhone Deals</h1>
+
+            <p className="text-red-500 font-semibold text-lg">Up to 10% Off</p>
+
+            <p className="text-gray-300 text-sm px-4">
+              Premium iPhones with exclusive discounts.
+            </p>
+          </div>
+
+          {/* CTA (only ONE primary action on mobile) */}
+          <button className="bg-red-600 hover:bg-red-700 transition px-6 py-3 rounded-lg font-semibold w-full max-w-xs">
+            Shop Now
+          </button>
+
+          {/* Dots */}
+          <div className="flex justify-center gap-2 pt-2">
+            {heroImages.map((_, index) => (
+              <div
+                key={index}
+                onClick={() => setActiveIndex(index)}
+                className={`h-2 rounded-full cursor-pointer transition-all
+          ${activeIndex === index ? "bg-red-500 w-6" : "bg-gray-500 w-2"}`}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
     </section>
   );
 };

@@ -91,7 +91,7 @@ const supabase = createClient()
 
   return (
     <div className="flex  items-center  py-28 bg-white text-black">
-      <div>
+      <div className="">
         <Image
           src="/images/beatsnoop.svg"
           alt="beatsnoop"
