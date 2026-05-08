@@ -31,6 +31,7 @@ const supabase = createClient()
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm<LoginFormData>({
     resolver: zodResolver(loginSchema),
@@ -41,7 +42,7 @@ const supabase = createClient()
   });
 
 
-  const { mutate, status, error } = useMutation({
+  const { mutate, status, error, isError, isSuccess } = useMutation({
     mutationFn: async (payload: LoginFormData) => {
       const res = await axios.post("/api/auth/login", payload);
       return res.data;
@@ -49,14 +50,18 @@ const supabase = createClient()
 
     onSuccess: (data) => {
       toast.success(data?.message);
+       reset({
+         email: "",
+         password: "",
+       });
 
       const redirectUrl = searchParams.get("redirect");
 
       const safeRedirect =
         redirectUrl && redirectUrl.startsWith("/") ? redirectUrl : "/";
-queryClient.invalidateQueries({
-  queryKey: ["user"],
-});
+      queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
       router.replace(safeRedirect);
     },
 
@@ -127,26 +132,25 @@ queryClient.invalidateQueries({
         </div>
 
         <form
+          autoComplete="off"
           className="flex flex-col space-y-5  "
           onSubmit={handleSubmit(onSubmit)}
         >
           <CustomInput
             type="email"
             placeholder="Email"
-            autoComplete="username"
+            autoComplete="off"
             register={register("email")}
             error={errors.email}
-            
           />
 
           <div className="relative ">
             <CustomInput
               type={showPassword ? "text" : "password"}
               placeholder="Password"
-              autoComplete="current-password"
+              autoComplete="new-password"
               register={register("password")}
               error={errors.password}
-              
             />
 
             <button
@@ -167,14 +171,15 @@ queryClient.invalidateQueries({
               {status === "pending" ? "Logging in..." : "Log in"}
             </button>
 
-            {status && (
-              <p
-                className={`text-sm text-center ${
-                  status === "error" ? "text-red-500" : "text-green-600"
-                }`}
-                role="alert"
-              >
+            {isError && (
+              <p className="text-sm text-center text-red-500" role="alert">
                 {error?.response?.data?.message}
+              </p>
+            )}
+
+            {isSuccess && (
+              <p className="text-sm text-center text-green-600">
+                Login successful
               </p>
             )}
 
