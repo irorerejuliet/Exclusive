@@ -40,37 +40,36 @@ const SignupDetails = () => {
     },
   });
 
- 
- const { mutate, status, error } = useMutation({
-   mutationFn: async (payload: SignupFormData) => {
-     const res = await axios.post("/api/auth/signup", payload, {
-       withCredentials: true,
-     });
-     return res.data;
-   },
+  const { mutate, status, error } = useMutation({
+    mutationFn: async (payload: SignupFormData) => {
+      const res = await axios.post("/api/auth/signup", payload, {
+        withCredentials: true,
+      });
+      return res.data;
+    },
 
-   onSuccess: async (data) => {
-     reset({
-       firstname: "",
-       lastname: "",
-       email: "",
-       password: "",
-       confirmPassword: "",
-     });
+    onSuccess: async (data) => {
+      reset({
+        firstname: "",
+        lastname: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+      });
 
-     toast.success(data?.message);
+      toast.success(data?.message);
 
-     await queryClient.invalidateQueries({
-       queryKey: ["user"],
-     });
+      await queryClient.invalidateQueries({
+        queryKey: ["user"],
+      });
 
-     router.push("/");
-   },
+      router.push("/");
+    },
 
-   onError: (error: AxiosError<ApiError>) => {
-     toast.error(error?.response?.data?.message);
-   },
- });
+    onError: (error: AxiosError<ApiError>) => {
+      toast.error(error?.response?.data?.message);
+    },
+  });
 
   const signInWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
@@ -167,10 +166,10 @@ const SignupDetails = () => {
           </button>
 
           {status === "error" && (
-  <p className="text-sm text-center text-red-500">
-    {error?.response?.data?.message}
-  </p>
-)}
+            <p className="text-sm text-center text-red-500">
+              {error?.response?.data?.message}
+            </p>
+          )}
           <button
             type="button"
             onClick={signInWithGoogle}

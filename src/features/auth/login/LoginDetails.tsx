@@ -14,6 +14,7 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { loginSchema } from "@/schema/auth/loginSchema";
+import { createClient } from "@/lib/supabase/client";
 
 
 
@@ -25,6 +26,7 @@ const LoginDetails = () => {
   const router = useRouter()
   const searchParams = useSearchParams();
 const queryClient = useQueryClient();
+const supabase = createClient()
   
   const {
     register,
@@ -67,6 +69,21 @@ queryClient.invalidateQueries({
     mutate(data)
   }
 
+
+  const loginWithGoogle = async () => {
+    const { error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: `${location.origin}/api/auth/callback`,
+      },
+    });
+
+    if (error) {
+      console.error("Google OAuth error:", error.message);
+      toast.error("Google login failed");
+    }
+  };
+
   return (
     <div className="flex  items-center  py-28 bg-white text-black">
       <div>
@@ -90,6 +107,7 @@ queryClient.invalidateQueries({
 
         <button
           type="button"
+          onClick={loginWithGoogle}
           className="flex w-full items-center justify-center gap-3 rounded-md border border-gray-300 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 transition"
         >
           <Image
@@ -118,6 +136,7 @@ queryClient.invalidateQueries({
             autoComplete="username"
             register={register("email")}
             error={errors.email}
+            
           />
 
           <div className="relative ">
@@ -127,6 +146,7 @@ queryClient.invalidateQueries({
               autoComplete="current-password"
               register={register("password")}
               error={errors.password}
+              
             />
 
             <button
