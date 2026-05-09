@@ -23,7 +23,7 @@ const HeroBanner = () => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden w-full rounded-xl mx-auto bg-gradient-to-br from-black via-gray-900 to-black text-white px-5 sm:px-10 lg:px-20 py-12 lg:py-20">
+    <section className="relative overflow-hidden w-full rounded-xl mx-auto bg-linear-to-br from-black via-gray-900 to-black text-white px-5 sm:px-10 lg:px-20 py-12 lg:py-20">
       {/* Background Glow */}
       <div className="absolute w-52 sm:w-72 h-52 sm:h-72 bg-red-500/20 blur-3xl rounded-full top-0 left-0" />
       <div className="absolute w-52 sm:w-72 h-52 sm:h-72 bg-purple-500/20 blur-3xl rounded-full bottom-0 right-0" />
@@ -72,7 +72,7 @@ const HeroBanner = () => {
             alt="hero"
             width={400}
             height={400}
-            className="relative w-44 sm:w-64 lg:w-[420px] object-contain transition-all duration-700"
+            className="relative w-44 sm:w-64 lg:w-105 object-contain transition-all duration-700"
           />
         </div>
       </div>
