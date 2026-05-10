@@ -1,4 +1,4 @@
-import ProfilePage from '@/features/profile/Profile'
+import ProfilePage from '@/features/profile/ProfilePage'
 
 const page = () => {
   return (

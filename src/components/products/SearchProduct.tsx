@@ -7,8 +7,10 @@ import ProductCard from "./ProductCard";
 import { Products, } from "@/types/products";
 
 const SearchProduct = () => {
-  const searchParams = useSearchParams();
-  const searchQuery = searchParams.get("query") || "";
+  const searchQuery =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search).get("query") || ""
+      : "";
 
   const { products = [], status, error } = useProductSearch(searchQuery);
 

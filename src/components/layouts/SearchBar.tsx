@@ -1,30 +1,32 @@
 "use client";
 
 import Image from "next/image";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export default function SearchBar() {
   const router = useRouter();
   const pathname = usePathname();
-  const searchParams = useSearchParams();
 
   const [query, setQuery] = useState("");
 
+  // read URL safely
+  const getQueryFromUrl = () => {
+    if (typeof window === "undefined") return "";
+    return new URLSearchParams(window.location.search).get("query") || "";
+  };
+
   useEffect(() => {
-    // Clear the input when leaving the search page
     if (pathname !== "/searchPage") {
       setQuery("");
       return;
     }
 
-    // Populate the input from the URL while on the search page
-    setQuery(searchParams.get("query") || "");
-  }, [pathname, searchParams]);
+    setQuery(getQueryFromUrl());
+  }, [pathname]);
 
   const onSubmit = () => {
     const trimmedQuery = query.trim();
-
     if (!trimmedQuery) return;
 
     router.push(`/searchPage?query=${encodeURIComponent(trimmedQuery)}`);

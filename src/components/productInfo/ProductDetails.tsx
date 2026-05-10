@@ -1,7 +1,7 @@
 "use client";
 
 import useFetch from "@/hooks/useFetch";
-import { Product } from "@/types/products";
+import { Products } from "@/types/products";
 import { ratingAndStars } from "@/utils/ratingAndStars";
 import { Heart } from "lucide-react";
 import Image from "next/image";
@@ -15,11 +15,12 @@ const ProductDetails = () => {
   const [currentImage, setCurrentImage] = useState("");
   const [qty, setQty] = useState(1);
 
-  const { data, isLoading, error } = useFetch({
-    url: `products/${id}`,
-  });
+ const { data, isLoading, error } = useFetch({
+   queryKey: ["product", id],
+   url: `products/${id}`,
+ });
 
-  const product = data as Product;
+  const product = data as Products;
 
   // Loading state
   if (isLoading) {
@@ -32,7 +33,7 @@ const ProductDetails = () => {
 
   // Error state
   if (error) {
-    return <h1 className="text-center text-red-500">{error}</h1>;
+    return <h1 className="text-center text-red-500">{error.message}</h1>;
   }
 
   // No product
@@ -151,20 +152,20 @@ const ProductDetails = () => {
               <p className="text-gray-500">
                 Enter your postal code for availability
               </p>
-              <p>{product.warrantyInformation}</p>
+              <p>{product.warranty_information}</p>
             </div>
 
             <hr />
 
             <div>
               <p className="font-medium">Return Policy</p>
-              <p className="text-gray-500">{product.returnPolicy}</p>
+              <p className="text-gray-500">{product.return_policy}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Reviews Section */}
+      {/* Reviews Section
       <div className="mt-16 border p-6 rounded">
         <h3 className="text-xl font-semibold mb-6">Customer Reviews</h3>
 
@@ -190,7 +191,7 @@ const ProductDetails = () => {
             </div>
           );
         })}
-      </div>
+      </div> */}
     </div>
   );
 };

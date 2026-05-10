@@ -1,8 +1,7 @@
 import LoginDetails from '@/features/auth/login/LoginDetails'
-import React from 'react'
 
-const page = () => {
-  return (<LoginDetails/> )
-}
+const page = ({ searchParams }: any) => {
+  return <LoginDetails redirect={searchParams?.redirect} />;
+};
 
 export default page

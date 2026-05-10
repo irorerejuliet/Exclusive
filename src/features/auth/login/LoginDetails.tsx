@@ -1,33 +1,28 @@
-"use client"
-import { zodResolver } from "@hookform/resolvers/zod";
-import type z from "zod";
-import Image from "next/image";
+"use client";
 
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Image from "next/image";
 import CustomInput from "../../../components/CustomInput";
 import { useForm } from "react-hook-form";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
-import { ApiError } from "next/dist/server/api-utils";
 import Link from "next/link";
 import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { loginSchema } from "@/schema/auth/loginSchema";
 import { createClient } from "@/lib/supabase/client";
 
-
-
 type LoginFormData = z.infer<typeof loginSchema>;
 
-
-const LoginDetails = () => {
+const LoginDetails = ({ redirect }: { redirect?: string }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter()
-  const searchParams = useSearchParams();
-const queryClient = useQueryClient();
-const supabase = createClient()
-  
+  const router = useRouter();
+  const queryClient = useQueryClient();
+  const supabase = createClient();
+
   const {
     register,
     handleSubmit,
@@ -41,7 +36,6 @@ const supabase = createClient()
     },
   });
 
-
   const { mutate, status, error, isError, isSuccess } = useMutation({
     mutationFn: async (payload: LoginFormData) => {
       const res = await axios.post("/api/auth/login", payload);
@@ -50,30 +44,23 @@ const supabase = createClient()
 
     onSuccess: (data) => {
       toast.success(data?.message);
-       reset({
-         email: "",
-         password: "",
-       });
-
-      const redirectUrl = searchParams.get("redirect");
+      reset({ email: "", password: "" });
 
       const safeRedirect =
-        redirectUrl && redirectUrl.startsWith("/") ? redirectUrl : "/";
-      queryClient.invalidateQueries({
-        queryKey: ["user"],
-      });
+        redirect && redirect.startsWith("/") ? redirect : "/";
+
+      queryClient.invalidateQueries({ queryKey: ["user"] });
       router.replace(safeRedirect);
     },
 
-    onError: (error: AxiosError<ApiError>) => {
-      return toast.error(error?.response?.data?.message);
+    onError: (error: AxiosError<any>) => {
+      toast.error(error?.response?.data?.message);
     },
   });
 
-  const onSubmit = async (data: LoginFormData) =>{
-    mutate(data)
-  }
-
+  const onSubmit = (data: LoginFormData) => {
+    mutate(data);
+  };
 
   const loginWithGoogle = async () => {
     const { error } = await supabase.auth.signInWithOAuth({
