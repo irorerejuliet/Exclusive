@@ -23,15 +23,15 @@ const HeroBanner = () => {
   }, []);
 
   return (
-    <section className="relative overflow-hidden w-full rounded-xl mx-auto bg-linear-to-br from-black via-gray-900 to-black text-white px-5 sm:px-10 lg:px-20 py-12 lg:py-20">
-      {/* Background Glow */}
+    <section className="relative overflow-hidden rounded-xl bg-linear-to-br from-black via-gray-900 to-black text-white px-5 sm:px-10 lg:px-20 py-12 lg:py-20">
+     
       <div className="absolute w-52 sm:w-72 h-52 sm:h-72 bg-red-500/20 blur-3xl rounded-full top-0 left-0" />
       <div className="absolute w-52 sm:w-72 h-52 sm:h-72 bg-purple-500/20 blur-3xl rounded-full bottom-0 right-0" />
 
-      {/* MAIN CONTENT */}
-      <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10 w-full">
-        {/* TEXT */}
-        <div className="w-full lg:max-w-xl space-y-5 text-center lg:text-left">
+     
+      <div className="relative flex flex-col lg:flex-row items-center justify-between gap-10">
+        
+        <div className="max-w-xl space-y-5 text-center lg:text-left lg:pt-0 pt-10">
           <span className="inline-block bg-red-600 text-xs px-3 py-1 rounded-full uppercase tracking-wide">
             Limited Offer
           </span>
@@ -64,7 +64,7 @@ const HeroBanner = () => {
         </div>
 
         {/* IMAGE */}
-        <div className="relative flex justify-center items-center mt-8 lg:mt-0 w-full">
+        <div className="relative flex justify-center items-center mt-8 lg:mt-0">
           <div className="absolute w-52 sm:w-64 lg:w-72 h-52 sm:h-64 lg:h-72 bg-red-500/30 blur-2xl rounded-full" />
 
           <Image

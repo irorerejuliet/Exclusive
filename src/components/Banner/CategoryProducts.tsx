@@ -37,7 +37,7 @@ const CategoryProducts = () => {
   }, []);
   console.log(categories, "Cat");
   return (
-    <div className="w-54.25 border-r pr-6 text-black">
+    <div className="hidden lg:block w-64 border-r pr-6 text-black">
       {loading && <p>Loading...</p>}
       {error && !categories?.length && <p>{error}</p>}
       {categories.slice(0, 10).map((category, index: number) => (
