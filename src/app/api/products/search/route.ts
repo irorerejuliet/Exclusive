@@ -1,15 +1,15 @@
-import { createClient } from "@/lib/supabase/client";
+import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
-
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const q = searchParams.get("q");
+
   if (!q || q.trim().length < 2) {
     return NextResponse.json([], { status: 200 });
   }
 
-  const supabase = createClient();
+  const supabase = await createClient();
 
   const { data, error } = await supabase
     .from("products")
