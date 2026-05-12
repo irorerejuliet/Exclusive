@@ -84,7 +84,7 @@ const LoginDetails = ({ redirect }: LoginDetailsProps) => {
 
   return (
     <div className="flex  items-center  py-28 bg-white text-black">
-      <div className="">
+      <div className="hidden lg:block">
         <Image
           src="/images/beatsnoop.svg"
           alt="beatsnoop"
