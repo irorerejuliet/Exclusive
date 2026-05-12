@@ -63,14 +63,17 @@ export async function POST(req: NextRequest) {
       message: "User registered successfully",
       data,
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error("SIGNUP ERROR:", error);
-
+let errorMessage = "Unknown error";
+if (error instanceof Error) {
+  errorMessage = error.message;
+}
     return NextResponse.json(
       {
         success: false,
-        message: error?.message || error?.error_description || "Unknown error",
-        debug: error,
+        message: errorMessage
+       
       },
       { status: 500 },
     );

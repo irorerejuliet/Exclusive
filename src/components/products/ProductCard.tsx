@@ -26,13 +26,7 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
       const res = await axios.post(`/api/products/isFavorite`, payload);
       return res.data;
     },
-    // onSuccess: (data, variables) => {
-    //   if (data?.success) {
-    //     toast.success(variables?.isFavorite ? "Added to wishist": "Remove from wishlist");
-    //     // Invalidate and refetch
-    //     queryClient.invalidateQueries({ queryKey: ["products"] });
-    //   }
-    // },
+   
     onSuccess: (data, variables) => {
       if (data?.success) {
         toast.success(

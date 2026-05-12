@@ -1,7 +1,19 @@
-import LoginDetails from '@/features/auth/login/LoginDetails'
+import LoginDetails from "@/features/auth/login/LoginDetails";
 
-const page = ({ searchParams }: any) => {
-  return <LoginDetails redirect={searchParams?.redirect} />;
+// Define the type properly for Next.js 15
+type PageProps = {
+  searchParams: Promise<{ [key: string]: string | string[] | undefined }>;
 };
 
-export default page
+// Use PascalCase for the component name (Page instead of page)
+const Page = async ({ searchParams }: PageProps) => {
+  // Await the promise to get the actual params
+  const resolvedParams = await searchParams;
+
+  // Pass the redirect as a string
+  return (
+    <LoginDetails redirect={resolvedParams.redirect as string | undefined} />
+  );
+};
+
+export default Page;

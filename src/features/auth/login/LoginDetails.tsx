@@ -15,9 +15,13 @@ import { useRouter } from "next/navigation";
 import { loginSchema } from "@/schema/auth/loginSchema";
 import { createClient } from "@/lib/supabase/client";
 
+interface LoginDetailsProps {
+  redirect?: string;
+}
+
 type LoginFormData = z.infer<typeof loginSchema>;
 
-const LoginDetails = ({ redirect }: { redirect?: string }) => {
+const LoginDetails = ({ redirect }: LoginDetailsProps) => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -53,8 +57,10 @@ const LoginDetails = ({ redirect }: { redirect?: string }) => {
       router.replace(safeRedirect);
     },
 
-    onError: (error: AxiosError<any>) => {
-      toast.error(error?.response?.data?.message);
+    onError: (error: AxiosError<{ message?: string }>) => {
+      const errorMessage =
+        error?.response?.data?.message || "Something went wrong";
+      toast.error(errorMessage);
     },
   });
 

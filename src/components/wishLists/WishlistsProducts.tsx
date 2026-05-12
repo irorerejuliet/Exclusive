@@ -1,8 +1,8 @@
 "use client";
 
-import { useFavorite } from "@/hooks/useFavorite";
+
 import ProductCard from "../products/ProductCard";
-import useProduct from "@/hooks/useProduct";
+
 import { Products } from "@/types/products";
 import useProducts from "@/hooks/useProducts";
 
