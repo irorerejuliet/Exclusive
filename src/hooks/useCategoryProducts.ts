@@ -1,3 +1,4 @@
+import { CategoryApiResponse } from "@/types/category";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
@@ -6,7 +7,7 @@ const useCategoryProducts = (categoryId: string) => {
     queryKey: ["category-products", categoryId],
 
     queryFn: async () => {
-      const res = await axios(`/api/products/categories/${categoryId}`);
+      const res = await axios<CategoryApiResponse>(`/api/products/categories/${categoryId}`);
 
       return res.data;
     },

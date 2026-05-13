@@ -22,10 +22,11 @@ const CategoryPage = () => {
 
   return (
     <div className="grid grid-cols-3 gap-6">
-      {products.map((product: any) => (
+      {products.map((product) => (
         <div key={product.id} className="border p-4 rounded">
           <h2>{product.name}</h2>
-          <p>${product.price}</p>
+          <p>{product.title}</p>
+          <p>{product.description}</p>
         </div>
       ))}
     </div>
