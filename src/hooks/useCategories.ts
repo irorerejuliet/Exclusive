@@ -12,7 +12,7 @@ const useCategories = () => {
     const fetchCategories = useQuery({
         queryKey: ["categories"],
         queryFn: async () => {
-            const res = await axios<CategoryApiResponse>("/api/categories");
+            const res = await axios<CategoryApiResponse>("/api/products/categories");
             return res.data
         }
     })
