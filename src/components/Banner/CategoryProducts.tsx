@@ -1,55 +1,48 @@
-"use client";
-
-import { Category, CategoryApiResponse } from "@/types/category";
+import useCategories from "@/hooks/useCategories";
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useState } from "react";
 
 const CategoryProducts = () => {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
+  const { categories, error, status } = useCategories();
 
-  useEffect(() => {
-    async function fetchCategories() {
-      setLoading(true);
-      try {
-        const res = await fetch("/api/categories");
-        if (!res.ok) throw new Error("Failed to fetch categories");
-        const data = (await res.json()) as CategoryApiResponse;
-        console.log(data);
-        console.log(data);
+ if (status === "pending") {
+   return (
+     <div className="hidden lg:block w-64 pr-6 ">
+       {[...Array(8)].map((_, index) => (
+         <div
+           key={index}
+           className="h-6 bg-gray-200 rounded animate-pulse mb-4 mt-10"
+         />
+       ))}
+     </div>
+   );
+ }
 
-        setCategories(data.data);
-        setError("");
-      } catch (err: unknown) {
-        if(err instanceof Error){
-         setError(err.message);
-        } else {
-          setError("Seomething went wrong")
-        }
-       
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchCategories();
-  }, []);
-  console.log(categories, "Cat");
+
+  if (status === "error") {
+    return (
+      <div className="border border-red-200 bg-red-50 p-4 rounded">
+        <p className="text-red-600">
+          {error instanceof Error ? error.message : "Failed to load categories"}
+        </p>
+      </div>
+    );
+  }
+
+  
+
   return (
     <div className="hidden lg:block w-64 border-r pr-6 text-black">
-      {loading && <p>Loading...</p>}
-      {error && !categories?.length && <p>{error}</p>}
       {categories.slice(0, 10).map((category, index: number) => (
         <div
-          key={index}
+          key={category.id}
           className="flex justify-between items-center py-3 text-[16px] cursor-pointer hover:text-black/70 capitalize"
         >
           <Link
             className="text-black hover:text-black/70 capitalize"
-            href={`/categories/${category?.id}`}
+            href={`/categories/${category.id}`}
           >
-            {category?.name}
+            {category.name}
           </Link>
 
           {index < 2 && (
@@ -68,4 +61,3 @@ const CategoryProducts = () => {
 };
 
 export default CategoryProducts;
-

@@ -102,13 +102,14 @@ const { user } = useUser();
                   <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md text-sm flex flex-col">
                     <Link
                       href="/profile"
+                      onClick={() => setProfileOpen(false)}
                       className="px-4 py-2 hover:bg-gray-100"
                     >
                       My Profile
                     </Link>
-
                     <Link
                       href="/orders"
+                      onClick={() => setProfileOpen(false)}
                       className="px-4 py-2 hover:bg-gray-100"
                     >
                       Orders
@@ -116,6 +117,7 @@ const { user } = useUser();
 
                     <Link
                       href="/settings"
+                      onClick={() => setProfileOpen(false)}
                       className="px-4 py-2 hover:bg-gray-100"
                     >
                       Settings
@@ -129,7 +131,7 @@ const { user } = useUser();
                           queryKey: ["user"],
                         });
 
-                        router.push("/"); 
+                        router.push("/");
                       }}
                       className="text-left px-4 py-2 hover:bg-gray-100 text-red-500"
                     >
@@ -150,7 +152,8 @@ const { user } = useUser();
         </div>
 
         {/* MOBILE RIGHT */}
-        <div className="flex md:hidden items-center gap-4">
+        {/* MOBILE RIGHT */}
+        <div className="flex md:hidden items-center gap-4 relative">
           <Link href="/cart" className="relative">
             <ShoppingCart size={22} />
             {cartCount > 0 && (
@@ -160,7 +163,59 @@ const { user } = useUser();
             )}
           </Link>
 
-          {isLoggedIn ? <User size={20} /> : <Link href="/login">Login</Link>}
+          {isLoggedIn ? (
+            <div className="relative">
+              <button
+                onClick={() => setProfileOpen(!profileOpen)}
+                className="w-8 h-8 flex items-center justify-center bg-gray-100 rounded-full"
+              >
+                <User size={18} />
+              </button>
+
+              {profileOpen && (
+                <div className="absolute right-0 mt-2 w-40 bg-white border rounded-md shadow-md text-sm flex flex-col z-50">
+                  <Link
+                    href="/profile"
+                    onClick={() => setProfileOpen(false)}
+                    className="px-4 py-2 hover:bg-gray-100"
+                  >
+                    My Profile
+                  </Link>
+                  <Link
+                    href="/orders"
+                    onClick={() => setProfileOpen(false)}
+                    className="px-4 py-2 hover:bg-gray-100"
+                  >
+                    Orders
+                  </Link>
+
+                  <Link
+                    href="/settings"
+                    onClick={() => setProfileOpen(false)}
+                    className="px-4 py-2 hover:bg-gray-100"
+                  >
+                    Settings
+                  </Link>
+                  <button
+                    onClick={async () => {
+                      await supabase.auth.signOut();
+
+                      queryClient.invalidateQueries({
+                        queryKey: ["user"],
+                      });
+
+                      router.push("/");
+                    }}
+                    className="text-left px-4 py-2 hover:bg-gray-100 text-red-500"
+                  >
+                    Logout
+                  </button>
+                </div>
+              )}
+            </div>
+          ) : (
+            <Link href="/login">Login</Link>
+          )}
         </div>
       </nav>
 

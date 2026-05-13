@@ -61,7 +61,7 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
   } = product;
   console.log(isFavorite);
   return (
-    <section className="group w-full max-w-65 flex flex-col">
+    <section className="group w-full max-w-full sm:max-w-65 flex flex-col">
       <div className="relative bg-gray-100 rounded-xl overflow-hidden transition-all duration-300 group-hover:shadow-xl">
         <span className="absolute top-3 left-3 bg-red-500 text-white text-xs px-2 py-1 rounded-md z-10">
           -{discount_percentage}%
@@ -76,7 +76,7 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
             }}
             disabled={isPending}
           >
-            {isFavorite ? "❤️" : "🤍" }
+            {isFavorite ? "❤️" : "🤍"}
           </button>
         </div>
         <div>
@@ -91,7 +91,7 @@ const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
               alt={title}
               width={160}
               height={160}
-              className="object-contain group-hover:scale-105 transition"
+              className="object-contain group-hover:scale-105 transition sm:w-auto sm:h-auto"
             />
           </div>
         </Link>
