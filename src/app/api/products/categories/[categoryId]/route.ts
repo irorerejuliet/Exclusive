@@ -1,36 +1,36 @@
 
-// import { createClient } from "@/lib/supabase/server"
-// import { apiResponse } from "@/utils/errorHandling"
+import { createClient } from "@/lib/supabase/server"
+import { apiResponse } from "@/utils/errorHandling"
 
-// interface Params {
-//   params: Promise<{ categoryId: string }>;
-// }
+interface Params {
+  params: Promise<{ categoryId: string }>;
+}
 
-// export const GET = async (request: Request, { params }: Params) => {
-//   const supabase = await createClient();
+export const GET = async (request: Request, { params }: Params) => {
+  const supabase = await createClient();
 
-//   const { categoryId } = await params;
+  const { categoryId } = await params;
 
-//   const { data, error } = await supabase
-//     .from("products")
-//     .select("*")
-//     .eq("category_id", categoryId);
+  const { data, error } = await supabase
+    .from("products")
+    .select("*")
+    .eq("category_id", categoryId);
 
-//   if (error) {
-//     return apiResponse({
-//       success: false,
-//       message: error.message,
-//       status: 400,
-//     });
-//   }
+  if (error) {
+    return apiResponse({
+      success: false,
+      message: error.message,
+      status: 400,
+    });
+  }
 
-//   return apiResponse({
-//     success: true,
-//     message: "Products fetched successfully",
-//     data,
-//     status: 200,
-//   });
-// };
+  return apiResponse({
+    success: true,
+    message: "Products fetched successfully",
+    data,
+    status: 200,
+  });
+};
 
 
 // export const DELETE = async (request: Request, {params}: Params) => {
