@@ -5,11 +5,11 @@ export interface CategoryApiResponse {
 }
 
 export interface Category {
-  id: number;
   created_at: string;
   name: string;
-  title: string;
-  description: string;
+  slug: string;
+  url: string;
+  id: string;
 }
 
 

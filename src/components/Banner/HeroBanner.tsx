@@ -20,7 +20,7 @@ const HeroBanner = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [heroImages]);
 
   return (
     <section className="relative overflow-hidden rounded-xl bg-linear-to-br from-black via-gray-900 to-black text-white px-5 sm:px-10 lg:px-20 py-12 lg:py-20">

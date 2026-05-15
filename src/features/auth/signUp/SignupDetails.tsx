@@ -11,7 +11,7 @@ import axios, { AxiosError } from "axios";
 import { toast } from "react-toastify";
 import { Eye, EyeOff } from "lucide-react";
 import { useState } from "react";
-import { redirect, useRouter } from "next/navigation";
+import {  useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
 type ApiError = {

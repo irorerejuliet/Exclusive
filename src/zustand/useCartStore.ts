@@ -17,7 +17,6 @@ interface CartState {
   removeFromCart: (id: string) => void;
   clearCart: () => void;
 
-  
   updateQuantity: (id: string, quantity: number) => void;
 }
 

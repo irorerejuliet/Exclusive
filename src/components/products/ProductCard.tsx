@@ -16,7 +16,7 @@ interface ProductCardProps {
   variant?: "default" | "wishlist";
 }
 
-const ProductCard = ({ product, variant = "default" }: ProductCardProps) => {
+const ProductCard = ({ product,  }: ProductCardProps) => {
   // Access the client
   const queryClient = useQueryClient();
 
