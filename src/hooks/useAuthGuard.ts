@@ -1,13 +1,13 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 "use client";
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 
-
 export default function useAuthGuard() {
   const router = useRouter();
-  const supabase = createClient()
+  const supabase = createClient();
 
   useEffect(() => {
     const checkUser = async () => {

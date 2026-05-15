@@ -22,7 +22,7 @@ interface CartState {
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set, get) => ({
+    (set) => ({
       cartItems: [],
 
       addToCart: (item) =>
@@ -49,7 +49,6 @@ export const useCartStore = create<CartState>()(
 
       clearCart: () => set({ cartItems: [] }),
 
-      // 🔥 THIS IS WHAT FIXES YOUR + / -
       updateQuantity: (id, quantity) =>
         set((state) => ({
           cartItems: state.cartItems

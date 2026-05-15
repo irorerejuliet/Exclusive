@@ -4,15 +4,16 @@ import { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 
+const heroImages = [
+  "/images/iphone1.png",
+  "/images/iphone17.png",
+  "/images/iphone-12.png",
+  "/images/iphone-18.png",
+];
 const HeroBanner = () => {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  const heroImages = [
-    "/images/iphone1.png",
-    "/images/iphone17.png",
-    "/images/iphone-12.png",
-    "/images/iphone-18.png",
-  ];
+  
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -20,7 +21,7 @@ const HeroBanner = () => {
     }, 4000);
 
     return () => clearInterval(interval);
-  }, [heroImages]);
+  }, []);
 
   return (
     <section className="relative overflow-hidden rounded-xl bg-linear-to-br from-black via-gray-900 to-black text-white px-5 sm:px-10 lg:px-20 py-12 lg:py-20">
