@@ -91,7 +91,7 @@ const ProductCard = ({ product,  }: ProductCardProps) => {
               alt={title}
               width={160}
               height={160}
-              className="object-contain group-hover:scale-105 transition sm:w-auto sm:h-auto bg-red-800"
+              className="object-contain group-hover:scale-105 transition sm:w-auto sm:h-auto"
             />
           </div>
         </Link>
