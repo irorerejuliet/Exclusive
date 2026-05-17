@@ -1,15 +1,16 @@
-
-import { createClient } from "@/lib/supabase/server"
-import { apiResponse } from "@/utils/errorHandling"
+import { createClient } from "@/lib/supabase/server";
+import { apiResponse } from "@/utils/errorHandling";
 
 interface Params {
-  params: Promise<{ categoryId: string }>;
+  params: {
+    categoryId: string;
+  };
 }
 
-export const GET = async (request: Request, { params }: Params) => {
+export async function GET(request: Request, { params }: Params) {
   const supabase = await createClient();
 
-  const { categoryId } = await params;
+  const { categoryId } = params;
 
   const { data, error } = await supabase
     .from("products")
@@ -30,37 +31,4 @@ export const GET = async (request: Request, { params }: Params) => {
     data,
     status: 200,
   });
-};
-
-
-// export const DELETE = async (request: Request, {params}: Params) => {
-//   const supabase = await createClient()
-//   const {categoryId} = await params;
-
-  
-// try {
-//   const { error } = await supabase
-//     .from("categories")
-//     .delete()
-//     .eq("id", categoryId);
-  
-//     if(error){
-//       return apiResponse({
-//         success: false,
-//         message: error.message,
-//         status: 400,
-//       });
-//     }
-
-
-//     return apiResponse({
-//       success: true,
-//       message: `${categoryId}  delected successfully`,
-//     });
-// } catch (error) {
-//   return apiResponse({
-//     success: false,
-//     message: error instanceof Error ? error.message : " Something whent wrong",
-//   });
-// }
-// }
+}
