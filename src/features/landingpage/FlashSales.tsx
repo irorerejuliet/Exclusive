@@ -26,7 +26,7 @@ if (status === "error") {
 
 if (status === "pending" && products.length === 0) {
   return (
-    <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 space-y-10 md:space-y-0 md:px-0 px-10">
+    <div className="wrapper grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-10.25 space-y-10 md:space-y-0 md:px-0 px-10 text-2xl">
       {[1, 2, 3, 4, 5, 6, 7, 8].map((_, i) => (
         <CardSkeleton key={i} />
       ))}
