@@ -12,7 +12,7 @@ const PaymentDetails = () => {
         </Link>
       </div>
       <div className="flex  items-center gap-10 py-20  ">
-        <div className="shadow border border-gray-100 w-[340px] h-[457px] pt-4 px-8 rounded-md">
+        <div className="shadow border border-gray-100 w-85 h-114.25 pt-4 px-8 rounded-md">
           <div className="space-y-6 pb-4">
             <div className="gap-2 flex items-center">
               <button className="text-white bg-primary rounded-full p-4">
@@ -46,7 +46,7 @@ const PaymentDetails = () => {
             <p>Emails: support@exclusive.com</p>
           </div>
         </div>
-        <div className="w-[1000px]   bg-white p-8 rounded-md shadow">
+        <div className="w-250   bg-white p-8 rounded-md shadow">
           <form className="space-y-6">
             {/* Top Inputs */}
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
