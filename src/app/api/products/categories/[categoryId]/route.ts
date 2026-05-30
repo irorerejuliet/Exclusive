@@ -1,16 +1,13 @@
 import { createClient } from "@/lib/supabase/server";
 import { apiResponse } from "@/utils/errorHandling";
 
-interface Params {
-  params: {
-    categoryId: string;
-  };
-}
-
-export async function GET(request: Request, { params }: Params) {
+export async function GET(
+  request: Request,
+  { params }: { params: Promise<{ categoryId: string }> },
+) {
   const supabase = await createClient();
 
-  const { categoryId } = params;
+  const { categoryId } = await params;
 
   const { data, error } = await supabase
     .from("products")
