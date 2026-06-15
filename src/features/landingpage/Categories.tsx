@@ -69,7 +69,7 @@ if (status === "success" && products.length === 0) {
                 alt="arrow-left"
                 width={40}
                 height={40}
-                className="shadow rounded-full p-1 border border-gray-100"
+                className="shadow rounded-full p-1 border border-gray-100 bg-red-700"
               />
             </button>
             <button onClick={handleNext}>

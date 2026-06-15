@@ -43,7 +43,7 @@ const ExploreOurProducts = () => {
         <p className="text-primary text-base font-semibold">Our Products</p>
       </div>
       <div className="flex justify-between items-center mb-7">
-        <h4 className="md:text-3xl font-semibold">Explore our latest product Products</h4>
+        <h4 className="md:text-3xl font-semibold">Explore our latest product Products </h4>
         <div className="flex gap-3 md:py-0 py-5">
           <Image
             src="/images/icons_arrow-left.svg"
