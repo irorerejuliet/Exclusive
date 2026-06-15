@@ -63,33 +63,35 @@ if (status === "success" && products.length === 0) {
         <div className="flex justify-between  items-center mb-7">
           <h4 className="md:text-3xl font-semibold">Browse By Category</h4>
           <div className="flex gap-3 md:py-0 py-5">
-            <button onClick={handlePrev}>
+            <button
+              onClick={handlePrev}
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-100 shadow transition-colors duration-200 hover:bg-red-700 active:bg-red-800"
+            >
               <Image
                 src="/images/icons_arrow-left.svg"
                 alt="arrow-left"
-                width={40}
-                height={40}
-                className="shadow rounded-full p-1 border border-gray-100 bg-red-700"
+                width={20}
+                height={20}
               />
             </button>
-            <button onClick={handleNext}>
+
+            <button
+              onClick={handleNext}
+              className="flex items-center justify-center w-10 h-10 rounded-full border border-gray-100 shadow transition-colors duration-200 hover:bg-red-700 active:bg-red-800"
+            >
               <Image
                 src="/images/icon-arrow-right.svg"
                 alt="arrow-right"
-                width={40}
-                height={40}
-                className="shadow rounded-full p-2 border border-gray-100"
+                width={20}
+                height={20}
               />
             </button>
           </div>
         </div>
         <div className="grid lg:grid-cols-4 md:grid-cols-3 grid-cols-1 gap-4 items-center space-y-10 md:space-y-0 md:px-0 px-10">
-         {products.slice(startIndex, startIndex + 4).map((product) => (
-  <ProductCard
-    key={product.id}
-    product={product}
-  />
-))}
+          {products.slice(startIndex, startIndex + 4).map((product) => (
+            <ProductCard key={product.id} product={product} />
+          ))}
         </div>
         <div className="w-full border-t border-gray-200 mt-20"></div>
       </div>
