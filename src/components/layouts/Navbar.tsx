@@ -65,29 +65,34 @@ const { user } = useUser();
           <SearchBar />
 
           <div className="flex gap-4 items-center">
-            <Link href="/wishlists" className="relative">
-              <Image
-                src="/images/HeartIcon.svg"
-                alt="wishlist"
-                width={28}
-                height={28}
-              />
+            {isLoggedIn && (
+              <>
+                <Link href="/wishlists" className="relative">
+                  <Image
+                    src="/images/HeartIcon.svg"
+                    alt="wishlist"
+                    width={28}
+                    height={28}
+                  />
 
-              {wishlistCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {wishlistCount}
-                </span>
-              )}
-            </Link>
+                  {wishlistCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-red-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                      {wishlistCount}
+                    </span>
+                  )}
+                </Link>
 
-            <Link href="/cart" className="relative">
-              <ShoppingCart size={24} />
-              {cartCount > 0 && (
-                <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                  {cartCount}
-                </span>
-              )}
-            </Link>
+                <Link href="/cart" className="relative">
+                  <ShoppingCart size={24} />
+
+                  {cartCount > 0 && (
+                    <span className="absolute -top-2 -right-2 bg-orange-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                      {cartCount}
+                    </span>
+                  )}
+                </Link>
+              </>
+            )}
 
             {isLoggedIn ? (
               <div className="relative">
@@ -152,16 +157,18 @@ const { user } = useUser();
         </div>
 
         {/* MOBILE RIGHT */}
-        {/* MOBILE RIGHT */}
         <div className="flex md:hidden items-center gap-4 relative">
-          <Link href="/cart" className="relative">
-            <ShoppingCart size={22} />
-            {cartCount > 0 && (
-              <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
-                {cartCount}
-              </span>
-            )}
-          </Link>
+          {isLoggedIn && (
+            <Link href="/cart" className="relative">
+              <ShoppingCart size={22} />
+
+              {cartCount > 0 && (
+                <span className="absolute -top-2 -right-2 bg-primary text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">
+                  {cartCount}
+                </span>
+              )}
+            </Link>
+          )}
 
           {isLoggedIn ? (
             <div className="relative">
